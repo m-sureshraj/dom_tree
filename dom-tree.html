@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dom-Tree</title>
+	<link rel="stylesheet" href="./dom-tree.css">
+</head>
+<body>
+	<div id="root"></div>
+	<div class="bingo"></div>
+
+	<script src="./dom-tree.js"></script>
+	<script>
+		var data = {
+			name: 'suresh',
+			age: 25,
+			married: false,
+			children: null,
+			obj: {
+				// name: 'sub-object',
+				// married: true
+			},
+			master: {
+				name: 'master',
+				sex: 'male',
+				friend: undefined,
+				kids: {
+					son: 'john',
+					daughter: 'jenne',
+					testing: {
+						work: true,
+						hola: 100,
+						friends: [
+							'baby', 'dolly', 'tina'
+						]
+					}
+				}
+			},
+			work: 'fine'
+		};
+
+		// var data = [
+		// 	'suresh', 'raina', 'raj'
+		// ];
+
+		// var data = [];
+
+		// var data = {};
+
+		console.time();
+		var dom = new DomTree({
+			ele: document.querySelector('#root'),
+			data: data,
+			separators: true,
+			fold: false,
+			// theme: 'one-dark'
+		});
+		dom.init();
+		console.timeEnd();
+
+		// var jsonData = '{"name": "suresh", "age": 26}';
+		// var dom = new DomTree({
+		// 	ele: document.querySelector('.bingo'),
+		// 	data: jsonData,
+		// 	theme: 'one-dark'
+		// });
+		// dom.init();
+
+	</script>
+</body>
+</html>
