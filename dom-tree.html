@@ -12,6 +12,9 @@
 	<script src="./dom-tree.js"></script>
 	<script>
 		var data = {
+			info: {
+				name: 'bingo'
+			},
 			name: 'suresh',
 			age: 25,
 			married: false,
@@ -21,6 +24,11 @@
 				// married: true
 			},
 			master: {
+				kenu: {
+					info: {
+						name: 'bingo'
+					}
+				},
 				name: 'master',
 				sex: 'male',
 				friend: undefined,
@@ -36,7 +44,11 @@
 					}
 				}
 			},
-			work: 'fine'
+			work: 'fine',
+			data: [
+				'bingo', 'dear'
+			]
+//			man: true
 		};
 
 		// var data = [
@@ -52,8 +64,8 @@
 			ele: document.querySelector('#root'),
 			data: data,
 			separators: true,
-			fold: false,
-			// theme: 'one-dark'
+			fold: false
+//			 theme: 'one-dark'
 		});
 		dom.init();
 		console.timeEnd();

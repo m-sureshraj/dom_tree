@@ -1,12 +1,13 @@
-.domTreeJsRoot {
+/*common styles*/
+.dtjs-root {
 	font: 14px/26px monospace;
 	font: 14px/30px monaco;
 	margin: 0;
-	/* root node floated expandale element need 20px space  */
-	padding: 0 0 0 20px;
+	outline: none;
+	padding: 0 0 0 32px;
 }
 
-.domTreeJsRoot li {
+.dtjs-root li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -64,6 +65,25 @@
 	display: inline-block;
 }
 
+.dtjs-mu:before,
+.dtjs-mu.fold > .cb:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: inline-block;
+	width: 9px;
+	height: 3px;
+}
+.dtjs-mu.fold > .cb:after {
+	left: -1px;
+	bottom: -6px;
+}
+.dtjs-mu.fold:before { display: none; }
+.dtjs-mu.fold > .cb { position: relative; }
+
+
+
 /* ============ default theme ============= */
 .k { color: #666; }
 .str { color: rgb(244, 54, 54); }
@@ -78,6 +98,15 @@
 .hc ul { border-left: 1px dotted #ccc; }
 .hc:after { color: #989797; } /* item count text color */
 .ex { border-top: 7px solid #b3b3b3; }
+/* keyboard navigation styles */
+.dtjs-root-focused { background-color: #f7f2f2; }
+.dtjs-highlight { background-color: #efe3e3; }
+.dtjs-md > .ex { border-top: 7px solid #4093ff; }
+.dtjs-mu:before,
+.dtjs-mu.fold > .cb:after { background-color: #4093ff; }
+/* keyboard navigation styles */
+/* ============ default theme ============= */
+
 
 /* ========== theme styles - one dark ============= */
 .one-dark {
@@ -103,27 +132,7 @@
 	color: rgb(153, 153, 153);
 }
 .one-dark .ex { border-top: 7px solid #666; }
-/*.one-dark > .hc > .ex { left: -10px; }*/
-
-/*.highlight {
-	background-color: #f5eceb;
-}*/
-
-/*a {
-	text-decoration: none;
-}
-
-a:hover,
-a:focus {
-	opacity: 0.6;
-	outline: none;
-}*/
-
-/* color the matching bracket */
-/*a:focus ~ .v,
-a:hover ~ .v {
-	color: #51af55;
-}*/
+/* ========== theme styles - one dark ============= */
 
 /* need to select sibling last span element */
 /* if we can't then add a class to the closing bracket, then select it */
