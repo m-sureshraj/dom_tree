@@ -1,7 +1,7 @@
 'use strict';
 
 // helper fn's
-var DomTreeUtil = (function() {
+var domTreeUtil = (function() {
 	/**
 	 * check param is a valid primitive type
 	 * @param { Any } key - js type eg. string | number | etc..
@@ -74,6 +74,9 @@ var DomTreeUtil = (function() {
 		getType: getType
 	};
 }());
+
+// keyboard navigation helper
+// var
 
 var DomTree = (function(dom, util) {
 	var defaultConfig = {
@@ -241,11 +244,16 @@ var DomTree = (function(dom, util) {
 	}
 
 	function _moveDown(ele) {
+        if (ele.parentNode.classList.contains('dtjs-root') && ele.classList.contains('fold')) {
+            return;
+        }
+
 		ele.classList.remove('dtjs-highlight');
 
 		// we focused next element because of move down
 		if (
 			ele.classList.contains('hc') &&
+            !ele.classList.contains('fold') &&
 			(!ele.classList.contains('dtjs-mu') || ele.parentNode.classList.contains('dtjs-root'))
 		) {
 			var firstChild = ele.querySelector('ul').firstChild;
@@ -259,7 +267,7 @@ var DomTree = (function(dom, util) {
 			ele.nextSibling.classList.add('dtjs-md');
 		}
 
-		if (ele.classList.contains('hc')) {
+		if (ele.classList.contains('hc') && !ele.classList.contains('fold')) {
 			if (ele.classList.contains('dtjs-mu') && ele.nextSibling) {
 				// has next sibling so highlight it
 				ele.classList.remove('dtjs-mu');
@@ -280,6 +288,9 @@ var DomTree = (function(dom, util) {
 				ele.querySelector('ul').firstChild.className += ' dtjs-highlight';
 			}
 		} else {
+            ele.classList.contains('dtjs-md') && ele.classList.remove('dtjs-md');
+            ele.classList.contains('dtjs-mu') && ele.classList.remove('dtjs-mu');
+
 			// next ele
 			var nextSibling = ele.nextSibling;
 
@@ -292,17 +303,21 @@ var DomTree = (function(dom, util) {
 	}
 
 	function _moveUp(ele) {
+        if (ele.parentNode.classList.contains('dtjs-root') && ele.classList.contains('fold')) {
+            return;
+        }
+
 		ele.classList.remove('dtjs-highlight');
 
 		// we focused next element because of move up
 		if (
 			ele.classList.contains('hc') &&
+            !ele.classList.contains('fold') &&
             (!ele.classList.contains('dtjs-md') || ele.parentNode.classList.contains('dtjs-root'))
 		) {
 			var lastChild = ele.querySelector('ul').lastChild;
 
 			if (lastChild && lastChild.classList.contains('hc')) {
-			    console.log('bingo');
 				lastChild.className += ' dtjs-mu';
 			}
 		} else {
@@ -311,7 +326,7 @@ var DomTree = (function(dom, util) {
 			}
 		}
 
-		if (ele.classList.contains('hc')) {
+		if (ele.classList.contains('hc') && !ele.classList.contains('fold')) {
 			if (ele.classList.contains('dtjs-md') && ele.previousSibling) {
 				// has previous sibling so highlight it
 				ele.classList.remove('dtjs-md');
@@ -329,6 +344,9 @@ var DomTree = (function(dom, util) {
 				ele.querySelector('ul').lastChild.className += ' dtjs-highlight';
 			}
 		} else {
+            ele.classList.contains('dtjs-mu') && ele.classList.remove('dtjs-mu');
+            ele.classList.contains('dtjs-md') && ele.classList.remove('dtjs-md');
+
 			// prev ele
 			var prevSibling = ele.previousSibling;
 
@@ -356,7 +374,7 @@ var DomTree = (function(dom, util) {
 		var highlightedEle = tree.querySelector('.dtjs-highlight');
 
 		// if there are no highlighted element yet then highlight tree's first child
-		if (!highlightedEle && (keyCode === 40 || keyCode === 38)) {
+		if (!highlightedEle && (keyCode >= 37 && keyCode <= 40)) {
 			tree.firstChild.className += ' dtjs-highlight';
 			return;
 		}
@@ -506,7 +524,7 @@ var DomTree = (function(dom, util) {
 
 	return DomTree;
 
-}(document, DomTreeUtil));
+}(document, domTreeUtil));
 
 // done:
 // prepend() not work for other browsers need to polyfill (done)
@@ -523,9 +541,10 @@ var DomTree = (function(dom, util) {
 // add open, close bracket class names for styling purpose (done)
 // enable theme option via configuration (done)
 // what if user passed a function as a property (done)
+// implement full key board navigation feature (done)
 
 // todo
-// implement full key board navigation feature (working)
+// extract keyboard navigation fn into separate helper fn
 // _createInstancePropWithDefaultConfig - optimize
 // refactor createEntry fn (must)
 // highlight matching bracket
