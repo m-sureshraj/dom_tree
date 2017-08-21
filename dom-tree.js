@@ -2,11 +2,6 @@
 
 // helper fn's
 var domTreeUtil = (function() {
-	/**
-	 * check param is a valid primitive type
-	 * @param { Any } key - js type eg. string | number | etc..
-	 * @return { Boolean }
-	 */
 	function isValuePrimitive(key) {
 		if (key === null)
 			return true;
@@ -309,13 +304,15 @@ var DomTree = (function(dom, util, kn) {
 		}
 
 		for (var key in data) {
-			if (util.isValuePrimitive(data[key])) {
-				root.appendChild(_createEntry(key, data[key]));
-			} else { // else part work same for obj and array
-				var val = data[key];
-				var entry = _createEntry(key, val);
+			if (data.hasOwnProperty(key)) {
+				if (util.isValuePrimitive(data[key])) {
+					root.appendChild(_createEntry(key, data[key]));
+				} else { // else part work same for obj and array
+					var val = data[key];
+					var entry = _createEntry(key, val);
 
-				root.appendChild(_constructChildTree(val, entry));
+					root.appendChild(_constructChildTree(val, entry));
+				}
 			}
 		}
 
@@ -430,11 +427,13 @@ var DomTree = (function(dom, util, kn) {
 
 	function _createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
 		for (var prop in defaultConfig) {
-			if (userConfig.hasOwnProperty(prop)) {
-				defaultConfig[prop] = userConfig[prop];
-			}
+		    if (defaultConfig.hasOwnProperty(prop)) {
+                if (userConfig.hasOwnProperty(prop)) {
+                    defaultConfig[prop] = userConfig[prop];
+                }
 
-			instance[prop] = defaultConfig[prop];
+                instance[prop] = defaultConfig[prop];
+            }
 		}
 	}
 
@@ -511,9 +510,14 @@ var DomTree = (function(dom, util, kn) {
 	DomTree.prototype = {
 		constuctor: DomTree,
 		init: function() {
+			// if user calling .init() more then once for a instance
+			if (this.ele.querySelector('ul') !== null) {
+				throw new Error('DomTree already initialized!');
+			}
+
 			var tree = _constructDomTree(this.data, null);
 			tree.className = 'dtjs-root';
-			tree.setAttribute('tabindex', 0);
+			tree.setAttribute('tabindex', '0');
 
 			// add theme option class
 			if (this.theme) {
@@ -530,8 +534,7 @@ var DomTree = (function(dom, util, kn) {
 
 			tree.addEventListener('keydown', function(e) {
 				var keyCode = e.keyCode;
-				// when `.dtjs-root` is focused prevent horizontal, vertical
-				// up and down scroll event
+				// when `.dtjs-root` is focused prevent horizontal, vertical scrolling
 				if (keyCode >= 37 && keyCode <= 40) {
 					e.preventDefault();
 					_handleKeyboardNavigation(tree, keyCode);
@@ -545,11 +548,8 @@ var DomTree = (function(dom, util, kn) {
 				}
 			}, false);
 
-			// what if user calling .init() more then once for a instance
-			// append tree only if this.ele is empty
-			if (this.ele.querySelector('ul') === null) {
-				this.ele.appendChild(tree);
-			}
+			// append constructed tree to target element
+			this.ele.appendChild(tree);
 		}
 	};
 
@@ -574,9 +574,9 @@ var DomTree = (function(dom, util, kn) {
 // what if user passed a function as a property (done)
 // implement full key board navigation feature (done)
 // extract keyboard navigation fn into separate helper fn (done)
+// optimize for in loop iteration (done)
 
 // todo
-// _createInstancePropWithDefaultConfig - optimize
 // refactor createEntry fn (must)
 // highlight matching bracket
 // Array.prototype.indexOf does not work in IE9 need polyfill
@@ -590,3 +590,5 @@ var DomTree = (function(dom, util, kn) {
 
 // nova color scheme
 // https://trevordmiller.com/projects/nova
+
+// why constuctor not constructor?
