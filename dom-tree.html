@@ -59,16 +59,17 @@
 
 		// var data = {};
 
-		console.time();
+		console.time('bingo');
 		var dom = new DomTree({
 			ele: document.querySelector('#root'),
 			data: data,
 			separators: true,
-			fold: false
+			fold: false,
+			keyboardNavigation: true
 //			 theme: 'one-dark'
 		});
 		dom.init();
-		console.timeEnd();
+		console.timeEnd('bingo');
 
 		// var jsonData = '{"name": "suresh", "age": 26}';
 		// var dom = new DomTree({

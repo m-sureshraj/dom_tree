@@ -242,7 +242,8 @@ var DomTree = (function(dom, util, kn) {
 		data: null,
 		separators: true,
 		fold: false,
-		theme: null
+		theme: null,
+		keyboardNavigation: false
 	};
 
 	var availableThemes = ['one-dark', 'chrome', 'darcula', 'github'];
@@ -445,10 +446,18 @@ var DomTree = (function(dom, util, kn) {
   		);
 	}
 
-	function _validateConfigBoolOption(config, option) {
-		if (config.hasOwnProperty(option) && typeof config[option] !== 'boolean') {
-  			throw Error('config.' + option + ' value should be boolean type');
-  		}
+	function _validateConfigBoolOptions(config) {
+		var options = ['separators', 'fold', 'keyboardNavigation'],
+			i = 0,
+			length = options.length,
+			option;
+
+		for (i; i < length; i++) {
+			option = options[i];
+			if (config.hasOwnProperty(option) && typeof config[option] !== 'boolean') {
+				throw Error('config.' + option + ' value should be boolean type');
+			}
+		}
 	}
 
 	function _validateConfigThemeOption(config) {
@@ -457,7 +466,7 @@ var DomTree = (function(dom, util, kn) {
   		}
 
   		if (availableThemes.indexOf(config.theme) === -1) {
-			throw Error('Invalid theme option.! available options are ' + availableThemes);
+			throw Error('Invalid theme option! available options are ' + availableThemes);
   		}
 	}
 
@@ -492,32 +501,29 @@ var DomTree = (function(dom, util, kn) {
 			_validateConfigThemeOption(config);
 		}
 
-  		// if optional config.separators property present, then it should be a boolean type
-  		_validateConfigBoolOption(config, 'separators');
-
-  		// if optional config.fold property present, then it should be a boolean type
-		_validateConfigBoolOption(config, 'fold');
+		// validate config optional boolean options
+		_validateConfigBoolOptions(config);
 
   		return config;
 	}
 
-	// @constuctor
+	// @constructor
 	function DomTree(config) {
 		config = _validateAndPrepareConfig(config);
 		_createInstancePropWithDefaultConfig(config, defaultConfig, this);
 	}
 
 	DomTree.prototype = {
-		constuctor: DomTree,
+		constructor: DomTree,
 		init: function() {
-			// if user calling .init() more then once for a instance
+			// if user calling .init() more then once for instance
 			if (this.ele.querySelector('ul') !== null) {
 				throw new Error('DomTree already initialized!');
 			}
 
 			var tree = _constructDomTree(this.data, null);
 			tree.className = 'dtjs-root';
-			tree.setAttribute('tabindex', '0');
+			tree.setAttribute('tabIndex', '0');
 
 			// add theme option class
 			if (this.theme) {
@@ -532,14 +538,16 @@ var DomTree = (function(dom, util, kn) {
 				util.handleToggleClass(tree, 'dtjs-root-focused');
 			});
 
-			tree.addEventListener('keydown', function(e) {
-				var keyCode = e.keyCode;
-				// when `.dtjs-root` is focused prevent horizontal, vertical scrolling
-				if (keyCode >= 37 && keyCode <= 40) {
-					e.preventDefault();
-					_handleKeyboardNavigation(tree, keyCode);
-				}
-			});
+			if (this.keyboardNavigation) {
+				tree.addEventListener('keydown', function(e) {
+					var keyCode = e.keyCode;
+					// when `.dtjs-root` is focused prevent horizontal, vertical scrolling
+					if (keyCode >= 37 && keyCode <= 40) {
+						e.preventDefault();
+						_handleKeyboardNavigation(tree, keyCode);
+					}
+				});
+			}
 
 			// register click event listener on toggleOption node via eventDelegation
 			tree.addEventListener('click', function(e) {
@@ -548,7 +556,7 @@ var DomTree = (function(dom, util, kn) {
 				}
 			}, false);
 
-			// append constructed tree to target element
+			// finally append constructed tree to target element :)
 			this.ele.appendChild(tree);
 		}
 	};
@@ -563,7 +571,7 @@ var DomTree = (function(dom, util, kn) {
 // improve registerEventListener fn (done)
 // count after collapsed (done)
 // classList.toggle should be polyfilled (done)
-// remove es6 and write in pure es5 constuctor fn way (done)
+// remove es6 and write in pure es5 constructor fn way (done)
 // check memory leaks in `toggleOptionNode` click listener (done)
 // validation on data input. [must be obj or array or json] (done)
 // prevent calling init more then once on same instance (done)
@@ -575,20 +583,21 @@ var DomTree = (function(dom, util, kn) {
 // implement full key board navigation feature (done)
 // extract keyboard navigation fn into separate helper fn (done)
 // optimize for in loop iteration (done)
+// refactor _validateConfigBoolOption() calls to single call (done)
 
-// todo
+// todo Before beta release
+// assign natural tab order
+// how to handle scrolling when tree is focused (improvement)
+// handle keyboard navigation if there are no elements in data prop. eg. {}
 // refactor createEntry fn (must)
-// highlight matching bracket
-// Array.prototype.indexOf does not work in IE9 need polyfill
-// check querySelector() supoort in IE9
-
-// later
 // create separate file for helpers fn
-// browser target IE9 and above
+// refactor css
+// testing
+// build automation
 
-// http://stackoverflow.com/questions/3656467/is-it-possible-to-focus-on-a-div-using-javascript-focus-function
+// todo After beta release
+// highlight matching bracket (after beta release)
+// Array.prototype.indexOf does not work in IE9 need polyfill
+// check querySelector() support in IE9
+// select IE browser target
 
-// nova color scheme
-// https://trevordmiller.com/projects/nova
-
-// why constuctor not constructor?

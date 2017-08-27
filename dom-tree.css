@@ -1,12 +1,10 @@
 /*common styles*/
 .dtjs-root {
-	font: 14px/26px monospace;
 	font: 14px/30px monaco;
 	margin: 0;
 	outline: none;
 	padding: 0 0 0 32px;
 }
-
 .dtjs-root li {
 	margin: 0;
 	padding: 0;
@@ -31,10 +29,10 @@
 	position: absolute;
 	left: -21px;
 	top: 12px;
+	transition: transform 0.3s ease;
 }
 
 .dots {
-	display: inline-block;
 	display: none;
 }
 .dots:after {
@@ -42,6 +40,7 @@
 	margin: 0 2px;
 }
 
+/* After folded */
 .fold ul {
 	display: none;
 }
@@ -107,12 +106,8 @@
 /* keyboard navigation styles */
 /* ============ default theme ============= */
 
-
 /* ========== theme styles - one dark ============= */
-.one-dark {
-	background-color: rgb(45, 45, 45);
-	padding-left: 34px; /*need more space on left to show root arrow down*/
-}
+.one-dark {  background-color: rgb(45, 45, 45); }
 .one-dark .k { color: rgb(220, 220, 220); }
 .one-dark .str { color: rgb(126, 198, 153); }
 .one-dark .num { color: rgb(204, 153, 205); }
@@ -133,9 +128,3 @@
 }
 .one-dark .ex { border-top: 7px solid #666; }
 /* ========== theme styles - one dark ============= */
-
-/* need to select sibling last span element */
-/* if we can't then add a class to the closing bracket, then select it */
-/*a:hover:last-child {
-	color: #51af55;
-}*/
