@@ -6,58 +6,63 @@
 	<link rel="stylesheet" href="./dom-tree.css">
 </head>
 <body>
+	<!--<h1>DomTree</h1>-->
+	<!--<a href="#">this is a link</a>-->
+	<!--<a href="#">this is a link two</a>-->
 	<div id="root"></div>
-	<div class="bingo"></div>
+	<!--<div class="bingo"></div>-->
+	<!--<a href="#">this is a link</a>-->
+	<!--<a href="#">this is a link two</a>-->
 
 	<script src="./dom-tree.js"></script>
 	<script>
-		var data = {
-			info: {
-				name: 'bingo'
-			},
-			name: 'suresh',
-			age: 25,
-			married: false,
-			children: null,
-			obj: {
-				// name: 'sub-object',
-				// married: true
-			},
-			master: {
-				kenu: {
-					info: {
-						name: 'bingo'
-					}
-				},
-				name: 'master',
-				sex: 'male',
-				friend: undefined,
-				kids: {
-					son: 'john',
-					daughter: 'jenne',
-					testing: {
-						work: true,
-						hola: 100,
-						friends: [
-							'baby', 'dolly', 'tina'
-						]
-					}
-				}
-			},
-			work: 'fine',
-			data: [
-				'bingo', 'dear'
-			]
-//			man: true
-		};
+//		var data = {
+//			info: {
+//				name: 'bingo'
+//			},
+//			name: 'suresh',
+//			age: 25,
+//			married: false,
+//			children: null,
+//			obj: {
+//				// name: 'sub-object',
+//				// married: true
+//			},
+//			master: {
+//				kenu: {
+//					info: {
+//						name: 'bingo'
+//					}
+//				},
+//				name: 'master',
+//				sex: 'male',
+//				friend: undefined,
+//				kids: {
+//					son: 'john',
+//					daughter: 'jenne',
+//					testing: {
+//						work: true,
+//						hola: 100,
+//						friends: [
+//							'baby', 'dolly', 'tina'
+//						]
+//					}
+//				}
+//			},
+//			work: 'fine',
+//			data: [
+//				'bingo', 'dear'
+//			]
+////			man: true
+//		};
 
-		// var data = [
-		// 	'suresh', 'raina', 'raj'
-		// ];
+		 var data = [
+		 	'suresh', 'raina', 'raj'
+		 ];
 
-		// var data = [];
+//		 var data = [];
 
-		// var data = {};
+//		var data = {};
 
 		console.time('bingo');
 		var dom = new DomTree({
@@ -71,13 +76,12 @@
 		dom.init();
 		console.timeEnd('bingo');
 
-		// var jsonData = '{"name": "suresh", "age": 26}';
-		// var dom = new DomTree({
-		// 	ele: document.querySelector('.bingo'),
-		// 	data: jsonData,
-		// 	theme: 'one-dark'
-		// });
-		// dom.init();
+//		 var jsonData = '{"name": "suresh", "age": 26}';
+//		 var bim = new DomTree({
+//		 	ele: document.querySelector('.bingo'),
+//		 	data: jsonData
+//		 });
+//		 bim.init();
 
 	</script>
 </body>

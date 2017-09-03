@@ -60,13 +60,24 @@ var domTreeUtil = (function() {
 		}
 	}
 
+	function isEmpty(param) {
+		var type = getType(param);
+
+		if (type === 'object' || type === 'array') {
+			return getLengthOfObjOrArray(param) === 0;
+		}
+
+		throw new Error('param should should be array or object but received ' + type);
+	}
+
 	return {
 		isValuePrimitive: isValuePrimitive,
 		getLengthOfObjOrArray: getLengthOfObjOrArray,
 		isArray: isArray,
 		isValidHtmlElement: isValidHtmlElement,
 		handleToggleClass: handleToggleClass,
-		getType: getType
+		getType: getType,
+		isEmpty: isEmpty
 	};
 }());
 
@@ -518,7 +529,7 @@ var DomTree = (function(dom, util, kn) {
 		init: function() {
 			// if user calling .init() more then once for instance
 			if (this.ele.querySelector('ul') !== null) {
-				throw new Error('DomTree already initialized!');
+				throw new Error('DomTree already initialized for target element!');
 			}
 
 			var tree = _constructDomTree(this.data, null);
@@ -528,6 +539,12 @@ var DomTree = (function(dom, util, kn) {
 			// add theme option class
 			if (this.theme) {
 				tree.className += (' ' + this.theme);
+			}
+
+			// if data prop is empty
+			if (util.isEmpty(this.data)) {
+				this.keyboardNavigation = false; // disable keyboard navigation
+				tree.className += ' dtjs-empty';
 			}
 
 			tree.addEventListener('focus', function() {
@@ -584,20 +601,19 @@ var DomTree = (function(dom, util, kn) {
 // extract keyboard navigation fn into separate helper fn (done)
 // optimize for in loop iteration (done)
 // refactor _validateConfigBoolOption() calls to single call (done)
+// handle keyboard navigation if there are no elements in data prop. eg. {} (done)
 
 // todo Before beta release
-// assign natural tab order
+// refactor css (working)
 // how to handle scrolling when tree is focused (improvement)
-// handle keyboard navigation if there are no elements in data prop. eg. {}
 // refactor createEntry fn (must)
 // create separate file for helpers fn
-// refactor css
 // testing
 // build automation
 
 // todo After beta release
+// select IE browser target
 // highlight matching bracket (after beta release)
 // Array.prototype.indexOf does not work in IE9 need polyfill
 // check querySelector() support in IE9
-// select IE browser target
 
