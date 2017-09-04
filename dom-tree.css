@@ -1,33 +1,36 @@
-/*common styles*/
-.dtjs-root {
-	font: 14px/30px monaco;
-	margin: 0;
-	outline: none;
-	padding: 0 0 0 32px;
-}
-.dtjs-root li {
+/* dom-tree.css rules */
+/* Always scope styles under .dtjs-root class */
+/* All color related styles are listed under theme section */
+
+/* css reset inside .dtjs-root */
+.dtjs-root,
+.dtjs-root li,
+.dtjs-root ul,
+.dtjs-root span {
 	margin: 0;
 	padding: 0;
-	list-style: none;
+	outline: none;
 }
-.dtjs-root.dtjs-empty {
-	padding-left: 7px;
-}
+.dtjs-root li { list-style: none; }
+/* css reset */
 
-.hc {
-	position: relative;
+.dtjs-root {
+	font: 14px/30px monaco;
+	padding: 0 0 0 32px;
 }
-
-.hc ul {
+.dtjs-root.dtjs-empty { padding-left: 7px; }
+.dtjs-root .hc { position: relative; }
+.dtjs-root .hc ul {
 	padding-left: 34px;
 	margin-left: 1px;
+	border-left: 1px dotted transparent;
 }
-
-.ex {
+.dtjs-root .hc .ex { /* expand arrow icon */
   	width: 0;
   	height: 0;
   	border-left: 5px solid transparent;
   	border-right: 5px solid transparent;
+	border-top: 7px solid transparent;
 	cursor: pointer;
 	position: absolute;
 	left: -21px;
@@ -35,99 +38,91 @@
 	transition: transform 0.3s ease;
 }
 
-.dots {
-	display: none;
-}
-.dots:after {
+/* 3 Dots */
+.dtjs-root .dots { display: none; }
+.dtjs-root .dots:after { /*dots element value*/
 	content: '...';
 	margin: 0 2px;
 }
 
-/* After folded */
-.fold ul {
-	display: none;
-}
-.fold .dots {
-	display: inline-block;
-}
-.fold .ex {
-	transform: rotate(-90deg);
-}
-
-/* initially hide item count text */
-.hc:after {
+/* Item count text */
+.dtjs-root .hc:after {
 	content: attr(data-cc);
 	display: none;
 	position: absolute;
 	top: 1px;
 	margin-left: 15px;
 }
-/* show item count text after fold */
-.hc.fold:after {
-	display: inline-block;
-}
 
-.dtjs-mu:before,
-.dtjs-mu.fold > .cb:after {
+/* keyboard navigation */
+.dtjs-root .dtjs-mu:before,
+.dtjs-root .dtjs-mu > .cb:after {
 	content: '';
 	position: absolute;
+	width: 9px;
+	height: 3px;
 	left: 0;
 	bottom: 0;
 	display: inline-block;
-	width: 9px;
-	height: 3px;
 }
-.dtjs-mu.fold > .cb:after {
+.dtjs-root .dtjs-mu > .cb:after { display: none; } /* become visible after ele get folded */
+
+/* element get folded */
+.dtjs-root .fold ul { display: none; }
+.dtjs-root .fold .dots { display: inline-block; } /*show the dots*/
+.dtjs-root .fold .ex { transform: rotate(-90deg); }
+.dtjs-root .fold:after { display: inline-block; } /* show item count text */
+/* move up KB navigation highlight cursor after folded */
+.dtjs-root .fold.dtjs-mu:before { display: none; }
+.dtjs-root .fold.dtjs-mu > .cb { position: relative; }
+.dtjs-root .fold.dtjs-mu > .cb:after {
+	display: inline-block;
 	left: -1px;
 	bottom: -6px;
 }
-.dtjs-mu.fold:before { display: none; }
-.dtjs-mu.fold > .cb { position: relative; }
-
-
 
 /* ============ default theme ============= */
-.k { color: #666; }
-.str { color: rgb(244, 54, 54); }
-.num { color: blue; }
-.null,
-.dots:after,
-.undef { color: #ccc; }
-.bool { color: brown; }
-.cb,
-.ob { color: #444; }
-.sep { color: #777; }
-.hc ul { border-left: 1px dotted #ccc; }
-.hc:after { color: #989797; } /* item count text color */
-.ex { border-top: 7px solid #b3b3b3; }
+.dtjs-root .k { color: #666; }
+.dtjs-root .str { color: rgb(244, 54, 54); }
+.dtjs-root .num { color: blue; }
+.dtjs-root .null,
+.dtjs-root .dots:after,
+.dtjs-root .undef { color: #ccc; }
+.dtjs-root .bool { color: brown; }
+.dtjs-root .cb,
+.dtjs-root .ob { color: #444; }
+.dtjs-root .sep { color: #777; }
+.dtjs-root .hc ul { border-left-color: #ccc; }
+.dtjs-root .hc:after { color: #989797; } /* item count text color */
+.dtjs-root .hc .ex { border-top-color: #b3b3b3; }
 /* keyboard navigation styles */
-.dtjs-root-focused { background-color: #f7f2f2; }
-.dtjs-highlight { background-color: #efe3e3; }
-.dtjs-md > .ex { border-top: 7px solid #4093ff; }
-.dtjs-mu:before,
-.dtjs-mu.fold > .cb:after { background-color: #4093ff; }
+.dtjs-root.dtjs-root-focused { background-color: #f7f2f2; }
+.dtjs-root .dtjs-highlight { background-color: #efe3e3; }
+.dtjs-root .dtjs-md > .ex { border-top-color: #4093ff; }
+.dtjs-root .dtjs-mu:before,
+.dtjs-root .dtjs-mu.fold > .cb:after { background-color: #4093ff; }
 /* keyboard navigation styles */
 /* ============ default theme ============= */
 
 /* ========== theme styles - one dark ============= */
-.one-dark {  background-color: rgb(45, 45, 45); }
-.one-dark .k { color: rgb(220, 220, 220); }
-.one-dark .str { color: rgb(126, 198, 153); }
-.one-dark .num { color: rgb(204, 153, 205); }
-.one-dark .bool { color: rgb(240, 141, 73); }
-.one-dark .cb,
-.one-dark .ob,
-.one-dark .dots:after {
+.dtjs-root.one-dark {  background-color: rgb(45, 45, 45); }
+.dtjs-root.one-dark .k { color: rgb(220, 220, 220); }
+.dtjs-root.one-dark .str { color: rgb(126, 198, 153); }
+.dtjs-root.one-dark .num { color: rgb(204, 153, 205); }
+.dtjs-root.one-dark .bool { color: rgb(240, 141, 73); }
+.dtjs-root.one-dark .cb,
+.dtjs-root.one-dark .ob,
+.dtjs-root.one-dark .dots:after {
 	color: rgb(103, 205, 204);
 }
-.one-dark .hc ul {
+.dtjs-root.one-dark .hc ul {
 	border-left-color: #666;
 }
-.one-dark .sep,
-.one-dark .null,
-.one-dark .undef,
-.one-dark .hc:after {
+.dtjs-root.one-dark .sep,
+.dtjs-root.one-dark .null,
+.dtjs-root.one-dark .undef,
+.dtjs-root.one-dark .hc:after {
 	color: rgb(153, 153, 153);
 }
-.one-dark .ex { border-top: 7px solid #666; }
+.dtjs-root.one-dark .ex { border-top-color: #666; }
 /* ========== theme styles - one dark ============= */

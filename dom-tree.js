@@ -602,9 +602,10 @@ var DomTree = (function(dom, util, kn) {
 // optimize for in loop iteration (done)
 // refactor _validateConfigBoolOption() calls to single call (done)
 // handle keyboard navigation if there are no elements in data prop. eg. {} (done)
+// refactor css (done)
 
 // todo Before beta release
-// refactor css (working)
+// write themes (working)
 // how to handle scrolling when tree is focused (improvement)
 // refactor createEntry fn (must)
 // create separate file for helpers fn
