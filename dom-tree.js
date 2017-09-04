@@ -256,12 +256,19 @@ var DomTree = (function(dom, util, kn) {
 		theme: null,
 		keyboardNavigation: false
 	};
-
+	var entryNodeMap = {
+		'object': { val: '{', className: 'ob' },
+		'null': { val: 'null', className: 'null' },
+		'array': { val: '[', className: 'ob' },
+		'undefined': { val: 'undefined', className: 'undef' },
+		'number': { val: null, className: 'num' },
+		'boolean': { val: null, className: 'bool' },
+		'string': { val: null, className: 'str' }
+	};
 	var availableThemes = ['one-dark', 'chrome', 'darcula', 'github'];
 
 	function _createEntry(key, value) {
 		var entryNode = dom.createElement('li');
-		// entryNode.className = 'e';
 
 		if (key) {
 			var keyElement = dom.createElement('span');
@@ -270,39 +277,21 @@ var DomTree = (function(dom, util, kn) {
 			entryNode.appendChild(keyElement);
 		}
 
-		var valueElement = dom.createElement('span');
-		// valueElement.className = 'v';
-
-		var type = util.getType(value);
-
-		if (type === 'string') {
-			valueElement.innerHTML = '"' + value + '"';
-			valueElement.className += ' str';
-		} else if (type === 'object') {
-			valueElement.innerHTML = '{';
-			valueElement.className = 'ob'; // openBracket
-		} else if (type === 'null') {
-			valueElement.innerHTML = 'null';
-			valueElement.className += ' null';
-		} else if (type === 'array') {
-			valueElement.innerHTML = '[';
-			valueElement.className = 'ob';
-		} else if (type === 'number') {
-			valueElement.innerHTML = value;
-			valueElement.className += ' num';
-		} else if (type === 'boolean') {
-			valueElement.innerHTML = value;
-			valueElement.className += ' bool';
-		} else if (type === 'undefined') {
-			valueElement.innerHTML = 'undefined';
-			valueElement.className += ' undef';
-		} else {
-			throw Error(value + ' not a valid type.!');
-		}
-
-		entryNode.appendChild(valueElement);
+		entryNode.appendChild(_getValueElement(value));
 
 		return entryNode;
+	}
+
+	function _getValueElement(value) {
+		var type = util.getType(value);
+		var entryNodeMapItem = entryNodeMap[type];
+		var valueElement = dom.createElement('span');
+		value = (type === 'string') ? ('"' + value + '"') : value;
+
+		valueElement.innerHTML = entryNodeMapItem.val || value;
+		valueElement.className += entryNodeMapItem.className;
+
+		return valueElement;
 	}
 
 	function _constructDomTree(data, root) {
@@ -603,11 +592,11 @@ var DomTree = (function(dom, util, kn) {
 // refactor _validateConfigBoolOption() calls to single call (done)
 // handle keyboard navigation if there are no elements in data prop. eg. {} (done)
 // refactor css (done)
+// refactor createEntry fn (done)
 
 // todo Before beta release
-// write themes (working)
-// how to handle scrolling when tree is focused (improvement)
-// refactor createEntry fn (must)
+// how to handle scrolling when tree is focused (working)
+// write themes
 // create separate file for helpers fn
 // testing
 // build automation
@@ -617,4 +606,3 @@ var DomTree = (function(dom, util, kn) {
 // highlight matching bracket (after beta release)
 // Array.prototype.indexOf does not work in IE9 need polyfill
 // check querySelector() support in IE9
-
