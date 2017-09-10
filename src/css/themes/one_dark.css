@@ -1,0 +1,22 @@
+/* ============ one-dark theme ============= */
+.dtjs-root.one-dark {  background-color: rgb(65, 65, 65) }
+.dtjs-root.one-dark .k { color: rgb(233, 232, 232) }
+.dtjs-root.one-dark .str { color: rgb(126, 198, 153); }
+.dtjs-root.one-dark .num { color: rgb(204, 153, 205); }
+.dtjs-root.one-dark .bool { color: rgb(240, 141, 73); }
+.dtjs-root.one-dark .cb,
+.dtjs-root.one-dark .ob,
+.dtjs-root.one-dark .dots:after { color: rgb(92, 188, 187); }
+.dtjs-root.one-dark .hc ul { border-left-color: #717171; }
+.dtjs-root.one-dark .sep,
+.dtjs-root.one-dark .null,
+.dtjs-root.one-dark .undef,
+.dtjs-root.one-dark .hc:after { color: rgb(153, 153, 153); } /* item count text color */
+.dtjs-root.one-dark .ex { border-top-color: #828282; }
+/* keyboard navigation styles */
+.dtjs-root.one-dark.dtjs-root-focused { background-color: rgb(70, 70, 70); }
+.dtjs-root.one-dark .dtjs-highlight { background-color: #525252; }
+.dtjs-root.one-dark .dtjs-md > .ex { border-top-color: #529dff; }
+.dtjs-root.one-dark .dtjs-mu:before,
+.dtjs-root.one-dark .dtjs-mu.fold > .cb:after { background-color: #529dff; }
+/* keyboard navigation styles */

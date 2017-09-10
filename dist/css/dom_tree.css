@@ -1,86 +1,87 @@
 /* dom-tree.css rules */
 /* Always scope styles under .dtjs-root class */
-/* All color related styles are listed under theme section */
+/* All color related styles are written in themes file */
 
 /* css reset inside .dtjs-root */
 .dtjs-root,
 .dtjs-root li,
 .dtjs-root ul,
 .dtjs-root span {
-	margin: 0;
-	padding: 0;
-	outline: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
 }
 .dtjs-root li { list-style: none; }
 /* css reset */
 
 .dtjs-root {
-	font: 14px/30px monaco;
-	padding: 0 0 0 32px;
+    font: 14px/30px monaco;
+    padding: 0 0 0 32px;
 }
 .dtjs-root.dtjs-empty { padding-left: 7px; }
 .dtjs-root .hc { position: relative; }
 .dtjs-root .hc ul {
-	padding-left: 34px;
-	margin-left: 1px;
-	border-left: 1px dotted transparent;
+    padding-left: 34px;
+    margin-left: 1px;
+    border-left: 1px dotted transparent;
 }
 .dtjs-root .hc .ex { /* expand arrow icon */
-  	width: 0;
-  	height: 0;
-  	border-left: 5px solid transparent;
-  	border-right: 5px solid transparent;
-	border-top: 7px solid transparent;
-	cursor: pointer;
-	position: absolute;
-	left: -21px;
-	top: 12px;
-	transition: transform 0.3s ease;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid transparent;
+    cursor: pointer;
+    position: absolute;
+    left: -21px;
+    top: 12px;
+    transition: -webkit-transform 0.3s ease;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 }
 
 /* 3 Dots */
 .dtjs-root .dots { display: none; }
 .dtjs-root .dots:after { /*dots element value*/
-	content: '...';
-	margin: 0 2px;
+    content: '...';
+    margin: 0 2px;
 }
 
 /* Item count text */
 .dtjs-root .hc:after {
-	content: attr(data-cc);
-	display: none;
-	position: absolute;
-	top: 1px;
-	margin-left: 15px;
+    content: attr(data-cc);
+    display: none;
+    position: absolute;
+    top: 1px;
+    margin-left: 15px;
 }
 
 /* keyboard navigation */
 .dtjs-root .dtjs-mu:before,
 .dtjs-root .dtjs-mu > .cb:after {
-	content: '';
-	position: absolute;
-	width: 9px;
-	height: 3px;
-	left: 0;
-	bottom: 0;
-	display: inline-block;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 3px;
+    left: 0;
+    bottom: 0;
+    display: inline-block;
 }
 .dtjs-root .dtjs-mu > .cb:after { display: none; } /* become visible after ele get folded */
 
 /* element get folded */
 .dtjs-root .fold ul { display: none; }
 .dtjs-root .fold .dots { display: inline-block; } /*show the dots*/
-.dtjs-root .fold .ex { transform: rotate(-90deg); }
+.dtjs-root .fold .ex { -webkit-transform: rotate(-90deg); transform: rotate(-90deg); }
 .dtjs-root .fold:after { display: inline-block; } /* show item count text */
 /* move up KB navigation highlight cursor after folded */
 .dtjs-root .fold.dtjs-mu:before { display: none; }
 .dtjs-root .fold.dtjs-mu > .cb { position: relative; }
 .dtjs-root .fold.dtjs-mu > .cb:after {
-	display: inline-block;
-	left: -1px;
-	bottom: -6px;
+    display: inline-block;
+    left: -1px;
+    bottom: -6px;
 }
-
 /* ============ default theme ============= */
 .dtjs-root .k { color: #666; }
 .dtjs-root .str { color: rgb(244, 54, 54); }
@@ -102,10 +103,8 @@
 .dtjs-root .dtjs-mu:before,
 .dtjs-root .dtjs-mu.fold > .cb:after { background-color: #4093ff; }
 /* keyboard navigation styles */
-/* ============ default theme ============= */
-
-/* ========== theme styles - one dark ============= */
-.dtjs-root.one-dark {  background-color: rgb(70, 70, 70) }
+/* ============ one-dark theme ============= */
+.dtjs-root.one-dark {  background-color: rgb(65, 65, 65) }
 .dtjs-root.one-dark .k { color: rgb(233, 232, 232) }
 .dtjs-root.one-dark .str { color: rgb(126, 198, 153); }
 .dtjs-root.one-dark .num { color: rgb(204, 153, 205); }
@@ -120,9 +119,10 @@
 .dtjs-root.one-dark .hc:after { color: rgb(153, 153, 153); } /* item count text color */
 .dtjs-root.one-dark .ex { border-top-color: #828282; }
 /* keyboard navigation styles */
+.dtjs-root.one-dark.dtjs-root-focused { background-color: rgb(70, 70, 70); }
 .dtjs-root.one-dark .dtjs-highlight { background-color: #525252; }
 .dtjs-root.one-dark .dtjs-md > .ex { border-top-color: #529dff; }
 .dtjs-root.one-dark .dtjs-mu:before,
 .dtjs-root.one-dark .dtjs-mu.fold > .cb:after { background-color: #529dff; }
 /* keyboard navigation styles */
-/* ========== theme styles - one dark ============= */
+

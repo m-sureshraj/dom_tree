@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DomTree.Js - PlayGround</title>
+</head>
+<body>
+    <h1>DomTree.Js PlayGround</h1>
+    <hr>
+    <div id="root"></div>
+
+
+    <script>
+        var data = {
+            info: {
+                name: 'DomTree'
+            },
+            author: 'suresh',
+            age: 25,
+            married: false,
+            children: null,
+            master: {
+                kenu: {
+                    info: {
+                        name: 'bingo'
+                    }
+                },
+                name: 'master',
+                sex: 'male',
+                friend: undefined,
+                kids: {
+                    son: 'john',
+                    daughter: 'jenne',
+                    testing: {
+                        work: true,
+                        hola: 100,
+                        friends: [
+                            'baby', 'dolly', 'tina'
+                        ]
+                    }
+                }
+            },
+            work: 'fine',
+            data: [
+                'bingo', 'dear'
+            ],
+			man: true
+        };
+
+        console.time('dom_tree');
+        var dom = new DomTree({
+            ele: document.querySelector('#root'),
+            data: data,
+            separators: true,
+            fold: false,
+            keyboardNavigation: true
+        });
+        dom.init();
+        console.timeEnd('dom_tree');
+    </script>
+</body>
+</html>
