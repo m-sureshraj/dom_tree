@@ -1,26 +1,38 @@
 'use strict';
-const webpack = require('webpack');
-const { join } = require('path');
-const merge = require('webpack-merge');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const common = require('./webpack.common');
+var join = require('path').join;
+var merge = require('webpack-merge');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var common = require('./webpack.common');
+var webpackUtil = require('./webpack.util');
 
-const rootPath = join(__dirname, '..');
-// clean dist dir before building
-const clean_webpack_plugin = new CleanWebpackPlugin('dist', {
-    root: rootPath
+var uglify_js_plugin = new UglifyJSPlugin({
+    parallel: {
+        cache: true
+    },
+    uglifyOptions: {
+        ecma: 5,
+        mangle: true,
+        warnings: true
+    }
 });
 
-// https://github.com/survivejs/webpack-merge/issues/17
-module.exports = merge.strategy({ plugins: 'prepend' })(common, {
+module.exports = merge(common, {
     output: {
-        path: join(rootPath, 'dist'),
+        path: join(webpackUtil.rootPath, 'dist')
+    },
+
+    module: {
+        rules: [
+            // bundle css
+            {
+                test: /\.css$/,
+                use: webpackUtil.getExtractTextPluginExtractOptions('prod')
+            }
+        ]
     },
 
     plugins: [
-        clean_webpack_plugin
+        uglify_js_plugin,
+        webpackUtil.extractTextPlugin
     ]
 });
-
-// todo
-// uglify, compress css, js

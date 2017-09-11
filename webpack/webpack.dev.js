@@ -1,27 +1,36 @@
 'use strict';
-const webpack = require('webpack');
-const { join } = require('path');
-const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHardDiskPlugin = require('html-webpack-harddisk-plugin');
-const common = require('./webpack.common');
+var join = require('path').join;
+var merge = require('webpack-merge');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackHardDiskPlugin = require('html-webpack-harddisk-plugin');
+var webpackUtil = require('./webpack.util');
+var common = require('./webpack.common');
 
-const rootPath = join(__dirname, '..');
 // initialize html_webpack_plugin
-const html_webpack_plugin = new HtmlWebpackPlugin({
-    template: join(rootPath, 'src', 'dom_tree.html'),
-    filename: join(rootPath, 'dev', 'index.html'),
+var html_webpack_plugin = new HtmlWebpackPlugin({
+    template: join(webpackUtil.rootPath, 'src', 'dom_tree.html'),
+    filename: join(webpackUtil.rootPath, 'dev', 'index.html'),
     inject: 'head',
     alwaysWriteToDisk: true
 });
 
 module.exports = merge(common, {
     output: {
-        path: join(rootPath, 'dev'),
+        path: join(webpackUtil.rootPath, 'dev')
+    },
+
+    module: {
+        rules: [
+            // bundle css
+            {
+                test: /\.css$/,
+                use: webpackUtil.getExtractTextPluginExtractOptions('dev')
+            }
+        ]
     },
 
     devServer: {
-        contentBase: join(rootPath, 'dev'),
+        contentBase: join(webpackUtil.rootPath, 'dev'),
         inline: true,
         port: 3333
     },
@@ -29,5 +38,6 @@ module.exports = merge(common, {
     plugins: [
         html_webpack_plugin,
         new HtmlWebpackHardDiskPlugin(),
+        webpackUtil.extractTextPlugin
     ]
 });

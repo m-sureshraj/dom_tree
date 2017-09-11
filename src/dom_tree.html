@@ -47,6 +47,67 @@
 			man: true
         };
 
+        data = {
+            "entry": {
+                "dom_tree": [
+                    "/Users/suresh/Desktop/dom_tree/src/js/dom_tree.js"
+                ]
+            },
+            "output": {
+                "filename": "js/[name].js",
+                "library": "DomTree",
+                "libraryTarget": "umd",
+                "libraryExport": "default",
+                "path": "/Users/suresh/Desktop/dom_tree/dist"
+            },
+            "module": {
+                "rules": [
+                    {
+                        "test": {},
+                        "use": [
+                            {
+                                "loader": "/Users/suresh/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
+                                "options": {
+                                    "id": 1,
+                                    "omit": 0,
+                                    "remove": true
+                                }
+                            },
+                            {
+                                "loader": "css-loader",
+                                "options": {
+                                    "importLoaders": 1,
+                                    "minimize": true
+                                }
+                            },
+                            {
+                                "loader": "postcss-loader"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "plugins": [
+                {
+                    "filename": "css/[name].css",
+                    "id": 1,
+                    "options": {}
+                },
+                {
+                    "options": {
+                        "parallel": {
+                            "cache": true
+                        },
+                        "uglifyOptions": {
+                            "ecma": 5,
+                            "mangle": true,
+                            "warnings": true
+                        }
+                    }
+                }
+            ]
+        };
+
         console.time('dom_tree');
         var dom = new DomTree({
             ele: document.querySelector('#root'),

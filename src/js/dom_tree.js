@@ -302,4 +302,3 @@ DomTree.prototype = {
         this.ele.appendChild(tree);
     }
 };
-
