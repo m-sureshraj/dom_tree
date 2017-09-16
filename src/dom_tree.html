@@ -3,51 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>DomTree.Js - PlayGround</title>
+    <style>
+        * { margin: 0; padding: 0 }
+        header {
+            background-color: #ffe287;
+            height: 55px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header h1 {
+            font-size: 19px;
+            font-family: monospace;
+            color: #493d25;
+            letter-spacing: 2px;
+        }
+        .wrapper {
+            width: 960px;
+            margin: 0 auto 30px;
+        }
+    </style>
 </head>
-<body>
-    <h1>DomTree.Js PlayGround</h1>
-    <hr>
-    <div id="root"></div>
 
+<body>
+    <header><h1>DomTree.Js PlayGround</h1></header>
+    <section class="wrapper">
+        <div id="root"></div>
+    </section>
 
     <script>
         var data = {
-            info: {
-                name: 'DomTree'
-            },
-            author: 'suresh',
-            age: 25,
-            married: false,
-            children: null,
-            master: {
-                kenu: {
-                    info: {
-                        name: 'bingo'
-                    }
-                },
-                name: 'master',
-                sex: 'male',
-                friend: undefined,
-                kids: {
-                    son: 'john',
-                    daughter: 'jenne',
-                    testing: {
-                        work: true,
-                        hola: 100,
-                        friends: [
-                            'baby', 'dolly', 'tina'
-                        ]
-                    }
-                }
-            },
-            work: 'fine',
-            data: [
-                'bingo', 'dear'
-            ],
-			man: true
-        };
-
-        data = {
             "entry": {
                 "dom_tree": [
                     "/Users/suresh/Desktop/dom_tree/src/js/dom_tree.js"
