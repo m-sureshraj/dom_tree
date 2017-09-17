@@ -34,26 +34,26 @@
 
     <script>
         var data = {
-            "entry": {
-                "dom_tree": [
+            entry: {
+                dom_tree: [
                     "/Users/suresh/Desktop/dom_tree/src/js/dom_tree.js"
                 ]
             },
-            "output": {
-                "filename": "js/[name].js",
-                "library": "DomTree",
-                "libraryTarget": "umd",
-                "libraryExport": "default",
-                "path": "/Users/suresh/Desktop/dom_tree/dist"
+            output: {
+                filename: "js/[name].js",
+                library: "DomTree",
+                libraryTarget: "umd",
+                libraryExport: "default",
+                path: "/Users/suresh/Desktop/dom_tree/dist"
             },
-            "module": {
-                "rules": [
+            module: {
+                rules: [
                     {
-                        "test": {},
-                        "use": [
+                        test: {},
+                        use: [
                             {
-                                "loader": "/Users/suresh/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
-                                "options": {
+                                loader: "/Users/suresh/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
+                                options: {
                                     "id": 1,
                                     "omit": 0,
                                     "remove": true
@@ -73,7 +73,7 @@
                     }
                 ]
             },
-            "plugins": [
+            plugins: [
                 {
                     "filename": "css/[name].css",
                     "id": 1,
@@ -104,12 +104,10 @@
             data: data,
             separators: true,
             fold: false,
-            keyboardNavigation: true,
-            theme: 'chrome-light'
+            keyboardNavigation: true
         });
         dom.init();
         console.timeEnd('dom_tree');
-        console.log(data);
     </script>
 </body>
 </html>
