@@ -1,6 +1,7 @@
 /* ============ one-dark theme ============= */
 .dtjs-root.one-dark {  background-color: rgb(65, 65, 65) }
-.dtjs-root.one-dark .k { color: rgb(233, 232, 232) }
+.dtjs-root.one-dark .k,
+.dtjs-root.one-dark .c { color: rgb(233, 232, 232) }
 .dtjs-root.one-dark .str { color: rgb(126, 198, 153); }
 .dtjs-root.one-dark .num { color: rgb(204, 153, 205); }
 .dtjs-root.one-dark .bool { color: rgb(240, 141, 73); }

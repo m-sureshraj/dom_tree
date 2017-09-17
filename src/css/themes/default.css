@@ -1,5 +1,7 @@
 /* ============ default theme ============= */
-.dtjs-root .k { color: #666; }
+.dtjs-root { background-color: #ffffff; }
+.dtjs-root .k,
+.dtjs-root .c { color: #666; }
 .dtjs-root .str { color: rgb(244, 54, 54); }
 .dtjs-root .num { color: blue; }
 .dtjs-root .null,

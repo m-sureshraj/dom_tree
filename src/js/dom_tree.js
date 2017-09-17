@@ -9,13 +9,22 @@ function _createEntry(key, value) {
     if (key) {
         var keyElement = document.createElement('span');
         keyElement.className = 'k';
-        keyElement.innerHTML = key + ': ';
+        keyElement.innerHTML = key;
+        keyElement.appendChild(_getColonNode());
         entryNode.appendChild(keyElement);
     }
 
     entryNode.appendChild(_getValueElement(value));
 
     return entryNode;
+}
+
+function _getColonNode() {
+    var colonNode = document.createElement('span');
+    colonNode.className = 'c'; // `c` => `colon`
+    colonNode.innerHTML = ': ';
+
+    return colonNode;
 }
 
 function _getValueElement(value) {

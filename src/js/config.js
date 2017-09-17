@@ -7,7 +7,7 @@ export var defaultConfig = {
     keyboardNavigation: false
 };
 
-export var availableThemes = ['one-dark', 'chrome', 'darcula', 'github'];
+export var availableThemes = ['one-dark', 'chrome-light', 'darcula', 'github'];
 
 export var entryNodeMap = {
     'object': { val: '{', className: 'ob' },

@@ -91,7 +91,11 @@
                         }
                     }
                 }
-            ]
+            ],
+            bingo: {
+                name: null,
+                foo: undefined
+            }
         };
 
         console.time('dom_tree');
@@ -100,10 +104,12 @@
             data: data,
             separators: true,
             fold: false,
-            keyboardNavigation: true
+            keyboardNavigation: true,
+            theme: 'chrome-light'
         });
         dom.init();
         console.timeEnd('dom_tree');
+        console.log(data);
     </script>
 </body>
 </html>
