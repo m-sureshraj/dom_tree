@@ -15,10 +15,10 @@ module.exports = {
         // Best practices
         semi: 2,
         quotes: ['error', 'single'],
-        "indent": [
-            "error",
-            "tab"
-        ],
+        // "indent": [
+        //     "error",
+        //     "tab"
+        // ],
         "linebreak-style": [
             "error",
             "unix"

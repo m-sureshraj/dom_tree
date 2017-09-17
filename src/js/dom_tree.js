@@ -171,14 +171,14 @@ function _handleKeyboardNavigation(tree, keyCode) {
     }
 }
 
-function _createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
-    for (var prop in defaultConfig) {
-        if (defaultConfig.hasOwnProperty(prop)) {
+function _createInstancePropWithDefaultConfig(userConfig, config, instance) {
+    for (var prop in config) {
+        if (config.hasOwnProperty(prop)) {
             if (userConfig.hasOwnProperty(prop)) {
-                defaultConfig[prop] = userConfig[prop];
+                config[prop] = userConfig[prop];
             }
 
-            instance[prop] = defaultConfig[prop];
+            instance[prop] = config[prop];
         }
     }
 }

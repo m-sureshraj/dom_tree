@@ -12,8 +12,8 @@ module.exports = {
     output: {
         filename: 'js/[name].js',
         // https://webpack.js.org/guides/author-libraries/
-        library: "DomTree",
-        libraryTarget: "umd",
-        libraryExport: "default"
+        library: 'DomTree',
+        libraryTarget: 'umd',
+        libraryExport: 'default'
     }
 };
