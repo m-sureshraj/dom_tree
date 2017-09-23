@@ -23,11 +23,19 @@
             width: 960px;
             margin: 0 auto 30px;
         }
+        .wrapper div:not(:last-child) {
+            padding-bottom: 30px;
+            border-bottom: 1px solid #dedede;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
 <body>
-    <header><h1>DomTree.Js PlayGround</h1></header>
+    <header>
+        <h1>DomTree.Js PlayGround</h1>
+    </header>
+
     <section class="wrapper">
         <div id="root"></div>
     </section>
@@ -36,7 +44,7 @@
         var data = {
             entry: {
                 dom_tree: [
-                    "/Users/suresh/Desktop/dom_tree/src/js/dom_tree.js"
+                    "/Users/author/Desktop/dom_tree/src/js/dom_tree.js"
                 ]
             },
             output: {
@@ -44,7 +52,7 @@
                 library: "DomTree",
                 libraryTarget: "umd",
                 libraryExport: "default",
-                path: "/Users/suresh/Desktop/dom_tree/dist"
+                path: "/Users/author/Desktop/dom_tree/dist"
             },
             module: {
                 rules: [
@@ -52,7 +60,7 @@
                         test: {},
                         use: [
                             {
-                                loader: "/Users/suresh/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
+                                loader: "/Users/author/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
                                 options: {
                                     "id": 1,
                                     "omit": 0,
@@ -91,21 +99,20 @@
                         }
                     }
                 }
-            ],
-            bingo: {
-                name: null,
-                foo: undefined
-            }
+            ]
         };
 
-        console.time('dom_tree');
         var dom = new DomTree({
             ele: document.querySelector('#root'),
             data: data,
             separators: true,
             fold: false,
-            keyboardNavigation: true
+            keyboardNavigation: true,
+            removeHighlightOnBlur: true,
+            theme: 'darcula'
         });
+
+        console.time('dom_tree');
         dom.init();
         console.timeEnd('dom_tree');
     </script>
