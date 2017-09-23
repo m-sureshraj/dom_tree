@@ -1,24 +1,16 @@
-export function _isParentNodeRoot(ele) {
+function isParentNodeRoot(ele) {
     return ele.parentNode.classList.contains('dtjs-root');
 }
 
-export function _isElementFolded(ele) {
+function isElementFolded(ele) {
     return ele.classList.contains('fold');
 }
 
-export function _isElementHasChildren(ele) {
+function isElementHasChildren(ele) {
     return ele.classList.contains('hc');
 }
 
-export function fold(ele) {
-    _isElementHasChildren(ele) && !_isElementFolded(ele) && ele.classList.add('fold');
-}
-
-export function collapse(ele) {
-    _isElementHasChildren(ele) && _isElementFolded(ele) && ele.classList.remove('fold');
-}
-
-export function _addMoveDownClass(
+function addMoveDownClass(
     isElementHasChildren, isElementFolded, isParentNodeRoot, firstChild,
     nextSibling, ele
 ) {
@@ -37,7 +29,7 @@ export function _addMoveDownClass(
     }
 }
 
-export function _addMoveUpClass(
+function addMoveUpClass(
     isElementHasChildren, isElementFolded, isParentNodeRoot, lastChild, previousSibling, ele
 ) {
     if (
@@ -55,14 +47,22 @@ export function _addMoveUpClass(
     }
 }
 
+export function fold(ele) {
+    isElementHasChildren(ele) && !isElementFolded(ele) && ele.classList.add('fold');
+}
+
+export function collapse(ele) {
+    isElementHasChildren(ele) && isElementFolded(ele) && ele.classList.remove('fold');
+}
+
 export function moveUp(ele) {
-    var isParentNodeRoot = _isParentNodeRoot(ele),
-        isElementFolded = _isElementFolded(ele);
+    var _isParentNodeRoot = isParentNodeRoot(ele),
+        _isElementFolded = isElementFolded(ele);
 
     // if root node is folded do nothing
-    if (isParentNodeRoot && isElementFolded) return;
+    if (_isParentNodeRoot && _isElementFolded) return;
 
-    var isElementHasChildren = _isElementHasChildren(ele),
+    var _isElementHasChildren = isElementHasChildren(ele),
         previousSibling = ele.previousSibling,
         lastChild = ele.querySelector('ul') && ele.querySelector('ul').lastChild,
         isEleHasMoveDownClass = ele.classList.contains('dtjs-md');
@@ -70,18 +70,18 @@ export function moveUp(ele) {
     ele.classList.remove('dtjs-highlight');
 
     // we focused next element because of move up
-    _addMoveUpClass(
-        isElementHasChildren, isElementFolded, isParentNodeRoot, lastChild, previousSibling, ele
+    addMoveUpClass(
+        _isElementHasChildren, _isElementFolded, _isParentNodeRoot, lastChild, previousSibling, ele
     );
 
-    if (isElementHasChildren && !isElementFolded) {
+    if (_isElementHasChildren && !_isElementFolded) {
         if (isEleHasMoveDownClass) {
             ele.classList.remove('dtjs-md');
 
             if (previousSibling) {
                 previousSibling.className += ' dtjs-highlight';
             } else {
-                isParentNodeRoot
+                _isParentNodeRoot
                     ? lastChild.className += ' dtjs-highlight'
                     : ele.offsetParent.className += ' dtjs-highlight dtjs-md';
             }
@@ -101,13 +101,13 @@ export function moveUp(ele) {
 }
 
 export function moveDown(ele) {
-    var isParentNodeRoot = _isParentNodeRoot(ele),
-        isElementFolded = _isElementFolded(ele);
+    var _isParentNodeRoot = isParentNodeRoot(ele),
+        _isElementFolded = isElementFolded(ele);
 
     // if root node is folded do nothing
-    if (isParentNodeRoot && isElementFolded) return;
+    if (_isParentNodeRoot && _isElementFolded) return;
 
-    var isElementHasChildren = _isElementHasChildren(ele),
+    var _isElementHasChildren = isElementHasChildren(ele),
         nextSibling = ele.nextSibling,
         firstChild = ele.querySelector('ul') && ele.querySelector('ul').firstChild,
         isEleHasMoveUpClass = ele.classList.contains('dtjs-mu');
@@ -115,11 +115,11 @@ export function moveDown(ele) {
     ele.classList.remove('dtjs-highlight');
 
     // we focused next element because of move down
-    _addMoveDownClass(
-        isElementHasChildren, isElementFolded, isParentNodeRoot, firstChild, nextSibling, ele
+    addMoveDownClass(
+        _isElementHasChildren, _isElementFolded, _isParentNodeRoot, firstChild, nextSibling, ele
     );
 
-    if (isElementHasChildren && !isElementFolded) {
+    if (_isElementHasChildren && !_isElementFolded) {
         if (isEleHasMoveUpClass) {
             ele.classList.remove('dtjs-mu');
 
@@ -127,7 +127,7 @@ export function moveDown(ele) {
                 nextSibling.className += ' dtjs-highlight';
             } else {
                 // reached to the root top then highlight it's first element
-                isParentNodeRoot
+                _isParentNodeRoot
                     ? firstChild.className += ' dtjs-highlight'
                     : ele.offsetParent.className += ' dtjs-highlight dtjs-mu';
             }

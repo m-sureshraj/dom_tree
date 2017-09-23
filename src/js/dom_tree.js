@@ -3,23 +3,23 @@ import * as kn from './util/keyboard_navigation';
 import { defaultConfig, availableThemes, entryNodeMap } from './config';
 import '../css/index.css';
 
-function _createEntry(key, value) {
+function createEntry(key, value) {
     var entryNode = document.createElement('li');
 
     if (key) {
         var keyElement = document.createElement('span');
         keyElement.className = 'k';
         keyElement.innerHTML = key;
-        keyElement.appendChild(_getColonNode());
+        keyElement.appendChild(getColonNode());
         entryNode.appendChild(keyElement);
     }
 
-    entryNode.appendChild(_getValueElement(value));
+    entryNode.appendChild(getValueElement(value));
 
     return entryNode;
 }
 
-function _getColonNode() {
+function getColonNode() {
     var colonNode = document.createElement('span');
     colonNode.className = 'c'; // `c` => `colon`
     colonNode.innerHTML = ': ';
@@ -27,7 +27,7 @@ function _getColonNode() {
     return colonNode;
 }
 
-function _getValueElement(value) {
+function getValueElement(value) {
     var type = util.getType(value);
     var entryNodeMapItem = entryNodeMap[type];
     var valueElement = document.createElement('span');
@@ -39,12 +39,12 @@ function _getValueElement(value) {
     return valueElement;
 }
 
-function _constructDomTree(data, root, config) {
+function constructDomTree(data, root, config) {
     if (root === null) {
-        root = _getRootEntryNode(data);
+        root = getRootEntryNode(data);
 
         var wrapperNode = document.createElement('ul');
-        wrapperNode.appendChild(_constructChildTree(data, root, config));
+        wrapperNode.appendChild(constructChildTree(data, root, config));
 
         return wrapperNode;
     }
@@ -52,10 +52,10 @@ function _constructDomTree(data, root, config) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             if (util.isValuePrimitive(data[key])) {
-                root.appendChild(_createEntry(key, data[key]));
+                root.appendChild(createEntry(key, data[key]));
             } else { // else part work same for obj and array
                 root.appendChild(
-                    _constructChildTree(data[key], _createEntry(key, data[key]), config)
+                    constructChildTree(data[key], createEntry(key, data[key]), config)
                 );
             }
         }
@@ -63,19 +63,19 @@ function _constructDomTree(data, root, config) {
 
     // add separator node to each direct children of root
     if (config.separators) {
-        _appendSeparatorNodes(root);
+        appendSeparatorNodes(root);
     }
 
     return root;
 }
 
-function _getRootEntryNode(data) {
+function getRootEntryNode(data) {
     var value = util.isArray(data) ? [] : {};
 
-    return _createEntry(null, value);
+    return createEntry(null, value);
 }
 
-function _constructChildTree(data, element, config) {
+function constructChildTree(data, element, config) {
     var len = util.getLengthOfObjOrArray(data);
 
     if (len) {
@@ -88,25 +88,25 @@ function _constructChildTree(data, element, config) {
         }
 
         // insert the toggleOptionNode into `element` as a first child
-        element.insertBefore(_getToggleOptionNode(), element.firstChild);
+        element.insertBefore(getToggleOptionNode(), element.firstChild);
 
         var parentNode = document.createElement('ul');
-        element.appendChild(_constructDomTree(data, parentNode, config));
+        element.appendChild(constructDomTree(data, parentNode, config));
 
         // append ellipse node
-        element.appendChild(_getEllipseNode());
+        element.appendChild(getEllipseNode());
 
         // show item count when collapsing wrapper element
         // -cc =>  children-count
         element.setAttribute('data-cc', ('// ' + len + ' Items'));
     }
 
-    element.appendChild(_getCloseWrapperNode(data));
+    element.appendChild(getCloseWrapperNode(data));
 
     return element;
 }
 
-function _appendSeparatorNodes(ele) {
+function appendSeparatorNodes(ele) {
     var children = ele.children,
         i = 0,
         // no need to add separator for last children element
@@ -121,21 +121,21 @@ function _appendSeparatorNodes(ele) {
     }
 }
 
-function _getToggleOptionNode() {
+function getToggleOptionNode() {
     var tagToExpand = document.createElement('span');
     tagToExpand.className = 'ex'; // `ex` => `expandable`
 
     return tagToExpand;
 }
 
-function _getEllipseNode() {
+function getEllipseNode() {
     var ellipseNode = document.createElement('span');
     ellipseNode.className = 'dots';
 
     return ellipseNode;
 }
 
-function _getCloseWrapperNode(param) {
+function getCloseWrapperNode(param) {
     var closeBlock = document.createElement('span');
     closeBlock.className = 'cb'; // closingBracket
     closeBlock.innerHTML = util.isArray(param) ? ']' : '}';
@@ -143,7 +143,7 @@ function _getCloseWrapperNode(param) {
     return closeBlock;
 }
 
-function _handleKeyboardNavigation(tree, keyCode) {
+function handleKeyboardNavigation(tree, keyCode) {
     var highlightedEle = tree.querySelector('.dtjs-highlight');
 
     // if there are no highlighted element yet then highlight tree's first child
@@ -170,12 +170,12 @@ function _handleKeyboardNavigation(tree, keyCode) {
     }
 }
 
-function _removeHighlight(ele) {
+function removeHighlight(ele) {
     var highlightedEle = ele.querySelector('.dtjs-root .dtjs-highlight');
     (highlightedEle) && highlightedEle.classList.remove('dtjs-highlight', 'dtjs-md', 'dtjs-mu');
 }
 
-function _createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
+function createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
     for (var prop in defaultConfig) {
         if (defaultConfig.hasOwnProperty(prop)) {
             instance[prop] = (userConfig.hasOwnProperty(prop))
@@ -185,7 +185,7 @@ function _createInstancePropWithDefaultConfig(userConfig, defaultConfig, instanc
     }
 }
 
-function _isValidConfigData(type) {
+function isValidConfigData(type) {
     return (
         type === 'object' ||
         type === 'array' ||
@@ -193,7 +193,7 @@ function _isValidConfigData(type) {
     );
 }
 
-function _validateConfigBoolOptions(config) {
+function validateConfigBoolOptions(config) {
     var options = ['separators', 'fold', 'keyboardNavigation', 'removeHighlightOnBlur'],
         i = 0,
         length = options.length,
@@ -207,7 +207,7 @@ function _validateConfigBoolOptions(config) {
     }
 }
 
-function _validateConfigThemeOption(config) {
+function validateConfigThemeOption(config) {
     if (typeof config.theme !== 'string') {
         throw new Error('config.theme should be a string');
     }
@@ -217,7 +217,7 @@ function _validateConfigThemeOption(config) {
     }
 }
 
-function _validateAndPrepareConfig(config) {
+function validateAndPrepareConfig(config) {
     config = config || {};
 
     // config.ele required property, it should be a valid html element
@@ -228,7 +228,7 @@ function _validateAndPrepareConfig(config) {
     // config.data required property, it should be a obj | array | json
     var configDataPropType = util.getType(config.data);
 
-    if (!_isValidConfigData(configDataPropType)) {
+    if (!isValidConfigData(configDataPropType)) {
         throw new Error('config.data is a required property and it should be a object '
             + 'or Array or JSON but received ' + configDataPropType);
     }
@@ -245,19 +245,19 @@ function _validateAndPrepareConfig(config) {
     // if optional config.theme property present, then it should be a string type &
     // value should be a available theme option
     if (config.hasOwnProperty('theme')) {
-        _validateConfigThemeOption(config);
+        validateConfigThemeOption(config);
     }
 
     // validate config optional boolean options
-    _validateConfigBoolOptions(config);
+    validateConfigBoolOptions(config);
 
     return config;
 }
 
 // @constructor
 export default function DomTree(config) {
-    config = _validateAndPrepareConfig(config);
-    _createInstancePropWithDefaultConfig(config, defaultConfig, this);
+    config = validateAndPrepareConfig(config);
+    createInstancePropWithDefaultConfig(config, defaultConfig, this);
 }
 
 DomTree.prototype = {
@@ -268,7 +268,7 @@ DomTree.prototype = {
             throw new Error('DomTree already initialized for target element!');
         }
 
-        var tree = _constructDomTree(
+        var tree = constructDomTree(
             this.data, null, {fold: this.fold, separators: this.separators}
         );
         tree.className = 'dtjs-root';
@@ -292,7 +292,7 @@ DomTree.prototype = {
         tree.addEventListener('blur', function() {
             util.handleToggleClass(tree, 'dtjs-root-focused');
             // if keyboard navigation disabled there are no highlighted element
-            this.keyboardNavigation && this.removeHighlightOnBlur && _removeHighlight(tree);
+            this.keyboardNavigation && this.removeHighlightOnBlur && removeHighlight(tree);
         }.bind(this));
 
         if (this.keyboardNavigation) {
@@ -301,7 +301,7 @@ DomTree.prototype = {
                 // when `.dtjs-root` is focused prevent horizontal, vertical scrolling
                 if (keyCode >= 37 && keyCode <= 40) {
                     e.preventDefault();
-                    _handleKeyboardNavigation(tree, keyCode);
+                    handleKeyboardNavigation(tree, keyCode);
                 }
             });
         }
