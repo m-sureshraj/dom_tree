@@ -15,6 +15,7 @@ var html_webpack_plugin = new HtmlWebpackPlugin({
 });
 
 module.exports = merge(common, {
+    devtool: 'eval-source-map',
     output: {
         path: join(webpackUtil.rootPath, 'dev')
     },
