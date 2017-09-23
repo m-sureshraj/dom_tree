@@ -39,12 +39,12 @@ function _getValueElement(value) {
     return valueElement;
 }
 
-function _constructDomTree(data, root) {
+function _constructDomTree(data, root, config) {
     if (root === null) {
         root = _getRootEntryNode(data);
 
         var wrapperNode = document.createElement('ul');
-        wrapperNode.appendChild(_constructChildTree(data, root));
+        wrapperNode.appendChild(_constructChildTree(data, root, config));
 
         return wrapperNode;
     }
@@ -54,16 +54,15 @@ function _constructDomTree(data, root) {
             if (util.isValuePrimitive(data[key])) {
                 root.appendChild(_createEntry(key, data[key]));
             } else { // else part work same for obj and array
-                var val = data[key];
-                var entry = _createEntry(key, val);
-
-                root.appendChild(_constructChildTree(val, entry));
+                root.appendChild(
+                    _constructChildTree(data[key], _createEntry(key, data[key]), config)
+                );
             }
         }
     }
 
     // add separator node to each direct children of root
-    if (defaultConfig.separators) {
+    if (config.separators) {
         _appendSeparatorNodes(root);
     }
 
@@ -76,7 +75,7 @@ function _getRootEntryNode(data) {
     return _createEntry(null, value);
 }
 
-function _constructChildTree(data, element) {
+function _constructChildTree(data, element, config) {
     var len = util.getLengthOfObjOrArray(data);
 
     if (len) {
@@ -84,7 +83,7 @@ function _constructChildTree(data, element) {
         element.className = 'hc';
 
         // by default all parent node's are collapsed. user can fold it via config
-        if (defaultConfig.fold) {
+        if (config.fold) {
             element.className += ' fold';
         }
 
@@ -92,7 +91,7 @@ function _constructChildTree(data, element) {
         element.insertBefore(_getToggleOptionNode(), element.firstChild);
 
         var parentNode = document.createElement('ul');
-        element.appendChild(_constructDomTree(data, parentNode));
+        element.appendChild(_constructDomTree(data, parentNode, config));
 
         // append ellipse node
         element.appendChild(_getEllipseNode());
@@ -171,14 +170,17 @@ function _handleKeyboardNavigation(tree, keyCode) {
     }
 }
 
-function _createInstancePropWithDefaultConfig(userConfig, config, instance) {
-    for (var prop in config) {
-        if (config.hasOwnProperty(prop)) {
-            if (userConfig.hasOwnProperty(prop)) {
-                config[prop] = userConfig[prop];
-            }
+function _removeHighlight(ele) {
+    var highlightedEle = ele.querySelector('.dtjs-root .dtjs-highlight');
+    (highlightedEle) && highlightedEle.classList.remove('dtjs-highlight', 'dtjs-md', 'dtjs-mu');
+}
 
-            instance[prop] = config[prop];
+function _createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
+    for (var prop in defaultConfig) {
+        if (defaultConfig.hasOwnProperty(prop)) {
+            instance[prop] = (userConfig.hasOwnProperty(prop))
+                ? userConfig[prop]
+                : defaultConfig[prop];
         }
     }
 }
@@ -192,7 +194,7 @@ function _isValidConfigData(type) {
 }
 
 function _validateConfigBoolOptions(config) {
-    var options = ['separators', 'fold', 'keyboardNavigation'],
+    var options = ['separators', 'fold', 'keyboardNavigation', 'removeHighlightOnBlur'],
         i = 0,
         length = options.length,
         option;
@@ -220,14 +222,14 @@ function _validateAndPrepareConfig(config) {
 
     // config.ele required property, it should be a valid html element
     if (!util.isValidHtmlElement(config.ele)) {
-        throw Error(config.ele + ' is not a valid HTML element');
+        throw new Error(config.ele + ' is not a valid HTML element');
     }
 
     // config.data required property, it should be a obj | array | json
     var configDataPropType = util.getType(config.data);
 
     if (!_isValidConfigData(configDataPropType)) {
-        throw Error('config.data property should be a object '
+        throw new Error('config.data is a required property and it should be a object '
             + 'or Array or JSON but received ' + configDataPropType);
     }
 
@@ -236,7 +238,7 @@ function _validateAndPrepareConfig(config) {
         try {
             config.data = JSON.parse(config.data);
         } catch (e) {
-            throw Error('config.data should be valid JSON ' + e);
+            throw new Error('config.data should be valid JSON ' + e);
         }
     }
 
@@ -266,7 +268,9 @@ DomTree.prototype = {
             throw new Error('DomTree already initialized for target element!');
         }
 
-        var tree = _constructDomTree(this.data, null);
+        var tree = _constructDomTree(
+            this.data, null, {fold: this.fold, separators: this.separators}
+        );
         tree.className = 'dtjs-root';
         tree.setAttribute('tabIndex', '0');
 
@@ -287,7 +291,9 @@ DomTree.prototype = {
 
         tree.addEventListener('blur', function() {
             util.handleToggleClass(tree, 'dtjs-root-focused');
-        });
+            // if keyboard navigation disabled there are no highlighted element
+            this.keyboardNavigation && this.removeHighlightOnBlur && _removeHighlight(tree);
+        }.bind(this));
 
         if (this.keyboardNavigation) {
             tree.addEventListener('keydown', function(e) {

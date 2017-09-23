@@ -4,7 +4,8 @@ export var defaultConfig = {
     separators: true,
     fold: false,
     theme: null,
-    keyboardNavigation: false
+    keyboardNavigation: false,
+    removeHighlightOnBlur: false
 };
 
 export var availableThemes = ['one-dark', 'chrome-light', 'darcula'];
