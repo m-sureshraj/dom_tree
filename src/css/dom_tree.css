@@ -40,13 +40,13 @@
 
 /* 3 Dots */
 .dtjs-root .dots { display: none; }
-.dtjs-root .dots:after { /*dots element value*/
+.dtjs-root .dots::after { /* dots element value */
     content: '...';
     margin: 0 2px;
 }
 
 /* Item count text */
-.dtjs-root .hc:after {
+.dtjs-root .hc::after {
     content: attr(data-cc);
     display: none;
     position: absolute;
@@ -55,8 +55,8 @@
 }
 
 /* keyboard navigation */
-.dtjs-root .dtjs-mu:before,
-.dtjs-root .dtjs-mu > .cb:after {
+.dtjs-root .dtjs-mu::before,
+.dtjs-root .dtjs-mu > .cb::after {
     content: '';
     position: absolute;
     width: 9px;
@@ -65,17 +65,17 @@
     bottom: 0;
     display: inline-block;
 }
-.dtjs-root .dtjs-mu > .cb:after { display: none; } /* become visible after ele get folded */
+.dtjs-root .dtjs-mu > .cb::after { display: none; } /* become visible after ele get folded */
 
 /* element get folded */
 .dtjs-root .fold ul { display: none; }
-.dtjs-root .fold .dots { display: inline-block; } /*show the dots*/
+.dtjs-root .fold .dots { display: inline-block; } /* show the dots */
 .dtjs-root .fold .ex { transform: rotate(-90deg); }
-.dtjs-root .fold:after { display: inline-block; } /* show item count text */
+.dtjs-root .fold::after { display: inline-block; } /* show item count text */
 /* move up KB navigation highlight cursor after folded */
-.dtjs-root .fold.dtjs-mu:before { display: none; }
+.dtjs-root .fold.dtjs-mu::before { display: none; }
 .dtjs-root .fold.dtjs-mu > .cb { position: relative; }
-.dtjs-root .fold.dtjs-mu > .cb:after {
+.dtjs-root .fold.dtjs-mu > .cb::after {
     display: inline-block;
     left: -1px;
     bottom: -6px;

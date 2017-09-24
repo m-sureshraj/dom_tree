@@ -1,6 +1,6 @@
 import * as util from './util/util';
 import * as kn from './util/keyboard_navigation';
-import { defaultConfig, availableThemes, entryNodeMap } from './config';
+import { libConfig, availableThemes, entryNodeMap } from './config';
 import '../css/index.css';
 
 function createEntry(key, value) {
@@ -255,9 +255,10 @@ function validateAndPrepareConfig(config) {
 }
 
 // @constructor
-export default function DomTree(config) {
-    config = validateAndPrepareConfig(config);
-    createInstancePropWithDefaultConfig(config, defaultConfig, this);
+export default function DomTree(userConfig) {
+    createInstancePropWithDefaultConfig(
+        validateAndPrepareConfig(userConfig), libConfig, this
+    );
 }
 
 DomTree.prototype = {

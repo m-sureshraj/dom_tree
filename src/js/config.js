@@ -1,4 +1,4 @@
-export var defaultConfig = {
+export var libConfig = {
     ele: null,
     data: null,
     separators: true,

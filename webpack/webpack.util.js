@@ -4,7 +4,8 @@ var join = require('path').join;
 
 // this plugin extract imported css into separate file
 var extractTextPlugin = new ExtractTextPlugin({
-    filename: 'css/[name].css'
+    filename: 'css/[name].css',
+    allChunks: true
 });
 
 exports.rootPath = join(__dirname, '..');
@@ -16,10 +17,10 @@ exports.getExtractTextPluginExtractOptions = function(env) {
 
     return extractTextPlugin.extract({
         use: [
-            // https://github.com/webpack-contrib/css-loader#importloaders
             {
                 loader: 'css-loader',
                 options: {
+                    // https://github.com/webpack-contrib/css-loader#importloaders
                     importLoaders: 1,
                     minimize: env === 'prod'
                 }

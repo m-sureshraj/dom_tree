@@ -1,23 +1,23 @@
 /* ============ default theme ============= */
-.dtjs-root { background-color: #ffffff; }
+.dtjs-root { background-color: #fff; }
 .dtjs-root .k,
 .dtjs-root .c { color: #666; }
 .dtjs-root .str { color: rgb(244, 54, 54); }
 .dtjs-root .num { color: blue; }
 .dtjs-root .null,
-.dtjs-root .dots:after,
+.dtjs-root .dots::after,
 .dtjs-root .undef { color: #ccc; }
 .dtjs-root .bool { color: brown; }
 .dtjs-root .cb,
 .dtjs-root .ob { color: #444; }
 .dtjs-root .sep { color: #777; }
 .dtjs-root .hc ul { border-left-color: #ccc; }
-.dtjs-root .hc:after { color: #989797; } /* item count text color */
+.dtjs-root .hc::after { color: #989797; } /* item count text color */
 .dtjs-root .hc .ex { border-top-color: #c2c2c2; }
 /* keyboard navigation styles */
 .dtjs-root.dtjs-root-focused { background-color: #f7f2f2; }
 .dtjs-root .dtjs-highlight { background-color: #efe3e3; }
 .dtjs-root .dtjs-md > .ex { border-top-color: #4093ff; }
-.dtjs-root .dtjs-mu:before,
-.dtjs-root .dtjs-mu.fold > .cb:after { background-color: #4093ff; }
+.dtjs-root .dtjs-mu::before,
+.dtjs-root .dtjs-mu.fold > .cb::after { background-color: #4093ff; }
 /* keyboard navigation styles */
