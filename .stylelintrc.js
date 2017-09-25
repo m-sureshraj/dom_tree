@@ -1,8 +1,8 @@
 module.exports = {
-    extends: "stylelint-config-standard",
+    extends: 'stylelint-config-standard',
     rules: {
-        'comment-empty-line-before': 'never',
-        indentation: 4,
-        'rule-empty-line-before': 'never'
+        'comment-empty-line-before': null,
+        'rule-empty-line-before': null,
+        indentation: 4
     }
 };
