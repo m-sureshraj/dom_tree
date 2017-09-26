@@ -172,7 +172,14 @@ function handleKeyboardNavigation(tree, keyCode) {
 
 function removeHighlight(ele) {
     var highlightedEle = ele.querySelector('.dtjs-root .dtjs-highlight');
-    (highlightedEle) && highlightedEle.classList.remove('dtjs-highlight', 'dtjs-md', 'dtjs-mu');
+
+    if (highlightedEle) {
+        // IE-11 browser does not support passing multiple arguments to
+        // classList remove method
+        highlightedEle.classList.remove('dtjs-highlight');
+        highlightedEle.classList.remove('dtjs-md');
+        highlightedEle.classList.remove('dtjs-mu');
+    }
 }
 
 function createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
