@@ -2,6 +2,7 @@ var options = {
     ele: null,
     data: null,
     theme: null,
+    format: 'object',
     fold: false,
     separators: true,
     keyboardNavigation: false,
@@ -9,6 +10,8 @@ var options = {
 };
 
 var availableThemes = ['one-dark', 'chrome-light', 'darcula'];
+
+var availableFormats = ['object', 'json'];
 
 var entryNodeMap = {
     'object': { val: '{', className: 'ob' },
@@ -23,5 +26,6 @@ var entryNodeMap = {
 module.exports = {
     options: options,
     availableThemes: availableThemes,
-    entryNodeMap: entryNodeMap
+    entryNodeMap: entryNodeMap,
+    availableFormats: availableFormats
 };

@@ -3,13 +3,11 @@ var kn = require('./util/keyboard_navigation');
 var config = require('./config');
 require('../css/index.css');
 
-function createEntry(key, value) {
+function createEntry(key, value, format) {
     var entryNode = document.createElement('li');
 
     if (key) {
-        var keyElement = document.createElement('span');
-        keyElement.className = 'k';
-        keyElement.innerHTML = key;
+        var keyElement = getKeyNode(key, format);
         keyElement.appendChild(getColonNode());
         entryNode.appendChild(keyElement);
     }
@@ -17,6 +15,15 @@ function createEntry(key, value) {
     entryNode.appendChild(getValueElement(value));
 
     return entryNode;
+}
+
+function getKeyNode(key, format) {
+    var keyNode = document.createElement('span');
+    keyNode.className = 'k';
+    keyNode.innerHTML =
+        format === 'json' ? ('"' + key + '"') : key;
+
+    return keyNode;
 }
 
 function getColonNode() {
@@ -52,10 +59,12 @@ function constructDomTree(data, root, _config) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             if (util.isValuePrimitive(data[key])) {
-                root.appendChild(createEntry(key, data[key]));
-            } else { // else part work same for obj and array
+                root.appendChild(createEntry(key, data[key], _config.format));
+            } else {
                 root.appendChild(
-                    constructChildTree(data[key], createEntry(key, data[key]), _config)
+                    constructChildTree(
+                        data[key], createEntry(key, data[key], _config.format), _config
+                    )
                 );
             }
         }
@@ -228,11 +237,21 @@ function validateBooleanOptions(userConfig) {
 
 function validateThemeOption(userConfig) {
     if (typeof userConfig.theme !== 'string') {
-        throw new Error('property `theme` should be a string');
+        throw new Error('property `theme` should be a type string');
     }
 
     if (config.availableThemes.indexOf(userConfig.theme) === -1) {
         throw new Error('Invalid theme option! available options are ' + config.availableThemes);
+    }
+}
+
+function validateFormatOption(userConfig) {
+    if (typeof userConfig.format !== 'string') {
+        throw new Error('property `format` should be a type string');
+    }
+
+    if (config.availableFormats.indexOf(userConfig.format) === -1) {
+        throw new Error('Invalid format option! available options are ' + config.availableFormats);
     }
 }
 
@@ -261,10 +280,14 @@ function validateAndPrepareConfig(userConfig) {
         }
     }
 
-    // if optional userConfig.theme property present, then it should be a string type &
-    // value should be a available theme option
+    // validate optional userConfig.theme option
     if (userConfig.hasOwnProperty('theme')) {
         validateThemeOption(userConfig);
+    }
+
+    // validate optional userConfig.format option
+    if (userConfig.hasOwnProperty('format')) {
+        validateFormatOption(userConfig);
     }
 
     // validate boolean options
@@ -291,7 +314,13 @@ DomTree.prototype = {
         }
 
         var tree = constructDomTree(
-            this.data, null, {fold: this.fold, separators: this.separators}
+            this.data,
+            null,
+            {
+                fold: this.fold,
+                separators: this.separators,
+                format: this.format
+            }
         );
         tree.className = 'dtjs-root';
         tree.setAttribute('tabIndex', '0');
@@ -328,7 +357,7 @@ DomTree.prototype = {
             });
         }
 
-        // register click event listener on toggleOption node via eventDelegation
+        // register click event listener on toggleOption node
         tree.addEventListener('click', function(e) {
             if (e.target && e.target.className === 'ex') {
                 util.handleToggleClass(e.target.offsetParent, 'fold');

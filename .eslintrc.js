@@ -3,16 +3,17 @@ module.exports = {
         ecmaVersion: 5
     },
     env: {
-        browser: true, // enable browser predefined global variables
+        browser: true,
         commonjs: true,
         node: true
     },
+    extends: "eslint:recommended",
     // 0: off, 1: warn, 2: error
     rules: {
         // Best practices
         semi: 2,
         quotes: ['error', 'single'],
-        // "indent": [
+        // indent: [
         //     "error",
         //     "tab"
         // ],
