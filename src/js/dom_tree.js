@@ -1,7 +1,7 @@
-import * as util from './util/util';
-import * as kn from './util/keyboard_navigation';
-import { libConfig, availableThemes, entryNodeMap } from './config';
-import '../css/index.css';
+var util = require('./util/util');
+var kn = require('./util/keyboard_navigation');
+var config = require('./config');
+require('../css/index.css');
 
 function createEntry(key, value) {
     var entryNode = document.createElement('li');
@@ -29,7 +29,7 @@ function getColonNode() {
 
 function getValueElement(value) {
     var type = util.getType(value);
-    var entryNodeMapItem = entryNodeMap[type];
+    var entryNodeMapItem = config.entryNodeMap[type];
     var valueElement = document.createElement('span');
     value = (type === 'string') ? ('"' + value + '"') : value;
 
@@ -39,12 +39,12 @@ function getValueElement(value) {
     return valueElement;
 }
 
-function constructDomTree(data, root, config) {
+function constructDomTree(data, root, _config) {
     if (root === null) {
         root = getRootEntryNode(data);
 
         var wrapperNode = document.createElement('ul');
-        wrapperNode.appendChild(constructChildTree(data, root, config));
+        wrapperNode.appendChild(constructChildTree(data, root, _config));
 
         return wrapperNode;
     }
@@ -55,14 +55,14 @@ function constructDomTree(data, root, config) {
                 root.appendChild(createEntry(key, data[key]));
             } else { // else part work same for obj and array
                 root.appendChild(
-                    constructChildTree(data[key], createEntry(key, data[key]), config)
+                    constructChildTree(data[key], createEntry(key, data[key]), _config)
                 );
             }
         }
     }
 
     // add separator node to each direct children of root
-    if (config.separators) {
+    if (_config.separators) {
         appendSeparatorNodes(root);
     }
 
@@ -75,7 +75,7 @@ function getRootEntryNode(data) {
     return createEntry(null, value);
 }
 
-function constructChildTree(data, element, config) {
+function constructChildTree(data, element, _config) {
     var len = util.getLengthOfObjOrArray(data);
 
     if (len) {
@@ -83,7 +83,7 @@ function constructChildTree(data, element, config) {
         element.className = 'hc';
 
         // by default all parent node's are collapsed. user can fold it via config
-        if (config.fold) {
+        if (_config.fold) {
             element.className += ' fold';
         }
 
@@ -91,7 +91,7 @@ function constructChildTree(data, element, config) {
         element.insertBefore(getToggleOptionNode(), element.firstChild);
 
         var parentNode = document.createElement('ul');
-        element.appendChild(constructDomTree(data, parentNode, config));
+        element.appendChild(constructDomTree(data, parentNode, _config));
 
         // append ellipse node
         element.appendChild(getEllipseNode());
@@ -200,71 +200,85 @@ function isValidConfigData(type) {
     );
 }
 
-function validateConfigBoolOptions(config) {
-    var options = ['separators', 'fold', 'keyboardNavigation', 'removeHighlightOnBlur'],
+function extractBooleanOptions(options) {
+    var booleanOptions = [];
+
+    for (var key in options) {
+        if (options.hasOwnProperty(key)) {
+            (typeof options[key] === 'boolean') && booleanOptions.push(key);
+        }
+    }
+
+    return booleanOptions;
+}
+
+function validateBooleanOptions(userConfig) {
+    var options = extractBooleanOptions(config.options),
         i = 0,
         length = options.length,
         option;
 
     for (i; i < length; i++) {
         option = options[i];
-        if (config.hasOwnProperty(option) && typeof config[option] !== 'boolean') {
+        if (userConfig.hasOwnProperty(option) && typeof userConfig[option] !== 'boolean') {
             throw new Error('config.' + option + ' value should be boolean type');
         }
     }
 }
 
-function validateConfigThemeOption(config) {
-    if (typeof config.theme !== 'string') {
-        throw new Error('config.theme should be a string');
+function validateThemeOption(userConfig) {
+    if (typeof userConfig.theme !== 'string') {
+        throw new Error('property `theme` should be a string');
     }
 
-    if (availableThemes.indexOf(config.theme) === -1) {
-        throw new Error('Invalid theme option! available options are ' + availableThemes);
+    if (config.availableThemes.indexOf(userConfig.theme) === -1) {
+        throw new Error('Invalid theme option! available options are ' + config.availableThemes);
     }
 }
 
-function validateAndPrepareConfig(config) {
-    config = config || {};
+function validateAndPrepareConfig(userConfig) {
+    userConfig = userConfig || {};
 
-    // config.ele required property, it should be a valid html element
-    if (!util.isValidHtmlElement(config.ele)) {
-        throw new Error(config.ele + ' is not a valid HTML element');
+    // userConfig.ele is required property, it should be a valid html element
+    if (!util.isValidHtmlElement(userConfig.ele)) {
+        throw new Error(userConfig.ele + ' is not a valid HTML element');
     }
 
-    // config.data required property, it should be a obj | array | json
-    var configDataPropType = util.getType(config.data);
+    // userConfig.data is required property, it should be a obj | array | json
+    var userConfigDataPropType = util.getType(userConfig.data);
 
-    if (!isValidConfigData(configDataPropType)) {
-        throw new Error('config.data is a required property and it should be a object '
-            + 'or Array or JSON but received ' + configDataPropType);
+    if (!isValidConfigData(userConfigDataPropType)) {
+        throw new Error('`data` is a required property and it should be a object '
+            + 'or Array or JSON but received ' + userConfigDataPropType);
     }
 
-    // if config.data type is string then, it should be a valid json
-    if (configDataPropType === 'string') {
+    // if userConfig.data type is string then, it should be a valid json
+    if (userConfigDataPropType === 'string') {
         try {
-            config.data = JSON.parse(config.data);
+            userConfig.data = JSON.parse(userConfig.data);
         } catch (e) {
-            throw new Error('config.data should be valid JSON ' + e);
+            throw new Error('property `data` should be valid JSON ' + e);
         }
     }
 
-    // if optional config.theme property present, then it should be a string type &
+    // if optional userConfig.theme property present, then it should be a string type &
     // value should be a available theme option
-    if (config.hasOwnProperty('theme')) {
-        validateConfigThemeOption(config);
+    if (userConfig.hasOwnProperty('theme')) {
+        validateThemeOption(userConfig);
     }
 
-    // validate config optional boolean options
-    validateConfigBoolOptions(config);
+    // validate boolean options
+    validateBooleanOptions(userConfig);
 
-    return config;
+    return userConfig;
 }
 
 // @constructor
-export default function DomTree(userConfig) {
+function DomTree(userConfig) {
     createInstancePropWithDefaultConfig(
-        validateAndPrepareConfig(userConfig), libConfig, this
+        validateAndPrepareConfig(userConfig),
+        config.options,
+        this
     );
 }
 
@@ -325,3 +339,5 @@ DomTree.prototype = {
         this.ele.appendChild(tree);
     }
 };
+
+module.exports.default = DomTree;

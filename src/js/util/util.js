@@ -3,7 +3,7 @@
  * @param value - required {valid Js type}
  * @returns {boolean}
  */
-export function isValuePrimitive(value) {
+function isValuePrimitive(value) {
     if (!arguments.length) throw new Error('Required argument is missing!');
 
     if (value === null) return true;
@@ -24,7 +24,7 @@ export function isValuePrimitive(value) {
  * @param param - required {Array || Object}
  * @returns {Number}
  */
-export function getLengthOfObjOrArray(param) {
+function getLengthOfObjOrArray(param) {
     if (!param) throw new Error('Required argument is missing!');
 
     var type = getType(param);
@@ -34,7 +34,7 @@ export function getLengthOfObjOrArray(param) {
     throw new TypeError('Argument type should be array or object but received ' + type);
 }
 
-export function getType(value) {
+function getType(value) {
     if (value === null) {
         return 'null';
     }
@@ -46,11 +46,11 @@ export function getType(value) {
     return typeof value;
 }
 
-export function isArray(type) {
+function isArray(type) {
     return (Object.prototype.toString.call(type) === '[object Array]');
 }
 
-export function isValidHtmlElement(ele) {
+function isValidHtmlElement(ele) {
     if (!ele) {
         throw Error('Invalid parameter.!');
     }
@@ -58,7 +58,7 @@ export function isValidHtmlElement(ele) {
     return ele instanceof HTMLElement;
 }
 
-export function handleToggleClass(ele, targetClassName) {
+function handleToggleClass(ele, targetClassName) {
     var classNamesArr = ele.className.split(' ');
     var index = classNamesArr.indexOf(targetClassName);
 
@@ -70,7 +70,7 @@ export function handleToggleClass(ele, targetClassName) {
     }
 }
 
-export function isEmpty(param) {
+function isEmpty(param) {
     var type = getType(param);
 
     if (type === 'object' || type === 'array') {
@@ -79,3 +79,13 @@ export function isEmpty(param) {
 
     throw new Error('param should should be array or object but received ' + type);
 }
+
+module.exports = {
+    isValuePrimitive: isValuePrimitive,
+    getLengthOfObjOrArray: getLengthOfObjOrArray,
+    getType: getType,
+    isArray: isArray,
+    isValidHtmlElement: isValidHtmlElement,
+    handleToggleClass: handleToggleClass,
+    isEmpty: isEmpty
+};

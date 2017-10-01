@@ -1,14 +1,11 @@
 module.exports = {
     parserOptions: {
-        ecmaVersion: 5,
-        sourceType: "module",
-        ecmaFeatures: {
-            impliedStrict: true
-        }
+        ecmaVersion: 5
     },
     env: {
-        // enable browser predefined global variables
-        browser: true
+        browser: true, // enable browser predefined global variables
+        commonjs: true,
+        node: true
     },
     // 0: off, 1: warn, 2: error
     rules: {
@@ -35,5 +32,3 @@ module.exports = {
 };
 
 // https://github.com/1hella/eslint-config-airbnb-es5/blob/master/.eslintrc
-
-

@@ -9,7 +9,7 @@
     "dev": "webpack --config ./webpack/webpack.dev.js",
     "prebuild": "rm -rf ./dist/*",
     "build": "webpack --config ./webpack/webpack.prod.js",
-    "lint": "eslint ./src/js/*.js ./webpack/*.js",
+    "jslint": "eslint '**/*.js'",
     "csslint": "stylelint './src/css/**/*.css'",
     "fixcsslint": "stylelint './src/css/**/*.css' --fix"
   },

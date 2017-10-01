@@ -11,13 +11,13 @@ function isElementHasChildren(ele) {
 }
 
 function addMoveDownClass(
-    isElementHasChildren, isElementFolded, isParentNodeRoot, firstChild,
+    _isElementHasChildren, _isElementFolded, _isParentNodeRoot, firstChild,
     nextSibling, ele
 ) {
     if (
-        isElementHasChildren &&
-        !isElementFolded &&
-        (!ele.classList.contains('dtjs-mu') || isParentNodeRoot)
+        _isElementHasChildren &&
+        !_isElementFolded &&
+        (!ele.classList.contains('dtjs-mu') || _isParentNodeRoot)
     ) {
         if (firstChild && firstChild.classList.contains('hc')) {
             firstChild.className += ' dtjs-md';
@@ -30,12 +30,12 @@ function addMoveDownClass(
 }
 
 function addMoveUpClass(
-    isElementHasChildren, isElementFolded, isParentNodeRoot, lastChild, previousSibling, ele
+    _isElementHasChildren, _isElementFolded, _isParentNodeRoot, lastChild, previousSibling, ele
 ) {
     if (
-        isElementHasChildren &&
-        !isElementFolded &&
-        (!ele.classList.contains('dtjs-md') || isParentNodeRoot)
+        _isElementHasChildren &&
+        !_isElementFolded &&
+        (!ele.classList.contains('dtjs-md') || _isParentNodeRoot)
     ) {
         if (lastChild && lastChild.classList.contains('hc')) {
             lastChild.className += ' dtjs-mu';
@@ -47,15 +47,15 @@ function addMoveUpClass(
     }
 }
 
-export function fold(ele) {
+function fold(ele) {
     isElementHasChildren(ele) && !isElementFolded(ele) && ele.classList.add('fold');
 }
 
-export function collapse(ele) {
+function collapse(ele) {
     isElementHasChildren(ele) && isElementFolded(ele) && ele.classList.remove('fold');
 }
 
-export function moveUp(ele) {
+function moveUp(ele) {
     var _isParentNodeRoot = isParentNodeRoot(ele),
         _isElementFolded = isElementFolded(ele);
 
@@ -100,7 +100,7 @@ export function moveUp(ele) {
     }
 }
 
-export function moveDown(ele) {
+function moveDown(ele) {
     var _isParentNodeRoot = isParentNodeRoot(ele),
         _isElementFolded = isElementFolded(ele);
 
@@ -144,3 +144,10 @@ export function moveDown(ele) {
             : ele.offsetParent.className += ' dtjs-highlight dtjs-mu';
     }
 }
+
+module.exports = {
+    fold: fold,
+    collapse: collapse,
+    moveUp: moveUp,
+    moveDown: moveDown
+};

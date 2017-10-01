@@ -1,16 +1,16 @@
-export var libConfig = {
+var options = {
     ele: null,
     data: null,
-    separators: true,
-    fold: false,
     theme: null,
+    fold: false,
+    separators: true,
     keyboardNavigation: false,
     removeHighlightOnBlur: false
 };
 
-export var availableThemes = ['one-dark', 'chrome-light', 'darcula'];
+var availableThemes = ['one-dark', 'chrome-light', 'darcula'];
 
-export var entryNodeMap = {
+var entryNodeMap = {
     'object': { val: '{', className: 'ob' },
     'null': { val: 'null', className: 'null' },
     'array': { val: '[', className: 'ob' },
@@ -18,4 +18,10 @@ export var entryNodeMap = {
     'number': { val: null, className: 'num' },
     'boolean': { val: null, className: 'bool' },
     'string': { val: null, className: 'str' }
+};
+
+module.exports = {
+    options: options,
+    availableThemes: availableThemes,
+    entryNodeMap: entryNodeMap
 };
