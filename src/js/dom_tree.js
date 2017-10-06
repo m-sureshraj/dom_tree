@@ -46,12 +46,12 @@ function getValueElement(value) {
     return valueElement;
 }
 
-function constructDomTree(data, root, _config) {
-    if (root === null) {
-        root = getRootEntryNode(data);
+function constructDomTree(data, node, _config) {
+    if (node === null) {
+        node = getRootEntryNode(data);
 
         var wrapperNode = document.createElement('ul');
-        wrapperNode.appendChild(constructChildTree(data, root, _config));
+        wrapperNode.appendChild(constructChildTree(data, node, _config));
 
         return wrapperNode;
     }
@@ -59,9 +59,9 @@ function constructDomTree(data, root, _config) {
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             if (util.isValuePrimitive(data[key])) {
-                root.appendChild(createEntry(key, data[key], _config.format));
+                node.appendChild(createEntry(key, data[key], _config.format));
             } else {
-                root.appendChild(
+                node.appendChild(
                     constructChildTree(
                         data[key], createEntry(key, data[key], _config.format), _config
                     )
@@ -72,10 +72,10 @@ function constructDomTree(data, root, _config) {
 
     // add separator node to each direct children of root
     if (_config.separators) {
-        appendSeparatorNodes(root);
+        appendSeparatorNodes(node);
     }
 
-    return root;
+    return node;
 }
 
 function getRootEntryNode(data) {
@@ -99,8 +99,7 @@ function constructChildTree(data, element, _config) {
         // insert the toggleOptionNode into `element` as a first child
         element.insertBefore(getToggleOptionNode(), element.firstChild);
 
-        var parentNode = document.createElement('ul');
-        element.appendChild(constructDomTree(data, parentNode, _config));
+        element.appendChild(constructDomTree(data, document.createElement('ul'), _config));
 
         // append ellipse node
         element.appendChild(getEllipseNode());
