@@ -209,20 +209,8 @@ function isValidConfigData(type) {
     );
 }
 
-function extractBooleanOptions(options) {
-    var booleanOptions = [];
-
-    for (var key in options) {
-        if (options.hasOwnProperty(key)) {
-            (typeof options[key] === 'boolean') && booleanOptions.push(key);
-        }
-    }
-
-    return booleanOptions;
-}
-
 function validateBooleanOptions(userConfig) {
-    var options = extractBooleanOptions(config.options),
+    var options = util.getBooleanOptionsFromObject(config.options),
         i = 0,
         length = options.length,
         option;
@@ -308,7 +296,7 @@ function DomTree(userConfig) {
 DomTree.prototype = {
     constructor: DomTree,
     init: function() {
-        // if user calling .init() more then once for instance
+        // if user calling .init() more then once for target element
         if (this.ele.querySelector('ul') !== null) {
             throw new Error('DomTree already initialized for target element!');
         }

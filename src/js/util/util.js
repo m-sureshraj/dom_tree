@@ -80,6 +80,18 @@ function isEmpty(param) {
     throw new Error('param should should be array or object but received ' + type);
 }
 
+function getBooleanOptionsFromObject(obj) {
+    var booleanOptions = [];
+
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            (typeof obj[key] === 'boolean') && booleanOptions.push(key);
+        }
+    }
+
+    return booleanOptions;
+}
+
 module.exports = {
     isValuePrimitive: isValuePrimitive,
     getLengthOfObjOrArray: getLengthOfObjOrArray,
@@ -87,5 +99,6 @@ module.exports = {
     isArray: isArray,
     isValidHtmlElement: isValidHtmlElement,
     handleToggleClass: handleToggleClass,
-    isEmpty: isEmpty
+    isEmpty: isEmpty,
+    getBooleanOptionsFromObject: getBooleanOptionsFromObject
 };
