@@ -155,9 +155,10 @@ function getCloseWrapperNode(param) {
 function handleKeyboardNavigation(tree, keyCode) {
     var highlightedEle = tree.querySelector('.dtjs-highlight');
 
-    // if there are no highlighted element yet then highlight tree's first child
+    // if there are no highlighted element yet then
+    // highlight tree's first child & root arrow node
     if (!highlightedEle && (keyCode >= 37 && keyCode <= 40)) {
-        tree.firstChild.className += ' dtjs-highlight';
+        tree.firstChild.className += ' dtjs-highlight dtjs-md';
         return;
     }
 
