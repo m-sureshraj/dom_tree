@@ -20,8 +20,7 @@ function createEntry(key, value, format) {
 function getKeyNode(key, format) {
     var keyNode = document.createElement('span');
     keyNode.className = 'k';
-    keyNode.innerHTML =
-        format === 'json' ? ('"' + key + '"') : key;
+    keyNode.innerHTML = format === 'json' ? ('"' + key + '"') : key;
 
     return keyNode;
 }
@@ -38,8 +37,8 @@ function getValueElement(value) {
     var type = util.getType(value);
     var entryNodeMapItem = config.entryNodeMap[type];
     var valueElement = document.createElement('span');
-    value = (type === 'string') ? ('"' + value + '"') : value;
 
+    value = type === 'string' ? ('"' + value + '"') : value;
     valueElement.innerHTML = entryNodeMapItem.val || value;
     valueElement.className += entryNodeMapItem.className;
 
@@ -191,16 +190,6 @@ function removeHighlight(ele) {
     }
 }
 
-function createInstancePropWithDefaultConfig(userConfig, defaultConfig, instance) {
-    for (var prop in defaultConfig) {
-        if (defaultConfig.hasOwnProperty(prop)) {
-            instance[prop] = (userConfig.hasOwnProperty(prop))
-                ? userConfig[prop]
-                : defaultConfig[prop];
-        }
-    }
-}
-
 function isValidConfigData(type) {
     return (
         type === 'object' ||
@@ -210,7 +199,7 @@ function isValidConfigData(type) {
 }
 
 function validateBooleanOptions(userConfig) {
-    var options = util.getBooleanOptionsFromObject(config.options),
+    var options = util.getBooleanOptionsFromObject(config.defaultConfig),
         i = 0,
         length = options.length,
         option;
@@ -229,7 +218,8 @@ function validateThemeOption(userConfig) {
     }
 
     if (config.availableThemes.indexOf(userConfig.theme) === -1) {
-        throw new Error('Invalid theme option! available options are ' + config.availableThemes);
+        throw new Error('Invalid theme option `' + userConfig.theme +
+            '`. available options are ' + config.availableThemes.join(', '));
     }
 }
 
@@ -243,8 +233,12 @@ function validateFormatOption(userConfig) {
     }
 }
 
-function validateAndPrepareConfig(userConfig) {
-    userConfig = userConfig || {};
+function getValidatedUserConfig(userConfig) {
+    var type = util.getType(userConfig);
+
+    if (type !== 'object') {
+        throw new TypeError('Argument should be a type object. But received ' + type);
+    }
 
     // userConfig.ele is required property, it should be a valid html element
     if (!util.isValidHtmlElement(userConfig.ele)) {
@@ -284,77 +278,103 @@ function validateAndPrepareConfig(userConfig) {
     return userConfig;
 }
 
-// @constructor
-function DomTree(userConfig) {
-    createInstancePropWithDefaultConfig(
-        validateAndPrepareConfig(userConfig),
-        config.options,
-        this
-    );
+function configureTree(tree, _config) {
+    tree.className = 'dtjs-root';
+    tree.setAttribute('tabIndex', '0');
+
+    // add theme option
+    if (_config.theme) tree.className += (' ' + _config.theme);
+
+    // if data prop is empty
+    if (util.isEmpty(_config.data)) {
+        _config.keyboardNavigation = false;
+        tree.className += ' dtjs-empty';
+    }
+
+    tree.addEventListener('focus', function() {
+        util.handleToggleClass(tree, 'dtjs-root-focused');
+    }, false);
+
+    tree.addEventListener('blur', function() {
+        util.handleToggleClass(tree, 'dtjs-root-focused');
+        // if keyboard navigation disabled there are no highlighted element
+        _config.keyboardNavigation &&
+        _config.removeHighlightOnBlur && removeHighlight(tree);
+    }, false);
+
+    if (_config.keyboardNavigation) {
+        tree.addEventListener('keydown', function(e) {
+            var keyCode = e.keyCode;
+            // if `.dtjs-root` is focused prevent horizontal, vertical scrolling
+            if (keyCode >= 37 && keyCode <= 40) {
+                e.preventDefault();
+                handleKeyboardNavigation(tree, keyCode);
+            }
+        }, false);
+    }
+
+    // fold | collapse when clicking toggle option node
+    tree.addEventListener('click', function(e) {
+        if (e.target && e.target.className === 'ex') {
+            util.handleToggleClass(e.target.offsetParent, 'fold');
+        }
+    }, false);
 }
 
-DomTree.prototype = {
-    constructor: DomTree,
-    init: function() {
+// @constructor
+function DomTree(userConfig) {
+    'use strict';
+    if (this === undefined) {
+        throw new Error('DomTree is a constructor function. Should be invoked with `new` keyword');
+    }
+
+    var _config = util.mergeConfig(getValidatedUserConfig(userConfig), config.defaultConfig);
+    // todo: refactor `constructDomTree` fn to take only config param
+    var tree = constructDomTree(_config.data, null, {
+            fold: _config.fold,
+            separators: _config.separators,
+            format: _config.format
+        });
+    configureTree(tree, _config);
+
+    // methods
+    this.init = function() {
         // if user calling .init() more then once for target element
-        if (this.ele.querySelector('ul') !== null) {
+        if (_config.initialized || _config.ele.querySelector('ul') !== null) {
             throw new Error('DomTree already initialized for target element!');
         }
 
-        var tree = constructDomTree(
-            this.data,
-            null,
-            {
-                fold: this.fold,
-                separators: this.separators,
-                format: this.format
-            }
-        );
-        tree.className = 'dtjs-root';
-        tree.setAttribute('tabIndex', '0');
+        _config.ele.appendChild(tree);
+        _config.initialized = true;
+    };
 
-        // add theme option class
-        if (this.theme) {
-            tree.className += (' ' + this.theme);
+    this.update = function(updatedUserConfig) {
+        if (!_config.initialized) {
+            throw new Error('Trying to update before initialize to target element!');
         }
 
-        // if data prop is empty
-        if (util.isEmpty(this.data)) {
-            this.keyboardNavigation = false; // disable keyboard navigation
-            tree.className += ' dtjs-empty';
+        updatedUserConfig = updatedUserConfig || {};
+
+        if (updatedUserConfig.hasOwnProperty('ele')) {
+            delete updatedUserConfig.ele;
+            console.warn('`update` method argument contains invalid key `ele`! ' +
+                'Via updating can\'t change already initialized target element.');
         }
 
-        tree.addEventListener('focus', function() {
-            util.handleToggleClass(tree, 'dtjs-root-focused');
-        });
-
-        tree.addEventListener('blur', function() {
-            util.handleToggleClass(tree, 'dtjs-root-focused');
-            // if keyboard navigation disabled there are no highlighted element
-            this.keyboardNavigation && this.removeHighlightOnBlur && removeHighlight(tree);
-        }.bind(this));
-
-        if (this.keyboardNavigation) {
-            tree.addEventListener('keydown', function(e) {
-                var keyCode = e.keyCode;
-                // when `.dtjs-root` is focused prevent horizontal, vertical scrolling
-                if (keyCode >= 37 && keyCode <= 40) {
-                    e.preventDefault();
-                    handleKeyboardNavigation(tree, keyCode);
-                }
+        if (util.getLengthOfObjOrArray(updatedUserConfig) > 0) {
+            updatedUserConfig = util.mergeConfig(updatedUserConfig, _config);
+            _config = getValidatedUserConfig(updatedUserConfig);
+            tree = constructDomTree(_config.data, null, {
+                fold: _config.fold,
+                separators: _config.separators,
+                format: _config.format
             });
+            configureTree(tree, _config);
+
+            // todo: check replaceWith support
+            _config.ele.querySelector('ul').replaceWith(tree);
         }
-
-        // register click event listener on toggleOption node
-        tree.addEventListener('click', function(e) {
-            if (e.target && e.target.className === 'ex') {
-                util.handleToggleClass(e.target.offsetParent, 'fold');
-            }
-        }, false);
-
-        // finally append constructed tree to target element :)
-        this.ele.appendChild(tree);
-    }
-};
+    };
+}
 
 module.exports.default = DomTree;

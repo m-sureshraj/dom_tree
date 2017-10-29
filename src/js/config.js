@@ -1,4 +1,4 @@
-var options = {
+var defaultConfig = {
     ele: null,
     data: null,
     theme: null,
@@ -24,7 +24,7 @@ var entryNodeMap = {
 };
 
 module.exports = {
-    options: options,
+    defaultConfig: defaultConfig,
     availableThemes: availableThemes,
     entryNodeMap: entryNodeMap,
     availableFormats: availableFormats

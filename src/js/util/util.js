@@ -92,6 +92,20 @@ function getBooleanOptionsFromObject(obj) {
     return booleanOptions;
 }
 
+function mergeConfig(userConfig, defaultConfig) {
+    var o = {};
+
+    for (var prop in defaultConfig) {
+        if (defaultConfig.hasOwnProperty(prop)) {
+            o[prop] = (userConfig.hasOwnProperty(prop))
+                ? userConfig[prop]
+                : defaultConfig[prop];
+        }
+    }
+
+    return o;
+}
+
 module.exports = {
     isValuePrimitive: isValuePrimitive,
     getLengthOfObjOrArray: getLengthOfObjOrArray,
@@ -100,5 +114,6 @@ module.exports = {
     isValidHtmlElement: isValidHtmlElement,
     handleToggleClass: handleToggleClass,
     isEmpty: isEmpty,
-    getBooleanOptionsFromObject: getBooleanOptionsFromObject
+    getBooleanOptionsFromObject: getBooleanOptionsFromObject,
+    mergeConfig: mergeConfig
 };
