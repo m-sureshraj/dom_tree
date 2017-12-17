@@ -237,7 +237,8 @@ function getValidatedUserConfig(userConfig) {
     var type = util.getType(userConfig);
 
     if (type !== 'object') {
-        throw new TypeError('Argument should be a type object. But received ' + type);
+        throw new TypeError('Argument to constructor function should be a type object. ' +
+            'But received ' + type);
     }
 
     // userConfig.ele is required property, it should be a valid html element
@@ -349,15 +350,15 @@ function DomTree(userConfig) {
     };
 
     this.update = function(updatedUserConfig) {
+        updatedUserConfig = updatedUserConfig || {};
+
         if (!_config.initialized) {
             throw new Error('Trying to update before initialize to target element!');
         }
 
-        updatedUserConfig = updatedUserConfig || {};
-
         if (updatedUserConfig.hasOwnProperty('ele')) {
             delete updatedUserConfig.ele;
-            console.warn('`update` method argument contains invalid key `ele`! ' +
+            console.warn('`update` method argument contains invalid property name `ele`! ' +
                 'Via updating can\'t change already initialized target element.');
         }
 
