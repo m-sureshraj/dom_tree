@@ -6,7 +6,7 @@ var HtmlWebpackHardDiskPlugin = require('html-webpack-harddisk-plugin');
 var webpackUtil = require('./webpack.util');
 var common = require('./webpack.common');
 
-// initialize html_webpack_plugin
+// eslint-disable-next-line camelcase
 var html_webpack_plugin = new HtmlWebpackPlugin({
     template: join(webpackUtil.rootPath, 'src', 'dom_tree.html'),
     filename: join(webpackUtil.rootPath, 'dev', 'index.html'),
@@ -37,7 +37,7 @@ module.exports = merge(common, {
     },
 
     plugins: [
-        html_webpack_plugin,
+        html_webpack_plugin, // eslint-disable-line camelcase
         new HtmlWebpackHardDiskPlugin(),
         webpackUtil.extractTextPlugin
     ]

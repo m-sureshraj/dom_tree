@@ -1,8 +1,3 @@
-/**
- * check param is a primitive type
- * @param value - required {valid Js type}
- * @returns {boolean}
- */
 function isValuePrimitive(value) {
     if (!arguments.length) throw new Error('Required argument is missing!');
 
@@ -19,11 +14,6 @@ function isValuePrimitive(value) {
     }
 }
 
-/**
- * get length of a Array or Object
- * @param param - required {Array || Object}
- * @returns {Number}
- */
 function getLengthOfObjOrArray(param) {
     if (!param) throw new Error('Required argument is missing!');
 
@@ -92,18 +82,52 @@ function getBooleanOptionsFromObject(obj) {
     return booleanOptions;
 }
 
-function mergeConfig(userConfig, defaultConfig) {
+function mergeConfig(target, source) {
     var o = {};
 
-    for (var prop in defaultConfig) {
-        if (defaultConfig.hasOwnProperty(prop)) {
-            o[prop] = (userConfig.hasOwnProperty(prop))
-                ? userConfig[prop]
-                : defaultConfig[prop];
+    for (var prop in target) {
+        if (target.hasOwnProperty(prop)) {
+            o[prop] = (source.hasOwnProperty(prop))
+                ? source[prop]
+                : target[prop];
         }
     }
 
     return o;
+}
+
+function deepClone(source) {
+    return JSON.parse(JSON.stringify(source));
+}
+
+function diff(prevConfig, updatedConfig) {
+    var o = {}, prevVal, updatedVal;
+
+    for (var prop in prevConfig) {
+        if (prevConfig.hasOwnProperty(prop) && updatedConfig.hasOwnProperty(prop)) {
+            prevVal = prevConfig[prop];
+            updatedVal = updatedConfig[prop];
+
+            // we can directly compare primitive values
+            if (isValuePrimitive(updatedVal) && prevVal !== updatedVal) {
+                o[prop] = updatedVal;
+            } else if (JSON.stringify(prevVal) !== JSON.stringify(updatedVal)) {
+                // compare array, object
+                // for our use case we can't use any `deepEqual` related packages.
+                // * deepEqual does not care about order of properties, but our case we need
+                //   that behavior. deepEqual({a: 1, b: 2}, {b: 2, a: 1}); // true
+                o[prop] = updatedVal;
+            }
+        }
+    }
+
+    return o;
+}
+
+function contains(haystack, arr) {
+    return arr.some(function(v) {
+        return haystack.indexOf(v) !== -1;
+    });
 }
 
 module.exports = {
@@ -115,5 +139,8 @@ module.exports = {
     handleToggleClass: handleToggleClass,
     isEmpty: isEmpty,
     getBooleanOptionsFromObject: getBooleanOptionsFromObject,
-    mergeConfig: mergeConfig
+    mergeConfig: mergeConfig,
+    deepClone: deepClone,
+    diff: diff,
+    contains: contains
 };

@@ -5,6 +5,7 @@ var webpackUtil = require('./webpack.util');
 module.exports = {
     // entry point to start bundling
     entry: {
+        // eslint-disable-next-line camelcase
         dom_tree: [join(webpackUtil.rootPath, 'src', 'js', 'dom_tree.js')]
     },
 

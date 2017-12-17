@@ -1,23 +1,23 @@
 /* ============ default theme ============= */
-.dtjs-root { background-color: #fff; }
-.dtjs-root .k,
-.dtjs-root .c { color: #666; }
-.dtjs-root .str { color: rgb(244, 54, 54); }
-.dtjs-root .num { color: blue; }
-.dtjs-root .null,
-.dtjs-root .dots::after,
-.dtjs-root .undef { color: #ccc; }
-.dtjs-root .bool { color: brown; }
-.dtjs-root .cb,
-.dtjs-root .ob { color: #444; }
-.dtjs-root .sep { color: #777; }
-.dtjs-root .hc ul { border-left-color: #ccc; }
-.dtjs-root .hc::after { color: #989797; } /* item count text color */
-.dtjs-root .hc .ex { border-top-color: #c2c2c2; }
+.dtjs-root.dtjs-default-theme { background-color: #fff; }
+.dtjs-root.dtjs-default-theme .k,
+.dtjs-root.dtjs-default-theme .c { color: #666; }
+.dtjs-root.dtjs-default-theme .str { color: rgb(244, 54, 54); }
+.dtjs-root.dtjs-default-theme .num { color: blue; }
+.dtjs-root.dtjs-default-theme .null,
+.dtjs-root.dtjs-default-theme .dots::after,
+.dtjs-root.dtjs-default-theme .undef { color: #ccc; }
+.dtjs-root.dtjs-default-theme .bool { color: brown; }
+.dtjs-root.dtjs-default-theme .cb,
+.dtjs-root.dtjs-default-theme .ob { color: #444; }
+.dtjs-root.dtjs-default-theme .sep { color: #777; }
+.dtjs-root.dtjs-default-theme .hc ul { border-left-color: #ccc; }
+.dtjs-root.dtjs-default-theme .hc::after { color: #989797; } /* item count text color */
+.dtjs-root.dtjs-default-theme .hc .ex { border-top-color: #c2c2c2; }
 /* keyboard navigation styles */
-.dtjs-root.dtjs-root-focused { background-color: #f7f2f2; }
-.dtjs-root .dtjs-highlight { background-color: #efe3e3; }
-.dtjs-root .dtjs-md > .ex { border-top-color: #4093ff; }
-.dtjs-root .dtjs-mu::before,
-.dtjs-root .dtjs-mu.fold > .cb::after { background-color: #4093ff; }
+.dtjs-root.dtjs-default-theme.dtjs-root-focused { background-color: #f7f2f2; }
+.dtjs-root.dtjs-default-theme .dtjs-highlight { background-color: #efe3e3; }
+.dtjs-root.dtjs-default-theme .dtjs-md > .ex { border-top-color: #4093ff; }
+.dtjs-root.dtjs-default-theme .dtjs-mu::before,
+.dtjs-root.dtjs-default-theme .dtjs-mu.fold > .cb::after { background-color: #4093ff; }
 /* keyboard navigation styles */

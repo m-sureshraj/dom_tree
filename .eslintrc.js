@@ -12,7 +12,7 @@ module.exports = {
     rules: {
         // Best practices
         semi: 2,
-        quotes: ['error', 'single'],
+        quotes: ["error", "single"],
         // indent: [
         //     "error",
         //     "tab"
@@ -21,8 +21,20 @@ module.exports = {
             "error",
             "unix"
         ],
+        "curly": ["error", "multi-line"],
+        "dot-notation": 2,
+        "no-dupe-args": 2,
+        "no-dupe-keys": 2,
+        "no-else-return": 2,
+        // Disallow double-negation boolean casts in a boolean context.
+        "no-extra-boolean-cast": 2,
+        "no-lonely-if": 2,
+        "no-nested-ternary": 2,
+        "no-inner-declarations": 0,
+        "no-console": ["error", { allow: ["warn", "error", "info"] }],
 
         // variables
+        "camelcase": 2,
         "no-shadow": 2,
         "no-shadow-restricted-names": 2,
         "no-unused-vars": [2, {

@@ -1,7 +1,6 @@
 var defaultConfig = {
-    ele: null,
     data: null,
-    theme: null,
+    theme: 'dtjs-default-theme',
     format: 'object',
     fold: false,
     separators: true,
@@ -9,7 +8,13 @@ var defaultConfig = {
     removeHighlightOnBlur: false
 };
 
-var availableThemes = ['one-dark', 'chrome-light', 'darcula'];
+var treeGenerateSpecificOptions = ['fold', 'format', 'separators', 'data'];
+
+var treeConfigurationSpecificOptions = [
+    'theme', 'keyboardNavigation', 'removeHighlightOnBlur'
+];
+
+var availableThemes = ['dtjs-default-theme', 'one-dark', 'chrome-light', 'darcula'];
 
 var availableFormats = ['object', 'json'];
 
@@ -25,6 +30,8 @@ var entryNodeMap = {
 
 module.exports = {
     defaultConfig: defaultConfig,
+    treeGenerateSpecificOptions: treeGenerateSpecificOptions,
+    treeConfigurationSpecificOptions: treeConfigurationSpecificOptions,
     availableThemes: availableThemes,
     entryNodeMap: entryNodeMap,
     availableFormats: availableFormats
