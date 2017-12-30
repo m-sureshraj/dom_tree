@@ -20,7 +20,7 @@ function createEntry(key, value, format) {
 function getKeyNode(key, format) {
     var keyNode = document.createElement('span');
     keyNode.className = 'k';
-    keyNode.innerHTML = format === 'json' ? ('"' + key + '"') : key;
+    keyNode.innerHTML = format === 'json' ? '"' + key + '"' : key;
 
     return keyNode;
 }
@@ -38,7 +38,7 @@ function getValueElement(value) {
     var entryNodeMapItem = config.entryNodeMap[type];
     var valueElement = document.createElement('span');
 
-    value = type === 'string' ? ('"' + value + '"') : value;
+    value = type === 'string' ? '"' + value + '"' : value;
     valueElement.innerHTML = entryNodeMapItem.val || value;
     valueElement.className += entryNodeMapItem.className;
 
@@ -103,13 +103,15 @@ function constructChildTree(_config, element) {
         // insert the toggleOptionNode into `element` as a first child
         element.insertBefore(getToggleOptionNode(), element.firstChild);
 
-        element.appendChild(constructDomTree(_config, document.createElement('ul')));
+        element.appendChild(
+            constructDomTree(_config, document.createElement('ul'))
+        );
 
         // append ellipse node
         element.appendChild(getEllipseNode());
 
         // show item count when collapsing wrapper element
-        element.setAttribute('data-cc', ('// ' + len + ' Items'));
+        element.setAttribute('data-cc', '// ' + len + ' Items');
     }
 
     element.appendChild(getCloseWrapperNode(data));
@@ -121,7 +123,7 @@ function appendSeparatorNodes(ele) {
     var children = ele.children,
         i = 0,
         // no need to add separator for last children element
-        len = (children.length - 1);
+        len = children.length - 1;
 
     for (i; i < len; i++) {
         var separatorNode = document.createElement('span');
@@ -200,11 +202,7 @@ function removeHighlight() {
 }
 
 function isValidConfigDataType(type) {
-    return (
-        type === 'object' ||
-        type === 'array' ||
-        type === 'string'
-    );
+    return type === 'object' || type === 'array' || type === 'string';
 }
 
 function validateBooleanOptions(userConfig) {
@@ -215,8 +213,13 @@ function validateBooleanOptions(userConfig) {
 
     for (i; i < length; i++) {
         option = options[i];
-        if (userConfig.hasOwnProperty(option) && typeof userConfig[option] !== 'boolean') {
-            throw new Error('config.' + option + ' value should be boolean type');
+        if (
+            userConfig.hasOwnProperty(option) &&
+            typeof userConfig[option] !== 'boolean'
+        ) {
+            throw new Error(
+                'config.' + option + ' value should be boolean type'
+            );
         }
     }
 }
@@ -227,8 +230,12 @@ function validateThemeOption(userConfig) {
     }
 
     if (config.availableThemes.indexOf(userConfig.theme) === -1) {
-        throw new Error('Invalid theme option `' + userConfig.theme +
-            '`. available options are ' + config.availableThemes.join(', '));
+        throw new Error(
+            'Invalid theme option `' +
+                userConfig.theme +
+                '`. available options are ' +
+                config.availableThemes.join(', ')
+        );
     }
 }
 
@@ -238,7 +245,10 @@ function validateFormatOption(userConfig) {
     }
 
     if (config.availableFormats.indexOf(userConfig.format) === -1) {
-        throw new Error('Invalid format option! available options are ' + config.availableFormats);
+        throw new Error(
+            'Invalid format option! available options are ' +
+                config.availableFormats
+        );
     }
 }
 
@@ -249,8 +259,11 @@ function validateConfigData(_config, mode) {
     var type = util.getType(_config.data);
 
     if (!isValidConfigDataType(type)) {
-        throw new Error('`data` is a required property and it should be a object '
-            + 'or Array or JSON but received ' + type);
+        throw new Error(
+            '`data` is a required property and it should be a object ' +
+                'or Array or JSON but received ' +
+                type
+        );
     }
 
     // if config.data type is string then, it should be a valid json
@@ -287,7 +300,7 @@ function validateConfig(userConfig, mode) {
 function configureTree(tree, _config) {
     tree.className = 'dtjs-root';
     tree.setAttribute('tabIndex', '0');
-    tree.className += (' ' + _config.theme);
+    tree.className += ' ' + _config.theme;
 
     // if data prop is empty
     if (util.isEmpty(_config.data)) {
@@ -295,13 +308,21 @@ function configureTree(tree, _config) {
         tree.className += ' dtjs-empty';
     }
 
-    tree.addEventListener('focus', function() {
-        util.handleToggleClass(tree, 'dtjs-root-focused');
-    }, false);
+    tree.addEventListener(
+        'focus',
+        function() {
+            util.handleToggleClass(tree, 'dtjs-root-focused');
+        },
+        false
+    );
 
-    tree.addEventListener('blur', function() {
-        util.handleToggleClass(tree, 'dtjs-root-focused');
-    }, false);
+    tree.addEventListener(
+        'blur',
+        function() {
+            util.handleToggleClass(tree, 'dtjs-root-focused');
+        },
+        false
+    );
 
     if (_config.removeHighlightOnBlur) {
         tree.addEventListener('blur', removeHighlight, false);
@@ -312,11 +333,15 @@ function configureTree(tree, _config) {
     }
 
     // fold | collapse when clicking toggle option node
-    tree.addEventListener('click', function(e) {
-        if (e.target && e.target.className === 'ex') {
-            util.handleToggleClass(e.target.offsetParent, 'fold');
-        }
-    }, false);
+    tree.addEventListener(
+        'click',
+        function(e) {
+            if (e.target && e.target.className === 'ex') {
+                util.handleToggleClass(e.target.offsetParent, 'fold');
+            }
+        },
+        false
+    );
 }
 
 function reConfigureTree(tree, previousConfig, updatedConfig) {
@@ -327,14 +352,18 @@ function reConfigureTree(tree, previousConfig, updatedConfig) {
 
     // handle keyboard navigation
     if (updatedConfig.hasOwnProperty('keyboardNavigation')) {
-        (updatedConfig.keyboardNavigation)
+        updatedConfig.keyboardNavigation
             ? tree.addEventListener('keydown', handleKeyboardNavigation, false)
-            : tree.removeEventListener('keydown', handleKeyboardNavigation, false);
+            : tree.removeEventListener(
+                  'keydown',
+                  handleKeyboardNavigation,
+                  false
+              );
     }
 
     // handle remove highlight on blur
     if (updatedConfig.hasOwnProperty('removeHighlightOnBlur')) {
-        (updatedConfig.removeHighlightOnBlur)
+        updatedConfig.removeHighlightOnBlur
             ? tree.addEventListener('blur', removeHighlight, false)
             : tree.removeEventListener('blur', removeHighlight, false);
     }
@@ -354,15 +383,20 @@ function DomTree(userConfig, targetNode) {
     userConfig = userConfig || {};
 
     if (this === undefined) {
-        throw new Error('DomTree is a constructor function. ' +
-            'Should be invoked with `new` keyword');
+        throw new Error(
+            'DomTree is a constructor function. ' +
+                'Should be invoked with `new` keyword'
+        );
     }
 
     if (!util.isValidHtmlElement(targetNode)) {
         throw new Error(targetNode + ' is not a valid HTML element');
     }
 
-    var _config = util.mergeConfig(config.defaultConfig, validateConfig(userConfig));
+    var _config = util.mergeConfig(
+        config.defaultConfig,
+        validateConfig(userConfig)
+    );
     var tree = constructDomTree(util.deepClone(_config), null);
 
     configureTree(tree, _config);
@@ -385,10 +419,15 @@ function DomTree(userConfig, targetNode) {
         if (util.getLengthOfObjOrArray(updatedUserConfig) === 0) return;
 
         if (!_config.initialized) {
-            throw new Error('Trying to update before initialize to target element!');
+            throw new Error(
+                'Trying to update before initialize to target element!'
+            );
         }
 
-        updatedUserConfig = util.diff(_config, validateConfig(updatedUserConfig, 'update'));
+        updatedUserConfig = util.diff(
+            _config,
+            validateConfig(updatedUserConfig, 'update')
+        );
         var keys = Object.keys(updatedUserConfig);
 
         // scenarios

@@ -21,7 +21,9 @@ function getLengthOfObjOrArray(param) {
     if (type === 'array') return param.length;
     if (type === 'object') return Object.keys(param).length;
 
-    throw new TypeError('Argument type should be array or object but received ' + type);
+    throw new TypeError(
+        'Argument type should be array or object but received ' + type
+    );
 }
 
 function getType(value) {
@@ -37,7 +39,7 @@ function getType(value) {
 }
 
 function isArray(type) {
-    return (Object.prototype.toString.call(type) === '[object Array]');
+    return Object.prototype.toString.call(type) === '[object Array]';
 }
 
 function isValidHtmlElement(ele) {
@@ -56,7 +58,7 @@ function handleToggleClass(ele, targetClassName) {
         var pattern = new RegExp('\\b ' + targetClassName + '\\b', 'i');
         ele.className = ele.className.replace(pattern, '');
     } else {
-        ele.className += (' ' + targetClassName);
+        ele.className += ' ' + targetClassName;
     }
 }
 
@@ -67,7 +69,9 @@ function isEmpty(param) {
         return getLengthOfObjOrArray(param) === 0;
     }
 
-    throw new Error('param should should be array or object but received ' + type);
+    throw new Error(
+        'param should should be array or object but received ' + type
+    );
 }
 
 function getBooleanOptionsFromObject(obj) {
@@ -75,7 +79,7 @@ function getBooleanOptionsFromObject(obj) {
 
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-            (typeof obj[key] === 'boolean') && booleanOptions.push(key);
+            typeof obj[key] === 'boolean' && booleanOptions.push(key);
         }
     }
 
@@ -87,9 +91,7 @@ function mergeConfig(target, source) {
 
     for (var prop in target) {
         if (target.hasOwnProperty(prop)) {
-            o[prop] = (source.hasOwnProperty(prop))
-                ? source[prop]
-                : target[prop];
+            o[prop] = source.hasOwnProperty(prop) ? source[prop] : target[prop];
         }
     }
 
@@ -101,10 +103,15 @@ function deepClone(source) {
 }
 
 function diff(prevConfig, updatedConfig) {
-    var o = {}, prevVal, updatedVal;
+    var o = {},
+        prevVal,
+        updatedVal;
 
     for (var prop in prevConfig) {
-        if (prevConfig.hasOwnProperty(prop) && updatedConfig.hasOwnProperty(prop)) {
+        if (
+            prevConfig.hasOwnProperty(prop) &&
+            updatedConfig.hasOwnProperty(prop)
+        ) {
             prevVal = prevConfig[prop];
             updatedVal = updatedConfig[prop];
 

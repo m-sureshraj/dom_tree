@@ -11,21 +11,28 @@ var defaultConfig = {
 var treeGenerateSpecificOptions = ['fold', 'format', 'separators', 'data'];
 
 var treeConfigurationSpecificOptions = [
-    'theme', 'keyboardNavigation', 'removeHighlightOnBlur'
+    'theme',
+    'keyboardNavigation',
+    'removeHighlightOnBlur'
 ];
 
-var availableThemes = ['dtjs-default-theme', 'one-dark', 'chrome-light', 'darcula'];
+var availableThemes = [
+    'dtjs-default-theme',
+    'one-dark',
+    'chrome-light',
+    'darcula'
+];
 
 var availableFormats = ['object', 'json'];
 
 var entryNodeMap = {
-    'object': { val: '{', className: 'ob' },
-    'null': { val: 'null', className: 'null' },
-    'array': { val: '[', className: 'ob' },
-    'undefined': { val: 'undefined', className: 'undef' },
-    'number': { val: null, className: 'num' },
-    'boolean': { val: null, className: 'bool' },
-    'string': { val: null, className: 'str' }
+    object: { val: '{', className: 'ob' },
+    null: { val: 'null', className: 'null' },
+    array: { val: '[', className: 'ob' },
+    undefined: { val: 'undefined', className: 'undef' },
+    number: { val: null, className: 'num' },
+    boolean: { val: null, className: 'bool' },
+    string: { val: null, className: 'str' }
 };
 
 module.exports = {

@@ -11,8 +11,12 @@ function isElementHasChildren(ele) {
 }
 
 function addMoveDownClass(
-    _isElementHasChildren, _isElementFolded, _isParentNodeRoot, firstChild,
-    nextSibling, ele
+    _isElementHasChildren,
+    _isElementFolded,
+    _isParentNodeRoot,
+    firstChild,
+    nextSibling,
+    ele
 ) {
     if (
         _isElementHasChildren &&
@@ -24,13 +28,18 @@ function addMoveDownClass(
         }
     } else {
         nextSibling &&
-        nextSibling.classList.contains('hc') &&
-        nextSibling.classList.add('dtjs-md');
+            nextSibling.classList.contains('hc') &&
+            nextSibling.classList.add('dtjs-md');
     }
 }
 
 function addMoveUpClass(
-    _isElementHasChildren, _isElementFolded, _isParentNodeRoot, lastChild, previousSibling, ele
+    _isElementHasChildren,
+    _isElementFolded,
+    _isParentNodeRoot,
+    lastChild,
+    previousSibling,
+    ele
 ) {
     if (
         _isElementHasChildren &&
@@ -42,17 +51,21 @@ function addMoveUpClass(
         }
     } else {
         previousSibling &&
-        previousSibling.classList.contains('hc') &&
-        previousSibling.classList.add('dtjs-mu');
+            previousSibling.classList.contains('hc') &&
+            previousSibling.classList.add('dtjs-mu');
     }
 }
 
 function fold(ele) {
-    isElementHasChildren(ele) && !isElementFolded(ele) && ele.classList.add('fold');
+    isElementHasChildren(ele) &&
+        !isElementFolded(ele) &&
+        ele.classList.add('fold');
 }
 
 function collapse(ele) {
-    isElementHasChildren(ele) && isElementFolded(ele) && ele.classList.remove('fold');
+    isElementHasChildren(ele) &&
+        isElementFolded(ele) &&
+        ele.classList.remove('fold');
 }
 
 function moveUp(ele) {
@@ -64,14 +77,20 @@ function moveUp(ele) {
 
     var _isElementHasChildren = isElementHasChildren(ele),
         previousSibling = ele.previousSibling,
-        lastChild = ele.querySelector('ul') && ele.querySelector('ul').lastChild,
+        lastChild =
+            ele.querySelector('ul') && ele.querySelector('ul').lastChild,
         isEleHasMoveDownClass = ele.classList.contains('dtjs-md');
 
     ele.classList.remove('dtjs-highlight');
 
     // we focused next element because of move up
     addMoveUpClass(
-        _isElementHasChildren, _isElementFolded, _isParentNodeRoot, lastChild, previousSibling, ele
+        _isElementHasChildren,
+        _isElementFolded,
+        _isParentNodeRoot,
+        lastChild,
+        previousSibling,
+        ele
     );
 
     if (_isElementHasChildren && !_isElementFolded) {
@@ -82,8 +101,8 @@ function moveUp(ele) {
                 previousSibling.className += ' dtjs-highlight';
             } else {
                 _isParentNodeRoot
-                    ? lastChild.className += ' dtjs-highlight'
-                    : ele.offsetParent.className += ' dtjs-highlight dtjs-md';
+                    ? (lastChild.className += ' dtjs-highlight')
+                    : (ele.offsetParent.className += ' dtjs-highlight dtjs-md');
             }
         } else {
             // highlight last child
@@ -95,8 +114,8 @@ function moveUp(ele) {
         isEleHasMoveDownClass && ele.classList.remove('dtjs-md');
 
         previousSibling
-            ? previousSibling.className += ' dtjs-highlight'
-            : ele.offsetParent.className += ' dtjs-highlight dtjs-md';
+            ? (previousSibling.className += ' dtjs-highlight')
+            : (ele.offsetParent.className += ' dtjs-highlight dtjs-md');
     }
 }
 
@@ -109,14 +128,20 @@ function moveDown(ele) {
 
     var _isElementHasChildren = isElementHasChildren(ele),
         nextSibling = ele.nextSibling,
-        firstChild = ele.querySelector('ul') && ele.querySelector('ul').firstChild,
+        firstChild =
+            ele.querySelector('ul') && ele.querySelector('ul').firstChild,
         isEleHasMoveUpClass = ele.classList.contains('dtjs-mu');
 
     ele.classList.remove('dtjs-highlight');
 
     // we focused next element because of move down
     addMoveDownClass(
-        _isElementHasChildren, _isElementFolded, _isParentNodeRoot, firstChild, nextSibling, ele
+        _isElementHasChildren,
+        _isElementFolded,
+        _isParentNodeRoot,
+        firstChild,
+        nextSibling,
+        ele
     );
 
     if (_isElementHasChildren && !_isElementFolded) {
@@ -128,8 +153,8 @@ function moveDown(ele) {
             } else {
                 // reached to the root top then highlight it's first element
                 _isParentNodeRoot
-                    ? firstChild.className += ' dtjs-highlight'
-                    : ele.offsetParent.className += ' dtjs-highlight dtjs-mu';
+                    ? (firstChild.className += ' dtjs-highlight')
+                    : (ele.offsetParent.className += ' dtjs-highlight dtjs-mu');
             }
         } else {
             // highlight first child
@@ -140,8 +165,8 @@ function moveDown(ele) {
         ele.classList.contains('dtjs-md') && ele.classList.remove('dtjs-md');
         isEleHasMoveUpClass && ele.classList.remove('dtjs-mu');
         nextSibling
-            ? nextSibling.className += ' dtjs-highlight'
-            : ele.offsetParent.className += ' dtjs-highlight dtjs-mu';
+            ? (nextSibling.className += ' dtjs-highlight')
+            : (ele.offsetParent.className += ' dtjs-highlight dtjs-mu');
     }
 }
 
