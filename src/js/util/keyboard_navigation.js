@@ -1,4 +1,7 @@
 function isParentNodeRoot(ele) {
+    // it's safe to access parentNode.classList directly without
+    // checking pareNode existence. Because dom-tree rendered into
+    // user's target node
     return ele.parentNode.classList.contains('dtjs-root');
 }
 
@@ -10,6 +13,7 @@ function isElementHasChildren(ele) {
     return ele.classList.contains('hc');
 }
 
+/* istanbul ignore next */
 function addMoveDownClass(
     _isElementHasChildren,
     _isElementFolded,
@@ -33,6 +37,7 @@ function addMoveDownClass(
     }
 }
 
+/* istanbul ignore next */
 function addMoveUpClass(
     _isElementHasChildren,
     _isElementFolded,
@@ -57,17 +62,18 @@ function addMoveUpClass(
 }
 
 function fold(ele) {
-    isElementHasChildren(ele) &&
-        !isElementFolded(ele) &&
+    kn.isElementHasChildren(ele) &&
+        !kn.isElementFolded(ele) &&
         ele.classList.add('fold');
 }
 
 function collapse(ele) {
-    isElementHasChildren(ele) &&
-        isElementFolded(ele) &&
+    kn.isElementHasChildren(ele) &&
+        kn.isElementFolded(ele) &&
         ele.classList.remove('fold');
 }
 
+/* istanbul ignore next */
 function moveUp(ele) {
     var _isParentNodeRoot = isParentNodeRoot(ele),
         _isElementFolded = isElementFolded(ele);
@@ -119,6 +125,7 @@ function moveUp(ele) {
     }
 }
 
+/* istanbul ignore next */
 function moveDown(ele) {
     var _isParentNodeRoot = isParentNodeRoot(ele),
         _isElementFolded = isElementFolded(ele);
@@ -170,9 +177,19 @@ function moveDown(ele) {
     }
 }
 
-module.exports = {
+// why can't directly use module.exports = {...}.
+// when i use module.exports i could not able to mock functions when testing.
+var kn = {
     fold: fold,
     collapse: collapse,
     moveUp: moveUp,
-    moveDown: moveDown
+    moveDown: moveDown,
+    // following fn's exported only for testing purpose.
+    // todo: may be we can use https://github.com/jhnns/rewire
+    isElementHasChildren: isElementHasChildren,
+    isElementFolded: isElementFolded,
+    isParentNodeRoot: isParentNodeRoot,
+    addMoveDownClass: addMoveDownClass
 };
+
+module.exports = kn;

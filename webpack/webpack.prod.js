@@ -5,6 +5,9 @@ var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var common = require('./webpack.common');
 var webpackUtil = require('./webpack.util');
 
+// add .min to extracted css file name
+webpackUtil.extractTextPlugin.filename = 'css/[name].min.css';
+
 // eslint-disable-next-line camelcase
 var uglify_js_plugin = new UglifyJSPlugin({
     parallel: {
@@ -19,7 +22,8 @@ var uglify_js_plugin = new UglifyJSPlugin({
 
 module.exports = merge(common, {
     output: {
-        path: join(webpackUtil.rootPath, 'dist')
+        path: join(webpackUtil.rootPath, 'dist'),
+        filename: 'js/[name].min.js'
     },
 
     module: {

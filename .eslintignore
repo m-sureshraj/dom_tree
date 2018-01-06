@@ -2,3 +2,5 @@
 
 dev/*
 dist/*
+coverage
+**/__tests__/*.*.js

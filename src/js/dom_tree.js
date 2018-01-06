@@ -110,7 +110,8 @@ function constructChildTree(_config, element) {
         // append ellipse node
         element.appendChild(getEllipseNode());
 
-        // show item count when collapsing wrapper element
+        // set item count as a data attr,
+        // will be displayed to the user when folding the element
         element.setAttribute('data-cc', '// ' + len + ' Items');
     }
 
@@ -311,7 +312,7 @@ function configureTree(tree, _config) {
     tree.addEventListener(
         'focus',
         function() {
-            util.handleToggleClass(tree, 'dtjs-root-focused');
+            tree.classList.toggle('dtjs-root-focused');
         },
         false
     );
@@ -319,7 +320,7 @@ function configureTree(tree, _config) {
     tree.addEventListener(
         'blur',
         function() {
-            util.handleToggleClass(tree, 'dtjs-root-focused');
+            tree.classList.toggle('dtjs-root-focused');
         },
         false
     );
@@ -337,7 +338,7 @@ function configureTree(tree, _config) {
         'click',
         function(e) {
             if (e.target && e.target.className === 'ex') {
-                util.handleToggleClass(e.target.offsetParent, 'fold');
+                e.target.offsetParent.classList.toggle('fold');
             }
         },
         false
