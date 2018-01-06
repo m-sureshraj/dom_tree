@@ -1,9 +1,4 @@
-/**
- * check param is a primitive type
- * @param value - required {valid Js type}
- * @returns {boolean}
- */
-export function isValuePrimitive(value) {
+function isValuePrimitive(value) {
     if (!arguments.length) throw new Error('Required argument is missing!');
 
     if (value === null) return true;
@@ -19,22 +14,19 @@ export function isValuePrimitive(value) {
     }
 }
 
-/**
- * get length of a Array or Object
- * @param param - required {Array || Object}
- * @returns {Number}
- */
-export function getLengthOfObjOrArray(param) {
+function getLengthOfObjOrArray(param) {
     if (!param) throw new Error('Required argument is missing!');
 
     var type = getType(param);
     if (type === 'array') return param.length;
     if (type === 'object') return Object.keys(param).length;
 
-    throw new TypeError('Argument type should be array or object but received ' + type);
+    throw new TypeError(
+        'Argument type should be array or object but received ' + type
+    );
 }
 
-export function getType(value) {
+function getType(value) {
     if (value === null) {
         return 'null';
     }
@@ -46,11 +38,11 @@ export function getType(value) {
     return typeof value;
 }
 
-export function isArray(type) {
-    return (Object.prototype.toString.call(type) === '[object Array]');
+function isArray(type) {
+    return Object.prototype.toString.call(type) === '[object Array]';
 }
 
-export function isValidHtmlElement(ele) {
+function isValidHtmlElement(ele) {
     if (!ele) {
         throw Error('Invalid parameter.!');
     }
@@ -58,7 +50,7 @@ export function isValidHtmlElement(ele) {
     return ele instanceof HTMLElement;
 }
 
-export function handleToggleClass(ele, targetClassName) {
+function handleToggleClass(ele, targetClassName) {
     var classNamesArr = ele.className.split(' ');
     var index = classNamesArr.indexOf(targetClassName);
 
@@ -66,16 +58,96 @@ export function handleToggleClass(ele, targetClassName) {
         var pattern = new RegExp('\\b ' + targetClassName + '\\b', 'i');
         ele.className = ele.className.replace(pattern, '');
     } else {
-        ele.className += (' ' + targetClassName);
+        ele.className += ' ' + targetClassName;
     }
 }
 
-export function isEmpty(param) {
+function isEmpty(param) {
     var type = getType(param);
 
     if (type === 'object' || type === 'array') {
         return getLengthOfObjOrArray(param) === 0;
     }
 
-    throw new Error('param should should be array or object but received ' + type);
+    throw new Error(
+        'param should should be array or object but received ' + type
+    );
 }
+
+function getBooleanOptionsFromObject(obj) {
+    var booleanOptions = [];
+
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            typeof obj[key] === 'boolean' && booleanOptions.push(key);
+        }
+    }
+
+    return booleanOptions;
+}
+
+function mergeConfig(target, source) {
+    var o = {};
+
+    for (var prop in target) {
+        if (target.hasOwnProperty(prop)) {
+            o[prop] = source.hasOwnProperty(prop) ? source[prop] : target[prop];
+        }
+    }
+
+    return o;
+}
+
+function deepClone(source) {
+    return JSON.parse(JSON.stringify(source));
+}
+
+function diff(prevConfig, updatedConfig) {
+    var o = {},
+        prevVal,
+        updatedVal;
+
+    for (var prop in prevConfig) {
+        if (
+            prevConfig.hasOwnProperty(prop) &&
+            updatedConfig.hasOwnProperty(prop)
+        ) {
+            prevVal = prevConfig[prop];
+            updatedVal = updatedConfig[prop];
+
+            // we can directly compare primitive values
+            if (isValuePrimitive(updatedVal) && prevVal !== updatedVal) {
+                o[prop] = updatedVal;
+            } else if (JSON.stringify(prevVal) !== JSON.stringify(updatedVal)) {
+                // compare array, object
+                // for our use case we can't use any `deepEqual` related packages.
+                // * deepEqual does not care about order of properties, but our case we need
+                //   that behavior. deepEqual({a: 1, b: 2}, {b: 2, a: 1}); // true
+                o[prop] = updatedVal;
+            }
+        }
+    }
+
+    return o;
+}
+
+function contains(haystack, arr) {
+    return arr.some(function(v) {
+        return haystack.indexOf(v) !== -1;
+    });
+}
+
+module.exports = {
+    isValuePrimitive: isValuePrimitive,
+    getLengthOfObjOrArray: getLengthOfObjOrArray,
+    getType: getType,
+    isArray: isArray,
+    isValidHtmlElement: isValidHtmlElement,
+    handleToggleClass: handleToggleClass,
+    isEmpty: isEmpty,
+    getBooleanOptionsFromObject: getBooleanOptionsFromObject,
+    mergeConfig: mergeConfig,
+    deepClone: deepClone,
+    diff: diff,
+    contains: contains
+};

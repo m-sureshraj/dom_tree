@@ -4,27 +4,46 @@
   "description": "",
   "main": "dom-tree.js",
   "scripts": {
-    "watch": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "predev": "rm -rf ./dev/*",
-    "dev": "webpack --config ./webpack/webpack.dev.js",
-    "prebuild": "rm -rf ./dist/*",
-    "build": "webpack --config ./webpack/webpack.prod.js",
-    "lint": "eslint ./src/js/*.js ./webpack/*.js",
-    "csslint": "stylelint './src/css/**/*.css'",
-    "fixcsslint": "stylelint './src/css/**/*.css' --fix"
+    "build:watch": "webpack-dev-server --config ./webpack/webpack.dev.js",
+    "prebuild:dev": "rm -rf ./dev/*",
+    "build:dev": "webpack --config ./webpack/webpack.dev.js",
+    "prebuild:production": "rm -rf ./dist/*",
+    "build:production": "webpack --config ./webpack/webpack.prod.js",
+    "lint-js": "eslint '**/*.js' '.*.js'",
+    "lint-js-fix": "eslint '**/*.js' '.*.js' --fix",
+    "lint-css": "stylelint './src/css/**/*.css'",
+    "lint-css-fix": "stylelint './src/css/**/*.css' --fix",
+    "lint": "run-p lint-js lint-css",
+    "precommit": "lint-staged",
+    "prepush": "run-p lint"
   },
-  "author": "",
+  "author": "M.Sureshraj <m.s.suresh100@gmail.com>",
   "license": "ISC",
+  "lint-staged": {
+    "**/*.js": [
+      "lint-js-fix",
+      "git add"
+    ],
+    "src/css/**/*.css": [
+      "lint-css-fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
     "css-loader": "^0.28.7",
     "eslint": "^4.6.1",
+    "eslint-plugin-prettier": "^2.4.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-harddisk-plugin": "^0.1.0",
     "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "npm-run-all": "^4.1.2",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-reporter": "^5.0.0",
+    "prettier": "^1.9.2",
     "stylelint": "^8.1.1",
     "stylelint-config-standard": "^17.0.0",
     "uglifyjs-webpack-plugin": "^0.4.6",

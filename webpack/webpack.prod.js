@@ -5,6 +5,7 @@ var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var common = require('./webpack.common');
 var webpackUtil = require('./webpack.util');
 
+// eslint-disable-next-line camelcase
 var uglify_js_plugin = new UglifyJSPlugin({
     parallel: {
         cache: true
@@ -32,7 +33,7 @@ module.exports = merge(common, {
     },
 
     plugins: [
-        uglify_js_plugin,
+        uglify_js_plugin, // eslint-disable-line camelcase
         webpackUtil.extractTextPlugin
     ]
 });
