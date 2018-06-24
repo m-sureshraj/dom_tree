@@ -20,4 +20,3 @@ script:
   - npm run test:coverage
 after_success:
   - npm run report-coverage
-  - npm run build:production

@@ -1,8 +1,17 @@
 {
   "name": "dom_tree",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dom-tree.js",
+  "version": "0.1.0",
+  "description": "Convert JavaScript Object, Array, JSON into HTML tree view",
+  "main": "dist/js/dom_tree.min.js",
+  "style": "dist/css/dom_tree.min.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-sureshraj/dom-tree.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m-sureshraj/dom-tree/issues"
+  },
+  "homepage": "https://github.com/m-sureshraj/dom-tree#readme",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
     "build:dev": "webpack --config ./webpack/webpack.dev.js",
@@ -20,10 +29,21 @@
     "report-coverage": "codecov",
     "precommit": "lint-staged",
     "prepush": "run-p lint test:single test:coverage",
-    "prettier": "prettier --config ./prettier.config.js --write"
+    "prettier": "prettier --config ./prettier.config.js --write",
+    "prerelease": "npm run lint && npm run test:single && npm run test:coverage",
+    "release": "npm run build:production"
   },
+  "files": ["dist", "src"],
   "author": "M.Sureshraj <m.s.suresh100@gmail.com>",
   "license": "ISC",
+  "keywords": [
+    "object tree",
+    "array tree",
+    "html tree view",
+    "json to html tree",
+    "convert javascript object to html tree view",
+    "convert javascript array to html tree view"
+  ],
   "lint-staged": {
     "**/*.js": [
       "lint-js-fix",
