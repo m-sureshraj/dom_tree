@@ -27,6 +27,8 @@ function getLengthOfObjOrArray(param) {
 }
 
 function getType(value) {
+    if (!arguments.length) throw new Error('Required argument is missing!');
+
     if (value === null) {
         return 'null';
     }
@@ -39,6 +41,8 @@ function getType(value) {
 }
 
 function isArray(type) {
+    if (!arguments.length) throw new Error('Required argument is missing!');
+
     return Object.prototype.toString.call(type) === '[object Array]';
 }
 
@@ -50,18 +54,6 @@ function isValidHtmlElement(ele) {
     return ele instanceof HTMLElement;
 }
 
-function handleToggleClass(ele, targetClassName) {
-    var classNamesArr = ele.className.split(' ');
-    var index = classNamesArr.indexOf(targetClassName);
-
-    if (index !== -1) {
-        var pattern = new RegExp('\\b ' + targetClassName + '\\b', 'i');
-        ele.className = ele.className.replace(pattern, '');
-    } else {
-        ele.className += ' ' + targetClassName;
-    }
-}
-
 function isEmpty(param) {
     var type = getType(param);
 
@@ -69,15 +61,18 @@ function isEmpty(param) {
         return getLengthOfObjOrArray(param) === 0;
     }
 
-    throw new Error(
-        'param should should be array or object but received ' + type
-    );
+    throw new Error('param should be array or object but received ' + type);
 }
 
 function getBooleanOptionsFromObject(obj) {
+    if (typeof obj !== 'object') {
+        throw new Error('Argument should be a type `object`');
+    }
+
     var booleanOptions = [];
 
     for (var key in obj) {
+        /* istanbul ignore else */
         if (obj.hasOwnProperty(key)) {
             typeof obj[key] === 'boolean' && booleanOptions.push(key);
         }
@@ -90,6 +85,7 @@ function mergeConfig(target, source) {
     var o = {};
 
     for (var prop in target) {
+        /* istanbul ignore else */
         if (target.hasOwnProperty(prop)) {
             o[prop] = source.hasOwnProperty(prop) ? source[prop] : target[prop];
         }
@@ -98,6 +94,7 @@ function mergeConfig(target, source) {
     return o;
 }
 
+// JSON.stringify will ignore methods on object
 function deepClone(source) {
     return JSON.parse(JSON.stringify(source));
 }
@@ -108,6 +105,7 @@ function diff(prevConfig, updatedConfig) {
         updatedVal;
 
     for (var prop in prevConfig) {
+        /* istanbul ignore else */
         if (
             prevConfig.hasOwnProperty(prop) &&
             updatedConfig.hasOwnProperty(prop)
@@ -143,7 +141,6 @@ module.exports = {
     getType: getType,
     isArray: isArray,
     isValidHtmlElement: isValidHtmlElement,
-    handleToggleClass: handleToggleClass,
     isEmpty: isEmpty,
     getBooleanOptionsFromObject: getBooleanOptionsFromObject,
     mergeConfig: mergeConfig,

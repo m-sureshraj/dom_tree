@@ -1,11 +1,23 @@
 sudo: false
+notifications:
+  email: false
+branches:
+  only:
+    - master
+
 language: node_js
 node_js:
    - "8.9.1"
 cache:
   directories:
     - "node_modules"
+
 before_script:
   - npm prune
 script:
   - npm run lint
+  - npm run test:single
+  - npm run test:coverage
+after_success:
+  - npm run report-coverage
+  - npm run build:production

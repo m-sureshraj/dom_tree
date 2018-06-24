@@ -5,20 +5,14 @@ module.exports = {
     env: {
         browser: true,
         commonjs: true,
-        node: true
+        node: true,
+        jest: true
     },
     extends: 'eslint:recommended',
     plugins: ['prettier'], // activating esling-plugin-prettier (--fix stuff)
     // 0: off, 1: warn, 2: error
     rules: {
-        'prettier/prettier': [
-            'error',
-            {
-                singleQuote: true,
-                trailingComma: 'none',
-                tabWidth: 4
-            }
-        ],
+        'prettier/prettier': 'error',
         // Best practices
         semi: 2,
         quotes: ['error', 'single'],
