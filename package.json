@@ -1,14 +1,24 @@
 {
   "name": "dom_tree",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dom-tree.js",
+  "version": "0.1.0",
+  "description": "Convert JavaScript Object, Array, JSON into HTML tree view",
+  "main": "dist/js/dom_tree.min.js",
+  "style": "dist/css/dom_tree.min.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-sureshraj/dom-tree.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m-sureshraj/dom-tree/issues"
+  },
+  "homepage": "https://github.com/m-sureshraj/dom-tree#readme",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "build:dev": "webpack --config ./webpack/webpack.dev.js",
-    "build:production": "webpack --config ./webpack/webpack.prod.js",
+    "prestart": "if [ ! -f './src/dom_tree.html' ]; then cp ./src/dom_tree_template.html ./src/dom_tree.html; fi",
+    "start": "webpack-dev-server --config ./webpack/webpack.dev.js",
     "prebuild:dev": "rm -rf ./dev/*",
+    "build:dev": "webpack --config ./webpack/webpack.dev.js",
     "prebuild:production": "rm -rf dist && mkdir dist",
+    "build:production": "webpack --config ./webpack/webpack.prod.js",
     "lint": "run-p lint-js lint-css",
     "lint-js": "eslint '**/*.js' '.*.js'",
     "lint-js-fix": "eslint --fix",
@@ -22,8 +32,17 @@
     "prepush": "run-p lint test:single test:coverage",
     "prettier": "prettier --config ./prettier.config.js --write"
   },
+  "files": ["dist", "src"],
   "author": "M.Sureshraj <m.s.suresh100@gmail.com>",
   "license": "ISC",
+  "keywords": [
+    "object tree",
+    "array tree",
+    "html tree view",
+    "json to html tree",
+    "convert javascript object to html tree view",
+    "convert javascript array to html tree view"
+  ],
   "lint-staged": {
     "**/*.js": [
       "lint-js-fix",
