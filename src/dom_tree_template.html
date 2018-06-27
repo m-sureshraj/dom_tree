@@ -107,14 +107,13 @@
         };
 
         var dom = new DomTree({
-            ele: document.querySelector('#root'),
             data: data,
             separators: true,
             fold: false,
             keyboardNavigation: true,
             removeHighlightOnBlur: true,
             theme: 'darcula'
-        });
+        }, document.querySelector('#root'));
 
         console.time('dom_tree');
         dom.init();

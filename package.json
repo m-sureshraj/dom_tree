@@ -13,11 +13,12 @@
   },
   "homepage": "https://github.com/m-sureshraj/dom-tree#readme",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "build:dev": "webpack --config ./webpack/webpack.dev.js",
-    "build:production": "webpack --config ./webpack/webpack.prod.js",
+    "prestart": "if [ ! -f './src/dom_tree.html' ]; then cp ./src/dom_tree_template.html ./src/dom_tree.html; fi",
+    "start": "webpack-dev-server --config ./webpack/webpack.dev.js",
     "prebuild:dev": "rm -rf ./dev/*",
+    "build:dev": "webpack --config ./webpack/webpack.dev.js",
     "prebuild:production": "rm -rf dist && mkdir dist",
+    "build:production": "webpack --config ./webpack/webpack.prod.js",
     "lint": "run-p lint-js lint-css",
     "lint-js": "eslint '**/*.js' '.*.js'",
     "lint-js-fix": "eslint --fix",
@@ -29,9 +30,7 @@
     "report-coverage": "codecov",
     "precommit": "lint-staged",
     "prepush": "run-p lint test:single test:coverage",
-    "prettier": "prettier --config ./prettier.config.js --write",
-    "prerelease": "npm run lint && npm run test:single && npm run test:coverage",
-    "release": "npm run build:production"
+    "prettier": "prettier --config ./prettier.config.js --write"
   },
   "files": ["dist", "src"],
   "author": "M.Sureshraj <m.s.suresh100@gmail.com>",

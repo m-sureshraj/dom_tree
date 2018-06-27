@@ -1,9 +1,10 @@
-.DS_Store
 .idea/
 .vscode/
-node_modules
+node_modules/
+dev/
+dist/
+.DS_Store
 npm-debug.log
-todo.txt
-dev
 dom_tree.html
 coverage
+todo.txt

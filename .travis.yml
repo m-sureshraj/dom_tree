@@ -20,3 +20,15 @@ script:
   - npm run test:coverage
 after_success:
   - npm run report-coverage
+  - npm run build:production
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: dist
+  target-branch: gh-pages
+  email: deploy@travis-ci.org
+  name: Deployment Bot
+  on:
+    branch: master
