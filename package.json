@@ -19,6 +19,7 @@
     "build:dev": "webpack --config ./webpack/webpack.dev.js",
     "prebuild:production": "rm -rf dist && mkdir dist",
     "build:production": "webpack --config ./webpack/webpack.prod.js",
+    "build:demo": "cp ./demo/index.html ./demo/dist/index.htm",
     "lint": "run-p lint-js lint-css",
     "lint-js": "eslint '**/*.js' '.*.js'",
     "lint-js-fix": "eslint --fix",
@@ -32,7 +33,10 @@
     "prepush": "run-p lint test:single test:coverage",
     "prettier": "prettier --config ./prettier.config.js --write"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "author": "M.Sureshraj <m.s.suresh100@gmail.com>",
   "license": "ISC",
   "keywords": [
