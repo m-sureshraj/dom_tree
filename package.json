@@ -19,7 +19,7 @@
     "build:dev": "webpack --config ./webpack/webpack.dev.js",
     "prebuild:production": "rm -rf dist && mkdir dist",
     "build:production": "webpack --config ./webpack/webpack.prod.js",
-    "build:demo": "cp ./demo/index.html ./demo/dist/index.htm",
+    "build:demo": "rm -rf demo/dist && mkdir demo/dist && cp demo/index.html demo/dist/index.htm",
     "lint": "run-p lint-js lint-css",
     "lint-js": "eslint '**/*.js' '.*.js'",
     "lint-js-fix": "eslint --fix",
