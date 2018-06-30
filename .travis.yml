@@ -19,7 +19,9 @@ script:
   - npm run test:single
   - npm run test:coverage
 after_success:
+  - echo "$TRAVIS_BRANCH"
   - npm run report-coverage
+  - npm run build:demo
 before_deploy:
   - npm run build:demo
 deploy:
