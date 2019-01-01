@@ -6,7 +6,7 @@ module.exports = {
     // entry point to start bundling
     entry: {
         // eslint-disable-next-line camelcase
-        dom_tree: [join(webpackUtil.rootPath, 'src', 'js', 'dom_tree.js')]
+        dom_tree: join(webpackUtil.rootPath, 'src', 'js', 'dom_tree.js')
     },
 
     // where to put bundled files
