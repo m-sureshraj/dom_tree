@@ -1,4 +1,4 @@
 # Dom-Tree
 
 WIP 
-![dom-tree in action]("media/dom-tree-on-action.gif?raw=true")
+![dom-tree in action]("https://github.com/m-sureshraj/dom-tree/blob/master/media/dom-tree-on-action.gif")
