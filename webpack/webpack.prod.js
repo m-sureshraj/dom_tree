@@ -2,16 +2,17 @@
 var join = require('path').join;
 var merge = require('webpack-merge');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-var common = require('./webpack.common');
-var webpackUtil = require('./webpack.util');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var common = require('./webpack.common');
+
+var rootPath = join(__dirname, '..');
 
 module.exports = merge(common, {
     mode: 'production',
 
     output: {
-        path: join(webpackUtil.rootPath, 'dist'),
+        path: join(rootPath, 'dist'),
         filename: 'js/[name].min.js'
     },
 
