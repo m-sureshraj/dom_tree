@@ -1,4 +1,4 @@
-const kbn = require('../src/js/util/keyboard_navigation');
+const kbn = require('../keyboard_navigation');
 
 describe('Test keyboard navigation functions', () => {
     describe('isElementHasChildren:', () => {

@@ -1,9 +1,13 @@
-.idea/
-.vscode/
 node_modules/
+
+# IDE
+.idea/
+
 dev/
 dist/
-.DS_Store
-npm-debug.log
-dom_tree.html
 coverage
+
+npm-debug.log
+
+# Template for local development
+dom_tree.html

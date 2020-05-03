@@ -1,17 +1,9 @@
 {
   "name": "dom-tree",
-  "version": "0.1.0",
-  "description": "Convert JavaScript Object, Array and JSON into HTML tree view",
+  "version": "0.0.1",
+  "description": "Convert JavaScript Object, Array, and JSON into HTML tree view",
   "main": "dist/js/dom_tree.min.js",
   "style": "dist/css/dom_tree.min.css",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/m-sureshraj/dom-tree.git"
-  },
-  "bugs": {
-    "url": "https://github.com/m-sureshraj/dom-tree/issues"
-  },
-  "homepage": "https://github.com/m-sureshraj/dom-tree#readme",
   "scripts": {
     "prestart": "rm -rf ./dev/* && if [ ! -f './src/dom_tree.html' ]; then cp ./src/dom_tree_template.html ./src/dom_tree.html; fi",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js --env.script=start",
@@ -23,19 +15,31 @@
     "lint-css": "stylelint './src/css/**/*.css'",
     "lint-css-fix": "stylelint --fix",
     "test": "jest --watch",
-    "test:single": "jest",
+    "test:ci": "jest --ci",
     "test:coverage": "jest --collectCoverage",
     "report-coverage": "codecov",
-    "precommit": "lint-staged",
-    "prepush": "run-p lint test:single test:coverage",
     "prettier": "prettier --config ./prettier.config.js --write"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "run-s lint test:ci"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint-js-fix"
+    ],
+    "src/css/*.css": [
+      "npm run lint-css-fix"
+    ]
+  },
   "author": "M.Sureshraj <m.s.suresh100@gmail.com>",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-sureshraj/dom-tree.git"
+  },
+  "license": "MIT",
   "keywords": [
     "object tree",
     "array tree",
@@ -44,16 +48,6 @@
     "convert javascript object to html tree view",
     "convert javascript array to html tree view"
   ],
-  "lint-staged": {
-    "**/*.js": [
-      "lint-js-fix",
-      "git add"
-    ],
-    "src/css/**/*.css": [
-      "lint-css-fix",
-      "git add"
-    ]
-  },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
     "codecov": "^3.1.0",
@@ -62,9 +56,9 @@
     "eslint-plugin-prettier": "^2.7.0",
     "html-webpack-harddisk-plugin": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^0.14.3",
+    "husky": "^4.2.5",
     "jest": "^23.6.0",
-    "lint-staged": "^6.1.1",
+    "lint-staged": "^10.2.2",
     "mini-css-extract-plugin": "^0.5.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",

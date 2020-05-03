@@ -9,7 +9,7 @@ module.exports = {
         jest: true
     },
     extends: 'eslint:recommended',
-    plugins: ['prettier'], // activating esling-plugin-prettier (--fix stuff)
+    plugins: ['prettier'], // activating eslint-plugin-prettier (--fix stuff)
     // 0: off, 1: warn, 2: error
     rules: {
         'prettier/prettier': 'error',

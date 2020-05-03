@@ -1,6 +1,12 @@
 # node_modules ignored by default
 
-dev/*
-dist/*
-coverage
+# Don't ignore the dot js files in the root (e.g. .eslintrc.js)
+!.*.js
+
+# auto-generated contents
+dev/
+dist/
+coverage/
+
+# temporarily turned off
 **/__tests__/*.*.js
