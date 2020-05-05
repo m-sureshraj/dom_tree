@@ -1,4 +1,4 @@
-const util = require('../src/js/util/util');
+const util = require('../util');
 
 describe('Test utility helper functions', () => {
     describe('isValuePrimitive:', () => {
