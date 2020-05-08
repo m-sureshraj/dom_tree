@@ -12,7 +12,7 @@ var htmlWebpackPlugin = new HtmlWebpackPlugin({
     template: join(rootPath, 'src', 'dom_tree.html'),
     filename: join(rootPath, 'dev', 'index.html'),
     inject: 'head',
-    alwaysWriteToDisk: true // HtmlWebpackHardDiskPlugin require this option
+    alwaysWriteToDisk: true, // HtmlWebpackHardDiskPlugin require this option
 });
 
 module.exports = function(env) {
@@ -23,7 +23,7 @@ module.exports = function(env) {
         mode: 'development',
 
         output: {
-            path: join(rootPath, 'dev')
+            path: join(rootPath, 'dev'),
         },
 
         module: {
@@ -33,27 +33,27 @@ module.exports = function(env) {
                     test: /\.css$/,
                     use: [
                         {
-                            loader: MiniCssExtractPlugin.loader
+                            loader: MiniCssExtractPlugin.loader,
                         },
                         'css-loader',
-                        'postcss-loader'
-                    ]
-                }
-            ]
+                        'postcss-loader',
+                    ],
+                },
+            ],
         },
 
         devServer: {
             contentBase: join(rootPath, 'dev'),
             inline: true,
-            port: 3333
+            port: 3333,
         },
 
         plugins: [
             isStartScript && htmlWebpackPlugin,
             isStartScript && new HtmlWebpackHardDiskPlugin(),
             new MiniCssExtractPlugin({
-                filename: 'css/[name].css'
-            })
-        ].filter(Boolean)
+                filename: 'css/[name].css',
+            }),
+        ].filter(Boolean),
     });
 };

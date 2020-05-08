@@ -5,7 +5,7 @@ module.exports = {
     // entry point to start bundling
     entry: {
         // eslint-disable-next-line camelcase
-        dom_tree: join(__dirname, '..', 'src', 'js', 'dom_tree.js')
+        dom_tree: join(__dirname, '..', 'src', 'js', 'dom_tree.js'),
     },
 
     // where to put bundled files
@@ -14,6 +14,6 @@ module.exports = {
         // https://webpack.js.org/guides/author-libraries/
         library: 'DomTree',
         libraryTarget: 'umd',
-        libraryExport: 'default'
-    }
+        libraryExport: 'default',
+    },
 };

@@ -103,9 +103,7 @@ function constructChildTree(_config, element) {
         // insert the toggleOptionNode into `element` as a first child
         element.insertBefore(getToggleOptionNode(), element.firstChild);
 
-        element.appendChild(
-            constructDomTree(_config, document.createElement('ul'))
-        );
+        element.appendChild(constructDomTree(_config, document.createElement('ul')));
 
         // append ellipse node
         element.appendChild(getEllipseNode());
@@ -218,9 +216,7 @@ function validateBooleanOptions(userConfig) {
             userConfig.hasOwnProperty(option) &&
             typeof userConfig[option] !== 'boolean'
         ) {
-            throw new Error(
-                'config.' + option + ' value should be boolean type'
-            );
+            throw new Error('config.' + option + ' value should be boolean type');
         }
     }
 }
@@ -247,8 +243,7 @@ function validateFormatOption(userConfig) {
 
     if (config.availableFormats.indexOf(userConfig.format) === -1) {
         throw new Error(
-            'Invalid format option! available options are ' +
-                config.availableFormats
+            'Invalid format option! available options are ' + config.availableFormats
         );
     }
 }
@@ -355,11 +350,7 @@ function reConfigureTree(tree, previousConfig, updatedConfig) {
     if (updatedConfig.hasOwnProperty('keyboardNavigation')) {
         updatedConfig.keyboardNavigation
             ? tree.addEventListener('keydown', handleKeyboardNavigation, false)
-            : tree.removeEventListener(
-                  'keydown',
-                  handleKeyboardNavigation,
-                  false
-              );
+            : tree.removeEventListener('keydown', handleKeyboardNavigation, false);
     }
 
     // handle remove highlight on blur
@@ -385,8 +376,7 @@ function DomTree(userConfig, targetNode) {
 
     if (this === undefined) {
         throw new Error(
-            'DomTree is a constructor function. ' +
-                'Should be invoked with `new` keyword'
+            'DomTree is a constructor function. ' + 'Should be invoked with `new` keyword'
         );
     }
 
@@ -394,10 +384,7 @@ function DomTree(userConfig, targetNode) {
         throw new Error(targetNode + ' is not a valid HTML element');
     }
 
-    var _config = util.mergeConfig(
-        config.defaultConfig,
-        validateConfig(userConfig)
-    );
+    var _config = util.mergeConfig(config.defaultConfig, validateConfig(userConfig));
     var tree = constructDomTree(util.deepClone(_config), null);
 
     configureTree(tree, _config);
@@ -420,9 +407,7 @@ function DomTree(userConfig, targetNode) {
         if (util.getLengthOfObjOrArray(updatedUserConfig) === 0) return;
 
         if (!_config.initialized) {
-            throw new Error(
-                'Trying to update before initialize to target element!'
-            );
+            throw new Error('Trying to update before initialize to target element!');
         }
 
         updatedUserConfig = util.diff(

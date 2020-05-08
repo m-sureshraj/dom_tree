@@ -21,9 +21,7 @@ function getLengthOfObjOrArray(param) {
     if (type === 'array') return param.length;
     if (type === 'object') return Object.keys(param).length;
 
-    throw new TypeError(
-        'Argument type should be array or object but received ' + type
-    );
+    throw new TypeError('Argument type should be array or object but received ' + type);
 }
 
 function getType(value) {
@@ -106,10 +104,7 @@ function diff(prevConfig, updatedConfig) {
 
     for (var prop in prevConfig) {
         /* istanbul ignore else */
-        if (
-            prevConfig.hasOwnProperty(prop) &&
-            updatedConfig.hasOwnProperty(prop)
-        ) {
+        if (prevConfig.hasOwnProperty(prop) && updatedConfig.hasOwnProperty(prop)) {
             prevVal = prevConfig[prop];
             updatedVal = updatedConfig[prop];
 
@@ -146,5 +141,5 @@ module.exports = {
     mergeConfig: mergeConfig,
     deepClone: deepClone,
     diff: diff,
-    contains: contains
+    contains: contains,
 };

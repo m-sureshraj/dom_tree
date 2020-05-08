@@ -16,8 +16,8 @@ before_script:
   - npm prune
 script:
   - npm run lint
-  - npm run test:ci
-  - npm run test:coverage
+  - npm run test-ci
+  - npm run test-coverage
 after_success:
   - echo "$TRAVIS_BRANCH"
   - npm run report-coverage
