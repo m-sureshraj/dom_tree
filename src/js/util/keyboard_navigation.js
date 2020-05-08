@@ -62,9 +62,7 @@ function addMoveUpClass(
 }
 
 function fold(ele) {
-    kn.isElementHasChildren(ele) &&
-        !kn.isElementFolded(ele) &&
-        ele.classList.add('fold');
+    kn.isElementHasChildren(ele) && !kn.isElementFolded(ele) && ele.classList.add('fold');
 }
 
 function collapse(ele) {
@@ -83,8 +81,7 @@ function moveUp(ele) {
 
     var _isElementHasChildren = isElementHasChildren(ele),
         previousSibling = ele.previousSibling,
-        lastChild =
-            ele.querySelector('ul') && ele.querySelector('ul').lastChild,
+        lastChild = ele.querySelector('ul') && ele.querySelector('ul').lastChild,
         isEleHasMoveDownClass = ele.classList.contains('dtjs-md');
 
     ele.classList.remove('dtjs-highlight');
@@ -135,8 +132,7 @@ function moveDown(ele) {
 
     var _isElementHasChildren = isElementHasChildren(ele),
         nextSibling = ele.nextSibling,
-        firstChild =
-            ele.querySelector('ul') && ele.querySelector('ul').firstChild,
+        firstChild = ele.querySelector('ul') && ele.querySelector('ul').firstChild,
         isEleHasMoveUpClass = ele.classList.contains('dtjs-mu');
 
     ele.classList.remove('dtjs-highlight');
@@ -189,7 +185,7 @@ var kn = {
     isElementHasChildren: isElementHasChildren,
     isElementFolded: isElementFolded,
     isParentNodeRoot: isParentNodeRoot,
-    addMoveDownClass: addMoveDownClass
+    addMoveDownClass: addMoveDownClass,
 };
 
 module.exports = kn;

@@ -3,7 +3,7 @@ module.exports = {
     collectCoverageFrom: [
         // 'src/**/*.js', // still not 100%
         'src/js/util/util.js',
-        'src/js/util/keyboard_navigation.js'
+        'src/js/util/keyboard_navigation.js',
         // '!src/js/config.js'
     ],
     coverageDirectory: './coverage',
@@ -12,7 +12,7 @@ module.exports = {
             branches: 100,
             functions: 100,
             lines: 100,
-            statements: 100
-        }
-    }
+            statements: 100,
+        },
+    },
 };

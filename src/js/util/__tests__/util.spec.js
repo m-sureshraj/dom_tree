@@ -3,7 +3,9 @@ const util = require('../util');
 describe('Test utility helper functions', () => {
     describe('isValuePrimitive:', () => {
         test('should throw error if argument is missing', () => {
-            expect(() => { util.isValuePrimitive(); }).toThrowError();
+            expect(() => {
+                util.isValuePrimitive();
+            }).toThrowError();
         });
 
         test('should return true for primitive values', () => {
@@ -22,21 +24,25 @@ describe('Test utility helper functions', () => {
 
     describe('getLengthOfObjOrArray:', () => {
         test('should throw error if argument is missing or invalid', () => {
-            expect(() => { util.getLengthOfObjOrArray(); }).toThrowError();
-            expect(() => { util.getLengthOfObjOrArray('text'); }).toThrowError();
+            expect(() => {
+                util.getLengthOfObjOrArray();
+            }).toThrowError();
+            expect(() => {
+                util.getLengthOfObjOrArray('text');
+            }).toThrowError();
         });
 
         test('should return correct length for valid argument', () => {
             expect(util.getLengthOfObjOrArray([1, 2])).toBe(2);
-            expect(util.getLengthOfObjOrArray({ name: 'foo', age: 10 })).toBe(
-                2
-            );
+            expect(util.getLengthOfObjOrArray({ name: 'foo', age: 10 })).toBe(2);
         });
     });
 
     describe('getType:', () => {
         test('should throw error if argument is missing', () => {
-            expect(() => { util.getType(); }).toThrowError();
+            expect(() => {
+                util.getType();
+            }).toThrowError();
         });
 
         test('should return valid type', () => {
@@ -50,7 +56,9 @@ describe('Test utility helper functions', () => {
 
     describe('isArray:', () => {
         test('should throw error if argument is missing', () => {
-            expect(() => { util.isArray(); }).toThrowError();
+            expect(() => {
+                util.isArray();
+            }).toThrowError();
         });
 
         test('should return true if argument type is array', () => {
@@ -61,7 +69,9 @@ describe('Test utility helper functions', () => {
 
     describe('isValidHtmlElement:', () => {
         test('should throw error if argument is missing', () => {
-            expect(() => { util.isValidHtmlElement(); }).toThrowError();
+            expect(() => {
+                util.isValidHtmlElement();
+            }).toThrowError();
         });
 
         test('should return true for valid dom element', () => {
@@ -82,8 +92,12 @@ describe('Test utility helper functions', () => {
 
     describe('getBooleanOptionsFromObject:', () => {
         test('should throw error if argument is missing or invalid', () => {
-            expect(() => { util.getBooleanOptionsFromObject(); }).toThrowError();
-            expect(() => { util.getBooleanOptionsFromObject('hello'); }).toThrowError();
+            expect(() => {
+                util.getBooleanOptionsFromObject();
+            }).toThrowError();
+            expect(() => {
+                util.getBooleanOptionsFromObject('hello');
+            }).toThrowError();
         });
 
         test('should return all boolean options from object', () => {
@@ -92,25 +106,30 @@ describe('Test utility helper functions', () => {
                 theme: 'dtjs-default-theme',
                 format: 'object',
                 fold: false,
-                separators: true
+                separators: true,
             };
 
             expect(util.getBooleanOptionsFromObject(defaultConfig)).toEqual([
-                'fold', 'separators'
+                'fold',
+                'separators',
             ]);
         });
     });
 
     describe('isEmpty:', () => {
         test('should throw error if argument is missing or invalid', () => {
-            expect(() => { util.isEmpty(); }).toThrowError();
-            expect(() => { util.isEmpty('hello'); }).toThrowError();
+            expect(() => {
+                util.isEmpty();
+            }).toThrowError();
+            expect(() => {
+                util.isEmpty('hello');
+            }).toThrowError();
         });
 
         test('should return true if array or object is empty', () => {
             expect(util.isEmpty([])).toBeTruthy();
             expect(util.isEmpty({})).toBeTruthy();
-            expect(util.isEmpty({name: 'foo'})).toBeFalsy();
+            expect(util.isEmpty({ name: 'foo' })).toBeFalsy();
         });
     });
 
@@ -130,7 +149,9 @@ describe('Test utility helper functions', () => {
             const source = { name: 'bar', isMarried: true };
 
             expect(util.mergeConfig(target, source)).toEqual({
-                name: 'bar', age: 100, isMarried: true
+                name: 'bar',
+                age: 100,
+                isMarried: true,
             });
         });
     });
@@ -143,8 +164,8 @@ describe('Test utility helper functions', () => {
                 length: '1560',
                 created: {
                     date: '2017-Dec-21',
-                    time: '3.00 pm'
-                }
+                    time: '3.00 pm',
+                },
             };
             const updatedConfig = {
                 movies: ['up', 'starwars'],
@@ -152,8 +173,8 @@ describe('Test utility helper functions', () => {
                 length: '1560',
                 created: {
                     date: '2017-Dec-21',
-                    time: '3.00 am'
-                }
+                    time: '3.00 am',
+                },
             };
 
             expect(util.diff(config, updatedConfig)).toEqual({
@@ -161,8 +182,8 @@ describe('Test utility helper functions', () => {
                 count: 4,
                 created: {
                     date: '2017-Dec-21',
-                    time: '3.00 am'
-                }
+                    time: '3.00 am',
+                },
             });
         });
     });

@@ -13,7 +13,7 @@ module.exports = merge(common, {
 
     output: {
         path: join(rootPath, 'dist'),
-        filename: 'js/[name].min.js'
+        filename: 'js/[name].min.js',
     },
 
     module: {
@@ -23,13 +23,13 @@ module.exports = merge(common, {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: MiniCssExtractPlugin.loader,
                     },
                     'css-loader',
-                    'postcss-loader'
-                ]
-            }
-        ]
+                    'postcss-loader',
+                ],
+            },
+        ],
     },
 
     optimization: {
@@ -39,17 +39,17 @@ module.exports = merge(common, {
                 parallel: true,
                 uglifyOptions: {
                     warnings: true,
-                    mangle: true
-                }
+                    mangle: true,
+                },
             }),
             // will minify the css file
-            new OptimizeCSSAssetsPlugin()
-        ]
+            new OptimizeCSSAssetsPlugin(),
+        ],
     },
 
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].min.css'
-        })
-    ]
+            filename: 'css/[name].min.css',
+        }),
+    ],
 });

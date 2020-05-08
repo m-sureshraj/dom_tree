@@ -3,6 +3,6 @@ module.exports = {
     rules: {
         'comment-empty-line-before': null,
         'rule-empty-line-before': null,
-        indentation: 4
-    }
+        indentation: 4,
+    },
 };
