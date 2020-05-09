@@ -1,24 +1,33 @@
-'use strict';
-var join = require('path').join;
-var merge = require('webpack-merge');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var common = require('./webpack.common');
+const { join } = require('path');
 
-var rootPath = join(__dirname, '..');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = merge(common, {
+const rootPath = join(__dirname, '..');
+const distPath = join(rootPath, 'dist');
+const sourcePath = join(rootPath, 'src', 'js');
+
+module.exports = {
     mode: 'production',
+    devtool: false,
+
+    entry: {
+        dom_tree: join(sourcePath, 'dom_tree.js'),
+    },
 
     output: {
-        path: join(rootPath, 'dist'),
+        path: distPath,
         filename: 'js/[name].min.js',
+        // https://webpack.js.org/guides/author-libraries/
+        library: 'DomTree',
+        libraryTarget: 'umd',
+        libraryExport: 'default',
     },
 
     module: {
         rules: [
-            // bundle css
             {
                 test: /\.css$/,
                 use: [
@@ -33,13 +42,11 @@ module.exports = merge(common, {
     },
 
     optimization: {
+        minimize: true,
         minimizer: [
-            // https://github.com/webpack-contrib/uglifyjs-webpack-plugin
-            new UglifyJSPlugin({
-                parallel: true,
-                uglifyOptions: {
+            new TerserPlugin({
+                terserOptions: {
                     warnings: true,
-                    mangle: true,
                 },
             }),
             // will minify the css file
@@ -48,8 +55,9 @@ module.exports = merge(common, {
     },
 
     plugins: [
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'css/[name].min.css',
         }),
     ],
-});
+};
