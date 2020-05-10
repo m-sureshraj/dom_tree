@@ -1,34 +1,54 @@
-'use strict';
-var join = require('path').join;
-var merge = require('webpack-merge');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var HtmlWebpackHardDiskPlugin = require('html-webpack-harddisk-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var common = require('./webpack.common');
+const { join } = require('path');
+const { existsSync, copyFileSync } = require('fs');
 
-var rootPath = join(__dirname, '..');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHardDiskPlugin = require('html-webpack-harddisk-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-var htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: join(rootPath, 'src', 'dom_tree.html'),
-    filename: join(rootPath, 'dev', 'index.html'),
+const rootPath = join(__dirname, '..');
+const sourcePath = join(rootPath, 'src');
+const buildPath = join(rootPath, 'dev');
+const template = join(sourcePath, 'dom_tree.html');
+
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+    template,
+    filename: join(buildPath, 'index.html'),
     inject: 'head',
-    alwaysWriteToDisk: true, // HtmlWebpackHardDiskPlugin require this option
+    alwaysWriteToDisk: true,
 });
 
-module.exports = function(env) {
-    var isStartScript = env.script === 'start';
+function copyTemplate() {
+    if (existsSync(template)) return;
 
-    return merge(common, {
-        devtool: 'eval-source-map',
+    copyFileSync(join(sourcePath, 'dom_tree_template.html'), template);
+}
+
+module.exports = (env, argv) => {
+    const { script = 'dev' } = argv;
+    const isStartScript = script === 'start';
+
+    if (isStartScript) copyTemplate();
+
+    return {
         mode: 'development',
+        devtool: isStartScript ? 'eval-cheap-source-map' : false,
+
+        entry: {
+            dom_tree: join(sourcePath, 'js', 'dom_tree.js'),
+        },
 
         output: {
-            path: join(rootPath, 'dev'),
+            path: buildPath,
+            filename: 'js/[name].js',
+            // https://webpack.js.org/guides/author-libraries/
+            library: 'DomTree',
+            libraryTarget: 'umd',
+            libraryExport: 'default',
         },
 
         module: {
             rules: [
-                // bundle css
                 {
                     test: /\.css$/,
                     use: [
@@ -43,17 +63,18 @@ module.exports = function(env) {
         },
 
         devServer: {
-            contentBase: join(rootPath, 'dev'),
+            contentBase: buildPath,
             inline: true,
-            port: 3333,
+            port: 3000,
         },
 
         plugins: [
+            new CleanWebpackPlugin(),
             isStartScript && htmlWebpackPlugin,
             isStartScript && new HtmlWebpackHardDiskPlugin(),
             new MiniCssExtractPlugin({
                 filename: 'css/[name].css',
             }),
         ].filter(Boolean),
-    });
+    };
 };
