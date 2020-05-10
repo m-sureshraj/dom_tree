@@ -1,4 +1,3 @@
-sudo: false
 notifications:
   email: false
 branches:
@@ -7,7 +6,7 @@ branches:
 
 language: node_js
 node_js:
-   - "11.2.0"
+   - "12.16.2"
 cache:
   directories:
     - "node_modules"
