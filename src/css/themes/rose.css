@@ -1,0 +1,54 @@
+/* ============ rose theme ============= */
+.dt-root.dt-rose {
+    background-color: #fff;
+}
+.dt-root.dt-rose .dt-key,
+.dt-root.dt-rose .dt-colon {
+    color: #666;
+}
+.dt-root.dt-rose .dt-str {
+    color: rgb(244, 54, 54);
+}
+.dt-root.dt-rose .dt-num {
+    color: blue;
+}
+.dt-root.dt-rose .dt-null,
+.dt-root.dt-rose .dt-dots::after,
+.dt-root.dt-rose .dt-undef {
+    color: #ccc;
+}
+.dt-root.dt-rose .dt-bool {
+    color: brown;
+}
+.dt-root.dt-rose .dt-close-bracket,
+.dt-root.dt-rose .dt-open-bracket {
+    color: #444;
+}
+.dt-root.dt-rose .dt-separator {
+    color: #777;
+}
+.dt-root.dt-rose .dt-hc ul {
+    border-left-color: #ccc;
+}
+.dt-root.dt-rose .dt-hc::after {
+    color: #989797;
+} /* item count text color */
+.dt-root.dt-rose .dt-hc .dt-expandable {
+    border-top-color: #c2c2c2;
+}
+
+/* keyboard navigation styles */
+.dt-root.dt-rose.dt-root-focused {
+    background-color: #f7f2f2;
+}
+.dt-root.dt-rose .dt-highlight {
+    background-color: #efe3e3;
+}
+.dt-root.dt-rose .dt-md > .dt-expandable {
+    border-top-color: #4093ff;
+}
+.dt-root.dt-rose .dt-mu::before,
+.dt-root.dt-rose .dt-mu.dt-fold > .dt-close-bracket::after {
+    background-color: #4093ff;
+}
+/* keyboard navigation styles */

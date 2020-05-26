@@ -1,18 +1,17 @@
 module.exports = {
     verbose: false,
-    collectCoverageFrom: [
-        // 'src/**/*.js', // still not 100%
-        'src/js/util/util.js',
-        'src/js/util/keyboard_navigation.js',
-        // '!src/js/config.js'
-    ],
+    setupFilesAfterEnv: ['./jest.setup.js'],
+    collectCoverageFrom: ['src/**/*.js', '!src/lib/navigation.js'],
     coverageDirectory: './coverage',
     coverageThreshold: {
         global: {
-            branches: 100,
-            functions: 100,
-            lines: 100,
-            statements: 100,
+            branches: 95,
+            functions: 95,
+            lines: 95,
+            statements: 95,
         },
+    },
+    moduleNameMapper: {
+        '\\.css$': '<rootDir>/src/style_mock.js',
     },
 };

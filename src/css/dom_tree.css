@@ -1,31 +1,41 @@
-/* dom-tree.css rules */
-/* Always scope styles under .dtjs-root class */
-/* All color related styles are written in themes file */
+/*
+    dom_tree.css rules
+    - Always scope styles under `dt-root` class
+    - Use themes to define colors
+*/
 
-/* css reset inside .dtjs-root */
-.dtjs-root,
-.dtjs-root li,
-.dtjs-root ul,
-.dtjs-root span {
+/* css reset inside .dt-root */
+.dt-root,
+.dt-root li,
+.dt-root ul,
+.dt-root span {
     margin: 0;
     padding: 0;
     outline: none;
 }
-.dtjs-root li { list-style: none; }
+.dt-root li {
+    list-style: none;
+}
 /* css reset */
 
-.dtjs-root {
-    font: 14px/30px monaco;
+.dt-root {
+    font: 14px/30px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+        'Courier New', monospace;
     padding: 0 0 0 32px;
 }
-.dtjs-root.dtjs-empty { padding-left: 7px; }
-.dtjs-root .hc { position: relative; }
-.dtjs-root .hc ul {
+.dt-root.dt-empty {
+    padding-left: 7px;
+}
+.dt-root .dt-hc {
+    position: relative;
+}
+.dt-root .dt-hc ul {
     padding-left: 34px;
     margin-left: 1px;
     border-left: 1px dotted transparent;
 }
-.dtjs-root .hc .ex { /* expand arrow icon */
+.dt-root .dt-hc .dt-expandable {
+    /* expand arrow icon */
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -39,14 +49,17 @@
 }
 
 /* 3 Dots */
-.dtjs-root .dots { display: none; }
-.dtjs-root .dots::after { /* dots element value */
+.dt-root .dt-dots {
+    display: none;
+}
+.dt-root .dt-dots::after {
+    /* dots element value */
     content: '...';
     margin: 0 2px;
 }
 
 /* Item count text */
-.dtjs-root .hc::after {
+.dt-root .dt-hc::after {
     content: attr(data-cc);
     display: none;
     position: absolute;
@@ -55,8 +68,8 @@
 }
 
 /* keyboard navigation */
-.dtjs-root .dtjs-mu::before,
-.dtjs-root .dtjs-mu > .cb::after {
+.dt-root .dt-mu::before,
+.dt-root .dt-mu > .dt-close-bracket::after {
     content: '';
     position: absolute;
     width: 9px;
@@ -65,17 +78,35 @@
     bottom: 0;
     display: inline-block;
 }
-.dtjs-root .dtjs-mu > .cb::after { display: none; } /* become visible after ele get folded */
+.dt-root .dt-mu > .dt-close-bracket::after {
+    display: none;
+} /* become visible after ele get folded */
 
-/* element get folded */
-.dtjs-root .fold ul { display: none; }
-.dtjs-root .fold .dots { display: inline-block; } /* show the dots */
-.dtjs-root .fold .ex { transform: rotate(-90deg); }
-.dtjs-root .fold::after { display: inline-block; } /* show item count text */
+/* element got folded */
+.dt-root .dt-fold ul {
+    display: none;
+}
+.dt-root .dt-fold .dt-dots {
+    display: inline-block;
+}
+
+/* show the dots */
+.dt-root .dt-fold .dt-expandable {
+    transform: rotate(-90deg);
+}
+.dt-root .dt-fold::after {
+    /* show item count text */
+    display: inline-block;
+}
+
 /* move up KB navigation highlight cursor after folded */
-.dtjs-root .fold.dtjs-mu::before { display: none; }
-.dtjs-root .fold.dtjs-mu > .cb { position: relative; }
-.dtjs-root .fold.dtjs-mu > .cb::after {
+.dt-root .dt-fold.dt-mu::before {
+    display: none;
+}
+.dt-root .dt-fold.dt-mu > .dt-close-bracket {
+    position: relative;
+}
+.dt-root .dt-fold.dt-mu > .dt-close-bracket::after {
     display: inline-block;
     left: -1px;
     bottom: -6px;
