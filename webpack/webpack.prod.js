@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const rootPath = join(__dirname, '..');
 const distPath = join(rootPath, 'dist');
-const sourcePath = join(rootPath, 'src', 'js');
+const sourcePath = join(rootPath, 'src');
 
 module.exports = {
     mode: 'production',
@@ -49,7 +49,7 @@ module.exports = {
                     warnings: true,
                 },
             }),
-            // will minify the css file
+            // To minify the css file
             new OptimizeCSSAssetsPlugin(),
         ],
     },

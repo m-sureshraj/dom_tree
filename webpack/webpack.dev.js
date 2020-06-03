@@ -35,7 +35,7 @@ module.exports = (env, argv) => {
         devtool: isStartScript ? 'eval-cheap-source-map' : false,
 
         entry: {
-            dom_tree: join(sourcePath, 'js', 'dom_tree.js'),
+            dom_tree: join(sourcePath, 'dom_tree.js'),
         },
 
         output: {

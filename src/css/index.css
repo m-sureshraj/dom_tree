@@ -1,5 +1,5 @@
-@import "./dom_tree.css";
-@import "./themes/default.css";
-@import "./themes/one_dark.css";
-@import "./themes/chrome_light.css";
-@import "themes/darcula.css";
+@import './dom_tree.css';
+@import './themes/rose.css';
+@import './themes/one_dark.css';
+@import './themes/chrome_light.css';
+@import './themes/darcula.css';

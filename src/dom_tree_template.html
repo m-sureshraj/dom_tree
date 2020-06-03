@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DomTree.Js - PlayGround</title>
+    <title>dom_tree.js - playground</title>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #ffe287;
+            background-color: #fdcf60;
             height: 55px;
             margin-bottom: 25px;
             display: flex;
@@ -22,7 +22,7 @@
         header h1 {
             font-size: 19px;
             font-family: monospace;
-            color: #493d25;
+            color: #000;
             letter-spacing: 2px;
         }
         .wrapper {
@@ -40,7 +40,7 @@
 
 <body>
     <header>
-        <h1>DomTree.Js PlayGround</h1>
+        <h1>dom_tree.js - playground</h1>
     </header>
 
     <section class="wrapper">
@@ -48,7 +48,7 @@
     </section>
 
     <script>
-        var data = {
+        const data = {
             entry: {
                 dom_tree: [
                     "/Users/author/Desktop/dom_tree/src/js/dom_tree.js"
@@ -109,18 +109,14 @@
             ]
         };
 
-        var dom = new DomTree({
+        // Webpack will inject dom_tree.{js,css} files into head
+        const dom = new DomTree({
             data: data,
             separators: true,
             fold: false,
             keyboardNavigation: true,
             removeHighlightOnBlur: true,
-            theme: 'darcula'
         }, document.querySelector('#root'));
-
-        console.time('dom_tree');
-        dom.init();
-        console.timeEnd('dom_tree');
     </script>
 </body>
 </html>

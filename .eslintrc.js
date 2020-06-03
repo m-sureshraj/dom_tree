@@ -13,6 +13,7 @@ module.exports = {
     // 0: off, 1: warn, 2: error
     rules: {
         'prettier/prettier': 2,
-        'no-prototype-builtins': 1,
+        'no-prototype-builtins': 0,
+        'no-var': 2,
     },
 };
