@@ -29,13 +29,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
                     },
                     'css-loader',
                     'postcss-loader',
+                    'sass-loader',
                 ],
             },
         ],

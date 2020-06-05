@@ -1,0 +1,129 @@
+// Rules
+// Always scope styles under `dt-root` class
+// Use themes to define colors
+
+.dt-root {
+    // simple reset
+    &,
+    li,
+    ul,
+    span {
+        margin: 0;
+        padding: 0;
+        outline: none;
+    }
+    li {
+        list-style: none;
+    }
+
+    font: 14px/30px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+        'Courier New', monospace;
+    padding: 0 0 0 32px;
+
+    // fixme: Do we need this style?
+    &.dt-empty {
+        padding-left: 7px;
+    }
+
+    .dt-hc {
+        position: relative;
+
+        // Item count text
+        &::after {
+            content: attr(data-cc);
+            display: none;
+            position: absolute;
+            top: 1px;
+            margin-left: 15px;
+        }
+
+        ul {
+            padding-left: 34px;
+            margin-left: 1px;
+            border-left: 1px dotted transparent;
+        }
+
+        // expand arrow
+        .dt-expandable {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 7px solid transparent;
+            cursor: pointer;
+            position: absolute;
+            left: -21px;
+            top: 12px;
+            transition: transform 0.3s ease;
+        }
+    }
+
+    .dt-dots {
+        display: none;
+
+        &::after {
+            content: '...';
+            margin: 0 2px;
+        }
+    }
+
+    .dt-fold {
+        &::after {
+            // show item count text
+            display: inline-block;
+        }
+
+        ul {
+            // hide the children
+            display: none;
+        }
+
+        .dt-dots {
+            // show 3 dots
+            display: inline-block;
+        }
+
+        .dt-expandable {
+            // rotate the expand icon
+            transform: rotate(-90deg);
+        }
+    }
+
+    .dt-mu {
+        // 2 underline indicators
+        &::before,
+        > .dt-close-bracket::after {
+            content: '';
+            position: absolute;
+            width: 9px;
+            height: 3px;
+            left: 0;
+            bottom: 0;
+            display: inline-block;
+        }
+
+        > .dt-close-bracket::after {
+            // hide the 2nd underline indicator inside the closing bracket
+            display: none;
+        }
+
+        // when the tree gets folded
+        &.dt-fold {
+            // hide the 1st underline indicator
+            &::before {
+                display: none;
+            }
+
+            // show the 2nd underline indicator inside the closing bracket
+            > .dt-close-bracket {
+                position: relative;
+
+                &::after {
+                    display: inline-block;
+                    left: -1px;
+                    bottom: -6px;
+                }
+            }
+        }
+    }
+}

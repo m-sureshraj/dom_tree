@@ -1,0 +1,76 @@
+// ============ rose theme =============//
+
+.dt-root {
+    &.dt-rose {
+        background-color: #fff;
+
+        &.dt-root-focused {
+            background-color: #f7f2f2;
+        }
+
+        .dt-key,
+        .dt-colon {
+            color: #666;
+        }
+        .dt-close-bracket,
+        .dt-open-bracket {
+            color: #444;
+        }
+        .dt-separator {
+            color: #777;
+        }
+        .dt-dots {
+            // dots color
+            &::after {
+                color: #ccc;
+            }
+        }
+
+        // Js primitive data types
+        .dt-str {
+            color: rgb(244, 54, 54);
+        }
+        .dt-num {
+            color: blue;
+        }
+        .dt-bool {
+            color: brown;
+        }
+        .dt-null,
+        .dt-undef {
+            color: #ccc;
+        }
+
+        .dt-hc {
+            // item count text color
+            &::after {
+                color: #989797;
+            }
+
+            // sub tree
+            ul {
+                border-left-color: #ccc;
+            }
+
+            .dt-expandable {
+                border-top-color: #c2c2c2;
+            }
+        }
+
+        // keyboard navigation styles
+        .dt-highlight {
+            background-color: #efe3e3;
+        }
+        .dt-md {
+            > .dt-expandable {
+                border-top-color: #4093ff;
+            }
+        }
+        .dt-mu {
+            &::before,
+            &.dt-fold > .dt-close-bracket::after {
+                background-color: #4093ff;
+            }
+        }
+    }
+}

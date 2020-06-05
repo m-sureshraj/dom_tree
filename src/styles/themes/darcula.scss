@@ -1,0 +1,80 @@
+// ============ darcula theme =============
+
+.dt-root {
+    &.dt-darcula {
+        background-color: #2e2e2e;
+
+        &.dt-root-focused {
+            background-color: #363636;
+        }
+
+        .dt-key {
+            color: #9876aa;
+        }
+        .dt-colon {
+            color: #a9b7c6;
+        }
+        .dt-close-bracket,
+        .dt-open-bracket {
+            color: #a9b8c7;
+        }
+        .dt-separator {
+            color: #cc7832;
+        }
+        .dt-dots {
+            // dots color
+            &::after {
+                color: #a9b8c7;
+            }
+        }
+
+        // Js primitive data types
+        .dt-str {
+            color: #6b8859;
+        }
+        .dt-num {
+            color: #6999bd;
+        }
+        .dt-bool {
+            color: #cc7832;
+        }
+        .dt-null {
+            color: #cc7832;
+        }
+        .dt-undef {
+            color: #9876aa;
+        }
+
+        .dt-hc {
+            // item count text color
+            &::after {
+                color: #817e80;
+            }
+
+            // sub tree
+            ul {
+                border-left-color: #565656;
+            }
+
+            .dt-expandable {
+                border-top-color: #6a6a6a;
+            }
+        }
+
+        // keyboard navigation styles
+        .dt-highlight {
+            background-color: #3f3f3f;
+        }
+        .dt-md {
+            > .dt-expandable {
+                border-top-color: #529dff;
+            }
+        }
+        .dt-mu {
+            &::before,
+            &.dt-fold > .dt-close-bracket::after {
+                background-color: #529dff;
+            }
+        }
+    }
+}

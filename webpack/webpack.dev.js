@@ -50,13 +50,14 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.css$/,
+                    test: /\.scss$/,
                     use: [
                         {
                             loader: MiniCssExtractPlugin.loader,
                         },
                         'css-loader',
-                        'postcss-loader',
+                        'postcss-loader', // post process css (e.g. add vendor prefix)
+                        'sass-loader', // compiles Sass to CSS
                     ],
                 },
             ],

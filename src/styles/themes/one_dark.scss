@@ -1,0 +1,76 @@
+// ============ one-dark theme =============
+
+.dt-root {
+    &.dt-one-dark {
+        background-color: rgb(65, 65, 65);
+
+        &.dt-root-focused {
+            background-color: rgb(70, 70, 70);
+        }
+
+        .dt-key,
+        .dt-colon {
+            color: rgb(233, 232, 232);
+        }
+        .dt-close-bracket,
+        .dt-open-bracket {
+            color: rgb(92, 188, 187);
+        }
+        .dt-separator {
+            color: rgb(153, 153, 153);
+        }
+        .dt-dots {
+            // dots color
+            &::after {
+                color: rgb(92, 188, 187);
+            }
+        }
+
+        // Js primitive data types
+        .dt-str {
+            color: rgb(126, 198, 153);
+        }
+        .dt-num {
+            color: rgb(204, 153, 205);
+        }
+        .dt-bool {
+            color: rgb(240, 141, 73);
+        }
+        .dt-null,
+        .dt-undef {
+            color: rgb(153, 153, 153);
+        }
+
+        .dt-hc {
+            // item count text color
+            &::after {
+                color: rgb(153, 153, 153);
+            }
+
+            // sub tree
+            ul {
+                border-left-color: #717171;
+            }
+
+            .dt-expandable {
+                border-top-color: #828282;
+            }
+        }
+
+        // keyboard navigation styles
+        .dt-highlight {
+            background-color: #525252;
+        }
+        .dt-md {
+            > .dt-expandable {
+                border-top-color: #529dff;
+            }
+        }
+        .dt-mu {
+            &::before,
+            &.dt-fold > .dt-close-bracket::after {
+                background-color: #529dff;
+            }
+        }
+    }
+}

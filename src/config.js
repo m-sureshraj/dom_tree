@@ -25,13 +25,13 @@ const classNames = {
 
     // themes
     rose: 'dt-rose',
-    oneDark: 'dt-one-dark',
-    chromeLight: 'dt-chrome-light',
+    'one-dark': 'dt-one-dark',
+    'chrome-light': 'dt-chrome-light',
     darcula: 'dt-darcula',
 };
 
 const defaultTheme = 'rose';
-const availableThemes = [defaultTheme, 'oneDark', 'chromeLight', 'darcula'];
+const availableThemes = [defaultTheme, 'one-dark', 'chrome-light', 'darcula'];
 
 const availableFormats = {
     object: 'object',
