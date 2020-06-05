@@ -118,7 +118,7 @@ describe('configureTree', () => {
         const tree = constructTree(options);
         configureTree(tree, options);
 
-        expect(tree).toHaveClass(`${classNames.root} ${classNames.oneDark}`);
+        expect(tree).toHaveClass(`${classNames.root} ${classNames['one-dark']}`);
     });
 
     test('tree should not focusable when data is empty', () => {

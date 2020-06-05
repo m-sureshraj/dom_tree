@@ -1,0 +1,78 @@
+// ============ chrome-light theme =============
+
+.dt-root {
+    &.dt-chrome-light {
+        background-color: #fff;
+
+        &.dt-root-focused {
+            background-color: #f7f2f2;
+        }
+
+        .dt-key {
+            color: #8c1b95;
+        }
+        .dt-colon {
+            color: #202020;
+        }
+        .dt-close-bracket,
+        .dt-open-bracket {
+            color: #202020;
+        }
+        .dt-separator {
+            color: #818181;
+        }
+        .dt-dots {
+            // dots color
+            &::after {
+                color: #202020;
+            }
+        }
+
+        // Js primitive data types
+        .dt-str {
+            color: #c41a16;
+        }
+        .dt-num {
+            color: #2307d0;
+        }
+        .dt-bool {
+            color: #2307d0;
+        }
+        .dt-null,
+        .dt-undef {
+            color: #818181;
+        }
+
+        .dt-hc {
+            // item count text color
+            &::after {
+                color: #818181;
+            }
+
+            // sub tree
+            ul {
+                border-left-color: #ccc;
+            }
+
+            .dt-expandable {
+                border-top-color: #878787;
+            }
+        }
+
+        // keyboard navigation styles
+        .dt-highlight {
+            background-color: #efe3e3;
+        }
+        .dt-md {
+            > .dt-expandable {
+                border-top-color: #529dff;
+            }
+        }
+        .dt-mu {
+            &::before,
+            &.dt-fold > .dt-close-bracket::after {
+                background-color: #529dff;
+            }
+        }
+    }
+}

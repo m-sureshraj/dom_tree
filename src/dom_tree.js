@@ -3,7 +3,7 @@ const utils = require('./lib/utils');
 const { validateOptions } = require('./lib/validation');
 const { defaultOptions } = require('./config');
 
-require('./css/index.css');
+require('./styles/index.scss');
 
 function DomTree(options, targetNode) {
     'use strict';
