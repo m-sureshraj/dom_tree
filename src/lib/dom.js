@@ -150,11 +150,11 @@ function configureTree(tree, options) {
 
     tree.setAttribute('tabIndex', '0');
 
-    tree.addEventListener('focus', function() {
+    tree.addEventListener('focus', () => {
         tree.classList.add(classNames.treeFocused);
     });
 
-    tree.addEventListener('blur', function() {
+    tree.addEventListener('blur', () => {
         tree.classList.remove(classNames.treeFocused);
     });
 
