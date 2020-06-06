@@ -50,9 +50,12 @@
     "convert javascript array to html tree view"
   ],
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
     "@testing-library/dom": "^7.5.7",
     "@testing-library/jest-dom": "^5.8.0",
     "autoprefixer": "^7.2.6",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "codecov": "^3.1.0",
     "css-loader": "^0.28.11",

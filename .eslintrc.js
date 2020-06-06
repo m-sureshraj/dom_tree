@@ -15,5 +15,7 @@ module.exports = {
         'prettier/prettier': 2,
         'no-prototype-builtins': 0,
         'no-var': 2,
+        'prefer-arrow-callback': 2,
+        'prefer-template': 2,
     },
 };
