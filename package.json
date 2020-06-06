@@ -1,9 +1,12 @@
 {
-  "name": "dom_tree",
+  "name": "@sureshraj/dom_tree",
   "version": "0.0.1",
   "description": "Convert JavaScript Object, Array, and JSON into interactive HTML tree view",
   "main": "dist/js/dom_tree.min.js",
   "style": "dist/css/dom_tree.min.css",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "-------------- MAIN --------------": "",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js --script=start",
