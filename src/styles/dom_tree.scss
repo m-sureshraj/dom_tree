@@ -2,9 +2,10 @@
 // Always scope styles under `dt-root` class
 // Use themes to define colors
 
+$root-left-padding: 32px;
+
 .dt-root {
     // simple reset
-    &,
     li,
     ul,
     span {
@@ -18,11 +19,10 @@
 
     font: 14px/30px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
         'Courier New', monospace;
-    padding: 0 0 0 32px;
+    padding: 0 0 0 $root-left-padding;
 
-    // fixme: Do we need this style?
     &.dt-empty {
-        padding-left: 7px;
+        padding-left: $root-left-padding / 2;
     }
 
     .dt-hc {
