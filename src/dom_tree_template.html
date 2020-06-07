@@ -8,10 +8,13 @@
             margin: 0;
             padding: 0;
         }
+        body {
+            padding-top: 55px;
+        }
         header {
             background-color: #fdcf60;
             height: 55px;
-            margin-bottom: 25px;
+            margin-top: -55px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -20,18 +23,17 @@
             z-index: 1;
         }
         header h1 {
-            font-size: 19px;
+            font-size: 18px;
             font-family: monospace;
             color: #000;
             letter-spacing: 2px;
         }
         .wrapper {
             width: 960px;
-            margin: 0 auto 30px;
-            padding-top: 80px;
+            margin: 30px auto;
         }
         .wrapper div:not(:last-child) {
-            padding-bottom: 30px;
+            padding-bottom: 15px;
             border-bottom: 1px solid #dedede;
             margin-bottom: 15px;
         }
