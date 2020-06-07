@@ -43,15 +43,6 @@
     "type": "git",
     "url": "https://github.com/m-sureshraj/dom-tree.git"
   },
-  "license": "MIT",
-  "keywords": [
-    "object tree",
-    "array tree",
-    "html tree view",
-    "json to html tree",
-    "convert javascript object to html tree view",
-    "convert javascript array to html tree view"
-  ],
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
