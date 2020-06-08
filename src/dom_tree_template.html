@@ -1,124 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>dom_tree.js - playground</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            padding-top: 55px;
-        }
-        header {
-            background-color: #fdcf60;
-            height: 55px;
-            margin-top: -55px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            width: 100%;
-            z-index: 1;
-        }
-        header h1 {
-            font-size: 18px;
-            font-family: monospace;
-            color: #000;
-            letter-spacing: 2px;
-        }
-        .wrapper {
-            width: 960px;
-            margin: 30px auto;
-        }
-        .wrapper div:not(:last-child) {
-            padding-bottom: 15px;
-            border-bottom: 1px solid #dedede;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <title>dom_tree.js - playground</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                padding-top: 55px;
+            }
+            header {
+                background-color: #fdcf60;
+                height: 55px;
+                margin-top: -55px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                width: 100%;
+                z-index: 1;
+            }
+            header h1 {
+                font-size: 18px;
+                font-family: monospace;
+                color: #000;
+                letter-spacing: 2px;
+            }
+            .wrapper {
+                width: 960px;
+                margin: 30px auto;
+            }
+            .wrapper div:not(:last-child) {
+                padding-bottom: 15px;
+                border-bottom: 1px solid #dedede;
+                margin-bottom: 15px;
+            }
+        </style>
+    </head>
 
-<body>
-    <header>
-        <h1>dom_tree.js - playground</h1>
-    </header>
+    <body>
+        <header><h1>dom_tree.js - playground</h1></header>
+        <section class="wrapper"><div id="root"></div></section>
 
-    <section class="wrapper">
-        <div id="root"></div>
-    </section>
-
-    <script>
-        const data = {
-            entry: {
-                dom_tree: [
-                    "/Users/author/Desktop/dom_tree/src/js/dom_tree.js"
-                ]
-            },
-            output: {
-                filename: "js/[name].js",
-                library: "DomTree",
-                libraryTarget: "umd",
-                libraryExport: "default",
-                path: "/Users/author/Desktop/dom_tree/dist"
-            },
-            module: {
-                rules: [
-                    {
-                        test: {},
-                        use: [
-                            {
-                                loader: "/Users/author/Desktop/dom_tree/node_modules/extract-text-webpack-plugin/dist/loader.js",
-                                options: {
-                                    "id": 1,
-                                    "omit": 0,
-                                    "remove": true
-                                }
-                            },
-                            {
-                                "loader": "css-loader",
-                                "options": {
-                                    "importLoaders": 1,
-                                    "minimize": true
-                                }
-                            },
-                            {
-                                "loader": "postcss-loader"
-                            }
-                        ]
-                    }
-                ]
-            },
-            plugins: [
-                {
-                    "filename": "css/[name].css",
-                    "id": 1,
-                    "options": {}
+        <script>
+            const data = {
+                name: 'Mr. Foo',
+                gender: 'Male',
+                age: 99,
+                isMarried: true,
+                wife: null,
+                children: ['bar', 'baz'],
+                friends: undefined,
+                location: {
+                    district: 'underground',
+                    zipcode: -100,
                 },
-                {
-                    "options": {
-                        "parallel": {
-                            "cache": true
-                        },
-                        "uglifyOptions": {
-                            "ecma": 5,
-                            "mangle": true,
-                            "warnings": true
-                        }
-                    }
-                }
-            ]
-        };
+            };
 
-        // Webpack will inject dom_tree.{js,css} files into head
-        const dom = new DomTree({
-            data: data,
-            separators: true,
-            fold: false,
-            keyboardNavigation: true,
-            removeHighlightOnBlur: true,
-        }, document.querySelector('#root'));
-    </script>
-</body>
+            // Webpack will inject dom_tree.{js,css} files into head
+            new DomTree(
+                {
+                    data,
+                    keyboardNavigation: true,
+                },
+                document.querySelector('#root')
+            ).init();
+        </script>
+    </body>
 </html>
