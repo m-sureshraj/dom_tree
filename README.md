@@ -86,18 +86,18 @@ dt.init();
 ## Options
 | Option | Type | Required? | Default | Description |
 | --- | --- | --- | --- | --- |
-| data | `object` \| `array` \| `JSON` | required | - | coming soon |
-| theme | `string` | optional | rose | Available themes are `rose`, `one-dark`, `chrome-light`, and `darcula`. |
-| format | `string` | optional | object | Available formats are `object` and `json`. Use `json` to wrap property keys with double quotes.  |
-| fold | `boolean` | optional | `false` | coming soon |
-| separators | `boolean` | optional | `true` | Add comma separator after each property. |
-| keyboardNavigation | `boolean` | optional | `false` | Use this option to enable/disable the keyboard navigation. |
-| removeHighlightOnBlur | `boolean` | optional | `false` | coming soon |
+| data | `object` \| `array` \| `JSON` | required | - | Data source to generate the tree |
+| theme | `string` | optional | rose | 🌈 Available themes are `rose`, `one-dark`, `chrome-light`, and `darcula`. |
+| format | `string` | optional | object | Available formats are `object` and `json`. Use `json` to wrap the keys with double quotes. |
+| fold | `boolean` | optional | `false` | By default, the tree is fully expanded. Enable this option to fold the root, sub-nodes on the tree. |
+| separators | `boolean` | optional | `true` | This option adds a comma separator after each property. |
+| keyboardNavigation | `boolean` | optional | `false` | This option enables/disables the keyboard navigation. |
+| removeHighlightOnBlur | `boolean` | optional | `false` | This option removes the highlighted section when the tree gets blurred. You must enable the keyboard navigation to see this option in action. |
 
 ## Methods
 | Method | Params | Description |
 | --- | --- | --- |
-| init | - | coming soon |
+| init | - | This method initializes the tree. |
 
 ## Todo
 * Expose a method to update the initialized tree. [Issue](https://github.com/m-sureshraj/dom_tree/issues/22)
