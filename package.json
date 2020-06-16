@@ -1,6 +1,6 @@
 {
   "name": "@sureshraj/dom_tree",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert JavaScript Object, Array, and JSON into interactive HTML tree view",
   "main": "dist/js/dom_tree.min.js",
   "style": "dist/css/dom_tree.min.css",
